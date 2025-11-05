@@ -4,7 +4,6 @@ function toggleSidebar() {
     if (sidebar) {
         sidebar.classList.toggle('open');
         
-        // Empêcher le défilement du body quand le sidebar est ouvert
         if (sidebar.classList.contains('open')) {
             document.body.style.overflow = 'hidden';
         } else {
@@ -35,259 +34,13 @@ function toggleSubmenu(element) {
     submenu.classList.toggle('open');
     element.classList.toggle('active');
     
-    // Animation de la flèche
     const arrow = element.querySelector('.arrow');
     if (arrow) {
         arrow.textContent = submenu.classList.contains('open') ? '▲' : '▼';
     }
 }
 
-// Gestion du défilement fluide
-function smoothScrollTo(target) {
-    const element = document.querySelector(target);
-    if (element) {
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }
-}
-
-// Animation au défilement
-function checkScroll() {
-    const sections = document.querySelectorAll('.section-card');
-    const windowHeight = window.innerHeight;
-    
-    sections.forEach(section => {
-        const sectionTop = section.getBoundingClientRect().top;
-        if (sectionTop < windowHeight - 100) {
-            section.classList.add('animate');
-        }
-    });
-}
-
-// Initialisation après chargement du DOM
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('NEBULA - Initialisation de la plateforme');
-    
-    // Éléments DOM
-    const menuToggle = document.getElementById('menuToggle');
-    const closeSidebar = document.getElementById('closeSidebar');
-    const sidebar = document.getElementById('sidebar');
-    const submenuToggles = document.querySelectorAll('.submenu-toggle');
-    const heroScroll = document.querySelector('.hero-scroll');
-    const sections = document.querySelectorAll('.section-card');
-    const actionButtons = document.querySelectorAll('.action-btn');
-    
-    // Vérification des éléments critiques
-    if (!sidebar) {
-        console.error('Sidebar non trouvé');
-        return;
-    }
-
-    // Écouteur pour le bouton du menu hamburger
-    if (menuToggle) {
-        menuToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleSidebar();
-        });
-    }
-    
-    // Écouteur pour le bouton de fermeture du sidebar
-    if (closeSidebar) {
-        closeSidebar.addEventListener('click', toggleSidebar);
-    }
-    
-    // Écouteurs pour les sous-menus
-    submenuToggles.forEach(toggle => {
-        toggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleSubmenu(this);
-        });
-    });
-    
-    // Fermer le sidebar en cliquant à l'extérieur
-    document.addEventListener('click', function(event) {
-        if (sidebar.classList.contains('open') && 
-            !sidebar.contains(event.target) && 
-            !menuToggle.contains(event.target)) {
-            toggleSidebar();
-        }
-    });
-    
-    // Fermer le sidebar avec la touche Échap
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && sidebar.classList.contains('open')) {
-            toggleSidebar();
-        }
-    });
-
-    // Animation au défilement
-    function initScrollAnimations() {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-    }
-
-    // Initialiser les animations de défilement
-    initScrollAnimations();
-    
-    // Animation du bouton de défilement hero
-    if (heroScroll) {
-        heroScroll.addEventListener('click', function() {
-            smoothScrollTo('.sections-grid');
-        });
-    }
-    
-    // Interactions des cartes
-    function initCardInteractions() {
-        sections.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-            
-            // Animation au clic
-            card.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A') return; // Ne pas animer les clics sur les liens
-                this.style.transform = 'translateY(-5px) scale(0.98)';
-                setTimeout(() => {
-                    this.style.transform = 'translateY(-10px)';
-                }, 150);
-            });
-        });
-    }
-    
-    initCardInteractions();
-    
-    // Animation des boutons d'action
-    function initButtonInteractions() {
-        actionButtons.forEach(button => {
-            button.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-3px)';
-            });
-            
-            button.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-            
-            button.addEventListener('mousedown', function() {
-                this.style.transform = 'translateY(0) scale(0.95)';
-            });
-            
-            button.addEventListener('mouseup', function() {
-                this.style.transform = 'translateY(-3px) scale(1)';
-            });
-        });
-    }
-    
-    initButtonInteractions();
-    
-    // Gestion des liens sociaux
-    function initSocialLinks() {
-        const socialLinks = document.querySelectorAll('.social-link');
-        socialLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const url = this.getAttribute('href');
-                if (url) {
-                    window.open(url, '_blank', 'noopener,noreferrer');
-                }
-            });
-        });
-    }
-    
-    initSocialLinks();
-    
-    // Gestion responsive
-    function handleResize() {
-        if (window.innerWidth > 768 && sidebar.classList.contains('open')) {
-            toggleSidebar();
-        }
-    }
-    
-    window.addEventListener('resize', handleResize);
-    
-    // Amélioration de l'accessibilité
-    function enhanceAccessibility() {
-        // Ajouter les attributs ARIA
-        if (menuToggle) {
-            menuToggle.setAttribute('aria-label', 'Ouvrir le menu de navigation');
-            menuToggle.setAttribute('aria-expanded', 'false');
-            menuToggle.setAttribute('aria-controls', 'sidebar');
-        }
-        
-        if (sidebar) {
-            sidebar.setAttribute('aria-hidden', 'true');
-            sidebar.setAttribute('aria-label', 'Menu de navigation principal');
-        }
-        
-        // Mettre à jour les états ARIA
-        menuToggle.addEventListener('click', function() {
-            const isOpen = sidebar.classList.contains('open');
-            this.setAttribute('aria-expanded', isOpen);
-            sidebar.setAttribute('aria-hidden', !isOpen);
-        });
-        
-        // Navigation au clavier dans le sidebar
-        sidebar.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                toggleSidebar();
-                menuToggle.focus();
-            }
-        });
-    }
-    
-    enhanceAccessibility();
-    
-    // Initialisation des performances
-    function initPerformance() {
-        // Préchargement des images critiques
-        const criticalImages = [
-            'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
-        ];
-        
-        criticalImages.forEach(src => {
-            const img = new Image();
-            img.src = src;
-        });
-    }
-    
-    initPerformance();
-    
-    console.log('NEBULA - Initialisation terminée');
-});
-
-// Gestion des erreurs globales
-window.addEventListener('error', function(e) {
-    console.error('Erreur JavaScript:', e.error);
-});
-
-// Gestion des promesses non catchées
-window.addEventListener('unhandledrejection', function(e) {
-    console.error('Promesse rejetée non gérée:', e.reason);
-});
-
-// Ajoutez cette fonction dans votre script.js
-
+// Animation des nombres
 function animateNumbers() {
     const statNumbers = document.querySelectorAll('.stat-number');
     
@@ -296,11 +49,9 @@ function animateNumbers() {
             if (entry.isIntersecting) {
                 const statNumber = entry.target;
                 const target = parseInt(statNumber.getAttribute('data-count'));
-                const duration = 2000; // 2 secondes
-                const step = target / (duration / 16); // 60fps
+                const duration = 2000;
+                const step = target / (duration / 16);
                 let current = 0;
-                
-                statNumber.classList.add('animated');
                 
                 const timer = setInterval(() => {
                     current += step;
@@ -324,25 +75,39 @@ function animateNumbers() {
     });
 }
 
-// Appelez cette fonction après le chargement du DOM
-document.addEventListener('DOMContentLoaded', function() {
-    animateNumbers();
-});
-
-// Fonctionnalité du carrousel
+// Fonctionnalité du carrousel - VERSION CORRIGÉE
 function initCarousel() {
+    console.log('Initialisation du carrousel...');
+    
     const slides = document.querySelectorAll('.carousel-slide');
     const indicators = document.querySelectorAll('.indicator');
     const prevBtn = document.querySelector('.carousel-prev');
     const nextBtn = document.querySelector('.carousel-next');
+    
     let currentSlide = 0;
     let autoSlideInterval;
+    let isAnimating = false;
+
+    console.log('Éléments trouvés:', {
+        slides: slides.length,
+        indicators: indicators.length,
+        prevBtn: !!prevBtn,
+        nextBtn: !!nextBtn
+    });
 
     // Fonction pour changer de slide
     function goToSlide(slideIndex) {
+        if (isAnimating) return;
+        
+        isAnimating = true;
+        
         // Retirer la classe active de tous les slides et indicateurs
-        slides.forEach(slide => slide.classList.remove('active'));
-        indicators.forEach(indicator => indicator.classList.remove('active'));
+        slides.forEach(slide => {
+            slide.classList.remove('active');
+        });
+        indicators.forEach(indicator => {
+            indicator.classList.remove('active');
+        });
         
         // Gérer les limites
         if (slideIndex >= slides.length) {
@@ -353,50 +118,77 @@ function initCarousel() {
             currentSlide = slideIndex;
         }
         
+        console.log('Changement vers slide:', currentSlide);
+        
         // Ajouter la classe active au slide et indicateur actuels
-        slides[currentSlide].classList.add('active');
-        indicators[currentSlide].classList.add('active');
+        setTimeout(() => {
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+            isAnimating = false;
+        }, 50);
     }
 
     // Fonction pour le slide suivant
     function nextSlide() {
+        console.log('Slide suivant');
         goToSlide(currentSlide + 1);
     }
 
     // Fonction pour le slide précédent
     function prevSlide() {
+        console.log('Slide précédent');
         goToSlide(currentSlide - 1);
     }
 
     // Défilement automatique
     function startAutoSlide() {
-        autoSlideInterval = setInterval(nextSlide, 5000); // Change toutes les 5 secondes
+        console.log('Démarrage du défilement automatique');
+        stopAutoSlide(); // S'assurer qu'aucun intervalle n'est déjà en cours
+        autoSlideInterval = setInterval(() => {
+            nextSlide();
+        }, 5000);
     }
 
     function stopAutoSlide() {
-        clearInterval(autoSlideInterval);
+        if (autoSlideInterval) {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = null;
+        }
     }
 
-    // Événements
+    // Événements pour les boutons de navigation
     if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
+        nextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Clic sur next');
             nextSlide();
             stopAutoSlide();
             startAutoSlide();
         });
+    } else {
+        console.error('Bouton next non trouvé');
     }
 
     if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
+        prevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Clic sur prev');
             prevSlide();
             stopAutoSlide();
             startAutoSlide();
         });
+    } else {
+        console.error('Bouton prev non trouvé');
     }
 
     // Événements pour les indicateurs
     indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
+        indicator.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Clic sur indicateur:', index);
             goToSlide(index);
             stopAutoSlide();
             startAutoSlide();
@@ -406,28 +198,230 @@ function initCarousel() {
     // Pause au survol
     const heroSection = document.querySelector('.hero-section');
     if (heroSection) {
-        heroSection.addEventListener('mouseenter', stopAutoSlide);
-        heroSection.addEventListener('mouseleave', startAutoSlide);
+        heroSection.addEventListener('mouseenter', () => {
+            console.log('Survol - pause auto');
+            stopAutoSlide();
+        });
+        
+        heroSection.addEventListener('mouseleave', () => {
+            console.log('Fin survol - reprise auto');
+            startAutoSlide();
+        });
     }
 
     // Navigation au clavier
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
+            e.preventDefault();
             prevSlide();
             stopAutoSlide();
             startAutoSlide();
         } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
             nextSlide();
             stopAutoSlide();
             startAutoSlide();
         }
     });
 
-    // Démarrer le défilement automatique
+    // Redémarrer le carrousel si la page devient visible
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopAutoSlide();
+        } else {
+            startAutoSlide();
+        }
+    });
+
+    // Initialisation
+    console.log('Initialisation du premier slide');
+    goToSlide(0);
     startAutoSlide();
+
+    // Debug: Vérifier l'état initial
+    setTimeout(() => {
+        console.log('État initial du carrousel:', {
+            slidesActifs: document.querySelectorAll('.carousel-slide.active').length,
+            indicateursActifs: document.querySelectorAll('.indicator.active').length,
+            currentSlide: currentSlide
+        });
+    }, 100);
 }
 
-// Initialiser le carrousel après le chargement du DOM
+// Gestion du défilement fluide
+function smoothScrollTo(target) {
+    const element = document.querySelector(target);
+    if (element) {
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+
+// Initialisation principale
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('NEBULA - Initialisation de la plateforme');
+    
+    // Éléments DOM
+    const menuToggle = document.getElementById('menuToggle');
+    const closeSidebar = document.getElementById('closeSidebar');
+    const sidebar = document.getElementById('sidebar');
+    const submenuToggles = document.querySelectorAll('.submenu-toggle');
+    const heroScroll = document.querySelector('.hero-scroll');
+    
+    // Écouteurs d'événements
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleSidebar();
+        });
+    }
+    
+    if (closeSidebar) {
+        closeSidebar.addEventListener('click', toggleSidebar);
+    }
+    
+    submenuToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleSubmenu(this);
+        });
+    });
+    
+    // Fermer le sidebar en cliquant à l'extérieur
+    document.addEventListener('click', function(event) {
+        if (sidebar && sidebar.classList.contains('open') && 
+            !sidebar.contains(event.target) && 
+            !menuToggle.contains(event.target)) {
+            toggleSidebar();
+        }
+    });
+    
+    // Fermer le sidebar avec la touche Échap
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && sidebar && sidebar.classList.contains('open')) {
+            toggleSidebar();
+        }
+    });
+
+    // Initialisation des fonctionnalités
     initCarousel();
+    animateNumbers();
+    
+    // Animation du bouton de défilement hero
+    if (heroScroll) {
+        heroScroll.addEventListener('click', function() {
+            smoothScrollTo('.sections-grid');
+        });
+    }
+    
+    // Gestion de l'assistant
+    const assistantLauncher = document.getElementById('assistantLauncher');
+    if (assistantLauncher) {
+        assistantLauncher.addEventListener('click', function() {
+            const assistant = document.getElementById('nebulaAssistant');
+            if (assistant.style.display === 'none') {
+                assistant.style.display = 'flex';
+                if (assistant.innerHTML.trim() === '') {
+                    loadAssistant();
+                }
+            } else {
+                assistant.style.display = 'none';
+            }
+        });
+    }
+
+    console.log('NEBULA - Initialisation terminée');
 });
+
+// Fonctions pour l'assistant (gardez celles-ci)
+function loadAssistant() {
+    console.log('Chargement de l\'assistant...');
+    createFallbackAssistant();
+}
+
+function createFallbackAssistant() {
+    const assistantHTML = `
+        <div class="assistant-widget" style="display: flex;">
+            <header class="widget-header">
+                <div class="header-content">
+                    <div class="avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="header-text">
+                        <h3>Assistant Khadija</h3>
+                        <p>Votre assistante éducative</p>
+                    </div>
+                </div>
+                <div class="widget-controls">
+                    <button class="control-btn" onclick="toggleMinimize()">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="control-btn" onclick="hideAssistant()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </header>
+            <div class="widget-content">
+                <div class="chat-container">
+                    <div class="chat-history" id="fallbackChatHistory">
+                        <div class="message ai">
+                            <strong>👋 Bonjour ! Je suis Khadija</strong><br><br>
+                            Je suis votre assistante éducative pour NEBULA.
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" class="chat-input" id="fallbackChatInput" placeholder="Posez votre question...">
+                        <button class="input-btn send-btn" onclick="sendFallbackMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('nebulaAssistant').innerHTML = assistantHTML;
+}
+
+function toggleMinimize() {
+    const widget = document.querySelector('.assistant-widget');
+    if (widget) {
+        widget.classList.toggle('minimized');
+    }
+}
+
+function hideAssistant() {
+    const assistant = document.getElementById('nebulaAssistant');
+    if (assistant) {
+        assistant.style.display = 'none';
+    }
+}
+
+function sendFallbackMessage() {
+    const input = document.getElementById('fallbackChatInput');
+    const history = document.getElementById('fallbackChatHistory');
+    
+    if (!input || !history) return;
+    
+    const message = input.value.trim();
+    if (!message) return;
+    
+    const userMsg = document.createElement('div');
+    userMsg.className = 'message user';
+    userMsg.textContent = message;
+    history.appendChild(userMsg);
+    
+    setTimeout(() => {
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'message ai';
+        aiMsg.innerHTML = "Je suis votre assistante NEBULA. En mode démonstration, je peux simuler des réponses à vos questions éducatives !";
+        history.appendChild(aiMsg);
+        history.scrollTop = history.scrollHeight;
+    }, 1000);
+    
+    input.value = '';
+    history.scrollTop = history.scrollHeight;
+}
