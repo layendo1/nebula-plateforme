@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khadija - Assistante SenProf</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .language-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #2E8B57;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #256945;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Khadija</h1>
+            <p>Votre assistante pour les ressources éducatives numériques sur Senprof</p>
+        </div>
+        
+        <div class="welcome-message">
+            <p>Bonjour ! Salaam aleekum ! Yeksil ak jàmm !</p>
+            <p>Je suis Khadija, votre assistante SenProf.</p>
+        </div>
+        
+        <div class="language-buttons">
+            <button onclick="setLanguage('fr')">Français</button>
+            <button onclick="setLanguage('wo')">Wolof</button>
+            <button onclick="setLanguage('ar')">Arabe</button>
+        </div>
+        
+        <div class="chat-interface">
+            <p>Posez votre question :</p>
+            <input type="text" id="question" placeholder="Tapez votre question ici...">
+            <button onclick="askQuestion()">Envoyer</button>
+            <div id="response"></div>
+        </div>
+    </div>
+
+    <script>
+        function setLanguage(lang) {
+            alert('Langue changée: ' + lang);
+            // Ici vous ajouterez la logique pour changer la langue
+        }
+        
+        function askQuestion() {
+            const question = document.getElementById('question').value;
+            const responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = `<p><strong>Vous:</strong> ${question}</p>
+                                   <p><strong>Khadija:</strong> Je traite votre question...</p>`;
+        }
+    </script>
+</body>
+</html>

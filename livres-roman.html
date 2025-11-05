@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livres de Roman - NEBULA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      :root {
+        --primary-color: #000000;
+        --secondary-color: #7F6B00;
+        --accent-color: #B8941F;
+        --gold-light: #D4AF37;
+        --gold-dark: #5D4A00;
+        --text-color: #ffffff;
+        --text-light: #cccccc;
+        --bg-dark: #0a0a0a;
+        --card-bg: rgba(15, 15, 15, 0.9);
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Montserrat', 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        color: var(--text-color);
+        position: relative;
+        overflow-x: hidden;
+        padding: 40px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      /* Effets de particules dorées */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .particle {
+        position: absolute;
+        background: var(--gold-light);
+        border-radius: 50%;
+        opacity: 0;
+        animation: floatParticle 8s infinite linear;
+      }
+
+      @keyframes floatParticle {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.3;
+        }
+        90% {
+          opacity: 0.3;
+        }
+        100% {
+          transform: translateY(-100px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      .container {
+        max-width: 800px;
+        width: 100%;
+        background: var(--card-bg);
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(127, 107, 0, 0.3);
+        backdrop-filter: blur(10px);
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Header élégant */
+      .page-header {
+        text-align: center;
+        padding: 0 0 40px 0;
+        position: relative;
+      }
+
+      .header-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(ellipse at center top, rgba(127, 107, 0, 0.2) 0%, transparent 70%);
+        z-index: -1;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--gold-light) 0%, var(--accent-color) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 15px;
+        text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .page-subtitle {
+        font-size: 1rem;
+        color: var(--text-light);
+        font-weight: 300;
+        letter-spacing: 1px;
+      }
+
+      ul.lesson-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      ul.lesson-list li {
+        margin-bottom: 15px;
+        position: relative;
+        padding-left: 0;
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.6s ease forwards;
+        opacity: 0;
+      }
+
+      ul.lesson-list li:nth-child(1) { animation-delay: 0.1s; }
+      ul.lesson-list li:nth-child(2) { animation-delay: 0.15s; }
+      ul.lesson-list li:nth-child(3) { animation-delay: 0.2s; }
+      ul.lesson-list li:nth-child(4) { animation-delay: 0.25s; }
+      ul.lesson-list li:nth-child(5) { animation-delay: 0.3s; }
+      ul.lesson-list li:nth-child(6) { animation-delay: 0.35s; }
+      ul.lesson-list li:nth-child(7) { animation-delay: 0.4s; }
+      ul.lesson-list li:nth-child(8) { animation-delay: 0.45s; }
+      ul.lesson-list li:nth-child(9) { animation-delay: 0.5s; }
+      ul.lesson-list li:nth-child(10) { animation-delay: 0.55s; }
+      ul.lesson-list li:nth-child(11) { animation-delay: 0.6s; }
+      ul.lesson-list li:nth-child(12) { animation-delay: 0.65s; }
+      ul.lesson-list li:nth-child(13) { animation-delay: 0.7s; }
+      ul.lesson-list li:nth-child(14) { animation-delay: 0.75s; }
+      ul.lesson-list li:nth-child(15) { animation-delay: 0.8s; }
+      ul.lesson-list li:nth-child(16) { animation-delay: 0.85s; }
+      ul.lesson-list li:nth-child(17) { animation-delay: 0.9s; }
+      ul.lesson-list li:nth-child(18) { animation-delay: 0.95s; }
+      ul.lesson-list li:nth-child(19) { animation-delay: 1s; }
+
+      ul.lesson-list li a {
+        display: flex;
+        align-items: center;
+        color: var(--text-light);
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 15px 20px;
+        background: rgba(30, 30, 30, 0.7);
+        border-radius: 12px;
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border: 1px solid rgba(127, 107, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
+
+      ul.lesson-list li a::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+        transition: left 0.6s ease;
+      }
+
+      ul.lesson-list li a:hover::before {
+        left: 100%;
+      }
+
+      ul.lesson-list li a:hover {
+        background: rgba(40, 40, 40, 0.9);
+        transform: translateX(10px) translateY(-2px);
+        box-shadow: 0 8px 25px rgba(127, 107, 0, 0.3);
+        border-color: var(--gold-light);
+        color: var(--text-color);
+      }
+
+      .book-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(127, 107, 0, 0.2);
+        color: var(--gold-light);
+        border-radius: 8px;
+        margin-right: 15px;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+      }
+
+      ul.lesson-list li a:hover .book-icon {
+        background: rgba(212, 175, 55, 0.3);
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+      }
+
+      .book-title {
+        flex-grow: 1;
+        line-height: 1.4;
+      }
+
+      .book-author {
+        font-size: 0.85rem;
+        color: var(--gold-light);
+        font-style: italic;
+        margin-top: 3px;
+        opacity: 0.8;
+      }
+
+      /* Animation d'entrée */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Bouton retour */
+      .back-button {
+        position: fixed;
+        top: 30px;
+        left: 30px;
+        background: rgba(15, 15, 15, 0.8);
+        color: var(--gold-light);
+        border: 1px solid rgba(127, 107, 0, 0.5);
+        padding: 12px 25px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .back-button:hover {
+        background: rgba(127, 107, 0, 0.2);
+        transform: translateX(-5px);
+        border-color: var(--gold-light);
+        color: var(--gold-light);
+        text-decoration: none;
+      }
+
+      /* Badge NEBULA */
+      .nebula-badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 20px;
+          margin: 20px;
+        }
+        
+        h1 {
+          font-size: 2rem;
+          flex-direction: column;
+          gap: 10px;
+        }
+        
+        ul.lesson-list li a {
+          padding: 12px 15px;
+          font-size: 15px;
+        }
+        
+        .book-icon {
+          width: 35px;
+          height: 35px;
+          margin-right: 12px;
+          font-size: 1.1rem;
+        }
+        
+        .back-button {
+          top: 20px;
+          left: 20px;
+          padding: 10px 20px;
+          font-size: 12px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 10px;
+        }
+        
+        .container {
+          padding: 25px 15px;
+        }
+        
+        h1 {
+          font-size: 1.7rem;
+        }
+        
+        .page-subtitle {
+          font-size: 0.9rem;
+        }
+        
+        ul.lesson-list li a {
+          padding: 10px 12px;
+          font-size: 14px;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        
+        .book-icon {
+          margin-right: 0;
+          margin-bottom: 8px;
+        }
+        
+        .book-author {
+          font-size: 0.8rem;
+        }
+        
+        .back-button {
+          top: 15px;
+          left: 15px;
+          padding: 8px 15px;
+          font-size: 11px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Effets de particules -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Bouton retour à l'accueil -->
+    <a href="./index.html" class="back-button">
+      <i class="fas fa-arrow-left"></i>
+      Retour à l'accueil
+    </a>
+
+    <div class="container">
+      <!-- Header de la page -->
+      <header class="page-header">
+        <div class="header-bg"></div>
+        <h1><i class="fas fa-book"></i> Livres de Roman</h1>
+        <p class="page-subtitle">Collection des chefs-d'œuvre littéraires</p>
+        <div class="nebula-badge">NEBULA</div>
+      </header>
+
+      <ul class="lesson-list">
+        <li>
+          <a href="https://drive.google.com/file/d/1dotaQX_R7Vn7GGUQuyGseGgwJnLNYUEn/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Le Pagne noir</div>
+              <div class="book-author">Bernard B. Dadier</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1hWpNYklP_QWt60uztMXDCAfSqVPS5QXV/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">L'Aventure Ambiguë</div>
+              <div class="book-author">Cheikh A. Kane</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1EzsBiBiFVwmCcTZLPp5i22R6z3sSs7vu/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">L'Enfant Noir</div>
+              <div class="book-author">Camara Laye</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1tjmlo1LoCA4sueIzsKsaqg9fqFKbZ19m/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Une si longue lettre</div>
+              <div class="book-author">Mariama Ba</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1m9EcmIUmaFm8l41CWAj36plptYv41UZ7/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Vol de Nuit</div>
+              <div class="book-author">Antoine de S. Exupery</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1jnDBJufHJLtXamx3FaElwi4vaqhsbEsE/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Qu'est ce que la littérature</div>
+              <div class="book-author">J. P. Sartre</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1ZulyBXxvdjq4Q4BrqXDbAC1WXKnzkZ7b/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">La pièce d'or</div>
+              <div class="book-author">Ken Bugul</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1GS4PK6hKRUjKGZU3RkKCA6PU49lZt0cX/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Le dernier de l'empire</div>
+              <div class="book-author">Ousmane Sembène</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1u8wOIF6yymT3vr4o7rkwto6RvKPQMLqP/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Notre Dame de Paris</div>
+              <div class="book-author">Victor Hugo</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1WRS-4uyvA-JFJ11xl3AJsIFSjJ5YayLy/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Le vieux nègre et la médaille</div>
+              <div class="book-author">Ferdinand Oyono</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1tCWTVQ1qUrRq3dYHQWE18I5v6hkD0BzP/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Thomas Sankara L'espoir assassiné</div>
+              <div class="book-author">Valére D. Somé</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1oQhILc8nPM6kOnUw6L9Ctm39VlOptZz9/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Une vie de boy</div>
+              <div class="book-author">Ferdinand Oyono</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1mXqP3D1AhFLC5i0Yu7Z-FoN58ZcfCr_K/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Le soleil des indépendances</div>
+              <div class="book-author">Ahmadou Krouma</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1BzEapV4l4PO4LqV7Jie7oIxQL0AmjAFT/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Petit Bodiel</div>
+              <div class="book-author">Amadou H. Ba</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1XsSO5FsGmyu5gGe3_eE9zWCJOZR3-edG/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">La mort heureuse</div>
+              <div class="book-author">Albert Camus</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1damHs85wNWz_CK0XE3_UEe94AfUZSZv0/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Les yeux du volcan</div>
+              <div class="book-author">Sony L. Tansy</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/15ieJq-40VLQGZUkW8GQTTrjm_pnRQExG/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Le Boucher de Kouta</div>
+              <div class="book-author">M. M. Diabaté</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1ZvS_iieUiLW1PDl3oOX4zMfcA5zSg8Hs/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Sous l'orage / La mort de Chaka</div>
+              <div class="book-author">S. Badian</div>
+            </div>
+          </a>
+        </li>
+        
+        <li>
+          <a href="https://drive.google.com/file/d/1TQ_2iEnWJ3zcmC4so-kQCgdG_QgDc6lP/view?usp=sharing" target="_blank">
+            <div class="book-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <div class="book-title">Soundjata ou l'épopée manding</div>
+              <div class="book-author">D. T. Niane</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <script>
+      // Création des particules animées
+      document.addEventListener('DOMContentLoaded', function() {
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 20;
+        
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          
+          const size = Math.random() * 4 + 1;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.animationDelay = `${Math.random() * 8}s`;
+          particle.style.animationDuration = `${Math.random() * 10 + 8}s`;
+          
+          particlesContainer.appendChild(particle);
+        }
+      });
+    </script>
+  </body>
+</html>

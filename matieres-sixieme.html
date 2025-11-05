@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matières en Sixième - NEBULA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #7F6B00;
+            --accent-color: #B8941F;
+            --gold-light: #D4AF37;
+            --gold-dark: #5D4A00;
+            --text-color: #ffffff;
+            --text-light: #cccccc;
+            --bg-dark: #0a0a0a;
+            --card-bg: rgba(15, 15, 15, 0.9);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--text-color);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Effets de particules dorées */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--gold-light);
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatParticle 8s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header élégant */
+        .page-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center top, rgba(127, 107, 0, 0.2) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        /* Grille des matières */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .subject-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(127, 107, 0, 0.3);
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .subject-card:hover::before {
+            left: 100%;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--gold-light);
+            box-shadow: 
+                0 15px 40px rgba(127, 107, 0, 0.4),
+                0 0 0 1px rgba(212, 175, 55, 0.1);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .subject-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, rgba(127, 107, 0, 0.2) 0%, rgba(212, 175, 55, 0.1) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .subject-card:hover .subject-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: linear-gradient(135deg, rgba(127, 107, 0, 0.3) 0%, rgba(212, 175, 55, 0.2) 100%);
+        }
+
+        .subject-icon img {
+            width: 40px;
+            height: 40px;
+            filter: brightness(0) saturate(100%) invert(72%) sepia(60%) saturate(500%) hue-rotate(10deg) brightness(90%) contrast(90%);
+            transition: all 0.3s ease;
+        }
+
+        .subject-card:hover .subject-icon img {
+            filter: brightness(0) saturate(100%) invert(84%) sepia(30%) saturate(600%) hue-rotate(10deg) brightness(105%) contrast(90%);
+            transform: scale(1.1);
+        }
+
+        .subject-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--gold-light);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .subject-card:hover .subject-name {
+            color: var(--text-color);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .subject-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .explore-btn {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            position: relative;
+            overflow: hidden;
+            pointer-events: none; /* Désactive le clic sur le bouton */
+        }
+
+        .subject-card:hover .explore-btn {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(127, 107, 0, 0.4);
+        }
+
+        /* Bouton retour */
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(15, 15, 15, 0.8);
+            color: var(--gold-light);
+            border: 1px solid rgba(127, 107, 0, 0.5);
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button:hover {
+            background: rgba(127, 107, 0, 0.2);
+            transform: translateX(-5px);
+            border-color: var(--gold-light);
+        }
+
+        /* Effet de brillance sur les cartes */
+        .subject-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .subject-card:hover::after {
+            opacity: 1;
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
+        /* Animation d'entrée */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subject-card {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .subject-card:nth-child(1) { animation-delay: 0.1s; }
+        .subject-card:nth-child(2) { animation-delay: 0.2s; }
+        .subject-card:nth-child(3) { animation-delay: 0.3s; }
+        .subject-card:nth-child(4) { animation-delay: 0.4s; }
+        .subject-card:nth-child(5) { animation-delay: 0.5s; }
+        .subject-card:nth-child(6) { animation-delay: 0.6s; }
+        .subject-card:nth-child(7) { animation-delay: 0.7s; }
+        .subject-card:nth-child(8) { animation-delay: 0.8s; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .subjects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .subject-card {
+                padding: 25px 20px;
+            }
+            
+            .back-button {
+                top: 20px;
+                left: 20px;
+                padding: 10px 20px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header {
+                padding: 50px 15px 30px;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .subject-icon {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .subject-icon img {
+                width: 35px;
+                height: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Effets de particules -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Bouton retour -->
+    <a href="./index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Retour à l'accueil
+    </a>
+
+    <!-- Header de la page -->
+    <header class="page-header">
+        <div class="header-bg"></div>
+        <h1 class="page-title">Les Matières en Sixième</h1>
+        <p class="page-subtitle">Découvrez l'excellence académique</p>
+    </header>
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <div class="subjects-grid">
+            <!-- Mathématiques -->
+            <a href="mathematiques-sixieme.html" class="subject-card">
+                <div class="subject-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/128/4344/4344982.png" alt="Mathématiques">
+                </div>
+                <h3 class="subject-name">Mathématiques</h3>
+                <p class="subject-description">Algèbre, géométrie et résolution de problèmes</p>
+                <div class="explore-btn">
+                    Explorer
+                </div>
+            </a>
+
+            <!-- S.V.T -->
+            <a href="svt-sixieme.html" class="subject-card">
+                <div class="subject-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/128/5903/5903746.png" alt="S.V.T">
+                </div>
+                <h3 class="subject-name">Sciences de la Vie et de la Terre</h3>
+                <p class="subject-description">Biologie, géologie et environnement</p>
+                <div class="explore-btn">
+                    Explorer
+                </div>
+            </a>
+
+            <!-- Informatique -->
+            <a href="informatique-sixieme.html" class="subject-card">
+                <div class="subject-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/128/1055/1055683.png" alt="Informatique">
+                </div>
+                <h3 class="subject-name">Informatique</h3>
+                <p class="subject-description">Programmation et technologies numériques</p>
+                <div class="explore-btn">
+                    Explorer
+                </div>
+            </a>
+
+            <!-- Français -->
+            <a href="francais-sixieme.html" class="subject-card">
+                <div class="subject-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/128/197/197560.png" alt="Français">
+                </div>
+                <h3 class="subject-name">Français</h3>
+                <p class="subject-description">Grammaire, littérature et expression écrite</p>
+                <div class="explore-btn">
+                    Explorer
+                </div>
+            </a>
+
+            <!-- Anglais -->
+            <a href="anglais-sixieme.html" class="subject-card">
+                <div class="subject-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/128/8363/8363075.png" alt="Anglais">
+                </div>
+                <h3 class="subject-name">Anglais</h3>
+                <p class="subject-description">Langue vivante et communication internationale</p>
+                <div class="explore-btn">
+                    Explorer
+                </div>
+            </a>
+
+            <!-- Histoire -->
+            <a href="histoire-sixieme.html" class="subject-card">
+                <div class="subject-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/128/2234/2234697.png" alt="Histoire">
+                </div>
+                <h3 class="subject-name">Histoire</h3>
+                <p class="subject-description">Civilisations et événements historiques</p>
+                <div class="explore-btn">
+                    Explorer
+                </div>
+            </a>
+
+            <!-- Géographie -->
+            <a href="geographie-sixieme.html" class="subject-card">
+                <div class="subject-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/128/4405/4405466.png" alt="Géographie">
+                </div>
+                <h3 class="subject-name">Géographie</h3>
+                <p class="subject-description">Territoires, populations et environnements</p>
+                <div class="explore-btn">
+                    Explorer
+                </div>
+            </a>
+
+            <!-- Éducation Civique -->
+            <a href="education-civique-sixieme.html" class="subject-card">
+                <div class="subject-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/128/2865/2865682.png" alt="Éducation Civique">
+                </div>
+                <h3 class="subject-name">Éducation Civique</h3>
+                <p class="subject-description">Citoyenneté et vie en société</p>
+                <div class="explore-btn">
+                    Explorer
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Création des particules animées
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Taille aléatoire
+                const size = Math.random() * 4 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Position de départ aléatoire
+                particle.style.left = `${Math.random() * 100}%`;
+                
+                // Animation
+                particle.style.animationDelay = `${Math.random() * 8}s`;
+                particle.style.animationDuration = `${Math.random() * 10 + 8}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        });
+    </script>
+</body>
+</html>

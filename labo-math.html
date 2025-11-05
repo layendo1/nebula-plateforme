@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratoire de Mathématiques - NEBULA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      :root {
+        --primary-color: #000000;
+        --secondary-color: #7F6B00;
+        --accent-color: #B8941F;
+        --gold-light: #D4AF37;
+        --gold-dark: #5D4A00;
+        --text-color: #ffffff;
+        --text-light: #cccccc;
+        --bg-dark: #0a0a0a;
+        --card-bg: rgba(15, 15, 15, 0.9);
+        --algebra-color: #FF6B6B;
+        --geometry-color: #4CC9F0;
+        --calculus-color: #9C27B0;
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Montserrat', 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        color: var(--text-color);
+        position: relative;
+        overflow-x: hidden;
+        padding: 40px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      /* Effets de particules dorées */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .particle {
+        position: absolute;
+        background: var(--gold-light);
+        border-radius: 50%;
+        opacity: 0;
+        animation: floatParticle 8s infinite linear;
+      }
+
+      @keyframes floatParticle {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.3;
+        }
+        90% {
+          opacity: 0.3;
+        }
+        100% {
+          transform: translateY(-100px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      .container {
+        max-width: 1200px;
+        width: 100%;
+        background: var(--card-bg);
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(127, 107, 0, 0.3);
+        backdrop-filter: blur(10px);
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Header élégant */
+      .page-header {
+        text-align: center;
+        padding: 0 0 40px 0;
+        position: relative;
+      }
+
+      .header-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(ellipse at center top, rgba(127, 107, 0, 0.2) 0%, transparent 70%);
+        z-index: -1;
+      }
+
+      h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--gold-light) 0%, var(--accent-color) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 15px;
+        text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .page-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        font-weight: 300;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      /* Badge NEBULA */
+      .nebula-badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
+      }
+
+      .category {
+        margin-bottom: 50px;
+      }
+
+      .category-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: var(--gold-light);
+        margin: 40px 0 25px;
+        padding-left: 15px;
+        border-left: 4px solid;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+      }
+
+      .algebra { border-left-color: var(--algebra-color); }
+      .geometry { border-left-color: var(--geometry-color); }
+      .calculus { border-left-color: var(--calculus-color); }
+
+      .category-title i {
+        font-size: 1.8rem;
+      }
+
+      .platforms-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 30px;
+        width: 100%;
+      }
+
+      .platform-card {
+        background: var(--card-bg);
+        border: 1px solid rgba(127, 107, 0, 0.3);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        transition: var(--transition);
+        position: relative;
+        backdrop-filter: blur(10px);
+        animation: fadeInUp 0.6s ease forwards;
+        opacity: 0;
+      }
+
+      .platform-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+        transition: left 0.6s ease;
+      }
+
+      .platform-card:hover::before {
+        left: 100%;
+      }
+
+      .platform-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        border-color: var(--gold-light);
+        box-shadow: 
+          0 15px 40px rgba(127, 107, 0, 0.4),
+          0 0 0 1px rgba(212, 175, 55, 0.1);
+      }
+
+      .platform-header {
+        padding: 30px 20px;
+        text-align: center;
+        position: relative;
+        height: 140px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .algebra-bg { 
+        background: #5D4A00;
+        border-bottom: 2px solid rgba(255, 107, 107, 0.5);
+      }
+      .geometry-bg { 
+        background: #5D4A00;
+        border-bottom: 2px solid rgba(76, 201, 240, 0.5);
+      }
+      .calculus-bg { 
+        background: #5D4A00;
+        border-bottom: 2px solid rgba(156, 39, 176, 0.5);
+      }
+
+      .platform-header img {
+        width: 70px;
+        height: 70px;
+        object-fit: contain;
+        margin-bottom: 15px;
+        filter: brightness(0) invert(1) drop-shadow(0 3px 5px rgba(0,0,0,0.3));
+        transition: var(--transition);
+      }
+
+      .platform-card:hover .platform-header img {
+        transform: scale(1.1) rotate(5deg);
+      }
+
+      .platform-name {
+        font-weight: 600;
+        font-size: 1.3rem;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+
+      .platform-body {
+        padding: 25px;
+        background: transparent;
+      }
+
+      .tag {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(255,255,255,0.9);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        color: #333;
+      }
+
+      .platform-desc {
+        font-size: 0.95rem;
+        color: var(--text-light);
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+
+      .platform-features {
+        font-size: 0.85rem;
+        color: var(--text-light);
+        margin-bottom: 25px;
+        line-height: 1.6;
+      }
+
+      .platform-features div {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .platform-features i {
+        color: var(--gold-light);
+        margin-right: 10px;
+        margin-top: 2px;
+        flex-shrink: 0;
+      }
+
+      .platform-link {
+        display: block;
+        text-align: center;
+        padding: 12px 20px;
+        background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 500;
+        transition: var(--transition);
+        border: 1px solid rgba(127, 107, 0, 0.5);
+        box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
+      }
+
+      .platform-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(127, 107, 0, 0.5);
+        text-decoration: none;
+        color: white;
+      }
+
+      .platform-link i {
+        margin-left: 8px;
+      }
+
+      /* Animation d'entrée */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Délais d'animation pour chaque carte */
+      .platform-card:nth-child(1) { animation-delay: 0.1s; }
+      .platform-card:nth-child(2) { animation-delay: 0.2s; }
+      .platform-card:nth-child(3) { animation-delay: 0.3s; }
+      .platform-card:nth-child(4) { animation-delay: 0.4s; }
+      .platform-card:nth-child(5) { animation-delay: 0.5s; }
+      .platform-card:nth-child(6) { animation-delay: 0.6s; }
+      .platform-card:nth-child(7) { animation-delay: 0.7s; }
+      .platform-card:nth-child(8) { animation-delay: 0.8s; }
+      .platform-card:nth-child(9) { animation-delay: 0.9s; }
+      .platform-card:nth-child(10) { animation-delay: 1.0s; }
+
+      /* Bouton retour */
+      .back-button {
+        position: fixed;
+        top: 30px;
+        left: 30px;
+        background: rgba(15, 15, 15, 0.8);
+        color: var(--gold-light);
+        border: 1px solid rgba(127, 107, 0, 0.5);
+        padding: 12px 25px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: var(--transition);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .back-button:hover {
+        background: rgba(127, 107, 0, 0.2);
+        transform: translateX(-5px);
+        border-color: var(--gold-light);
+        color: var(--gold-light);
+        text-decoration: none;
+      }
+
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .platforms-grid {
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 25px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 20px;
+          margin: 20px;
+        }
+        
+        h1 {
+          font-size: 2.2rem;
+          flex-direction: column;
+          gap: 10px;
+        }
+        
+        .platforms-grid {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 20px;
+        }
+        
+        .platform-header {
+          height: 120px;
+          padding: 20px 15px;
+        }
+        
+        .platform-header img {
+          width: 60px;
+          height: 60px;
+        }
+        
+        .back-button {
+          top: 20px;
+          left: 20px;
+          padding: 10px 20px;
+          font-size: 12px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 10px;
+        }
+        
+        .container {
+          padding: 25px 15px;
+        }
+        
+        h1 {
+          font-size: 1.8rem;
+        }
+        
+        .page-subtitle {
+          font-size: 0.9rem;
+        }
+        
+        .platforms-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .platform-header {
+          height: 110px;
+          padding: 15px 10px;
+        }
+        
+        .platform-header img {
+          width: 50px;
+          height: 50px;
+        }
+        
+        .platform-body {
+          padding: 20px 15px;
+        }
+        
+        .back-button {
+          top: 15px;
+          left: 15px;
+          padding: 8px 15px;
+          font-size: 11px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Effets de particules -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Bouton retour à l'accueil -->
+    <a href="./index.html" class="back-button">
+      <i class="fas fa-arrow-left"></i>
+      Retour à l'accueil
+    </a>
+
+    <div class="container">
+      <!-- Header de la page -->
+      <header class="page-header">
+        <div class="header-bg"></div>
+        <h1><i class="fas fa-calculator"></i> Laboratoire de Mathématiques</h1>
+        <p class="page-subtitle">Outils interactifs pour l'apprentissage mathématique</p>
+        <div class="nebula-badge">NEBULA</div>
+      </header>
+
+      <div class="category">
+        <div class="category-title algebra"><i class="fas fa-square-root-alt"></i> Algèbre & Calcul</div>
+        <div class="platforms-grid">
+          <div class="platform-card">
+            <div class="platform-header algebra-bg">
+              <img src="https://cdn-icons-png.flaticon.com/128/1974/1974499.png" alt="Wolfram Alpha">
+              <div class="platform-name">Wolfram Alpha</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Calcul intelligent</div>
+              <div class="platform-desc">
+                Moteur de calcul computationnel pour résoudre des équations, factoriser, dériver et intégrer.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Résolution pas à pas</div>
+                <div><i class="fas fa-check-circle"></i> Graphes avancés</div>
+                <div><i class="fas fa-check-circle"></i> Algèbre linéaire</div>
+              </div>
+              <a href="https://www.wolframalpha.com/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+
+          <div class="platform-card">
+            <div class="platform-header algebra-bg">
+              <img src="https://cdn-icons-png.flaticon.com/128/1974/1974499.png" alt="Cymath">
+              <div class="platform-name">Cymath</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Résolution d'équations</div>
+              <div class="platform-desc">
+                Résolveur d'équations algébriques avec explications détaillées étape par étape.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Algèbre de base</div>
+                <div><i class="fas fa-check-circle"></i> Calcul différentiel</div>
+                <div><i class="fas fa-check-circle"></i> Applications mobiles</div>
+              </div>
+              <a href="https://www.cymath.com/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+
+          <div class="platform-card">
+            <div class="platform-header algebra-bg">
+              <img src="https://cdn-icons-png.flaticon.com/128/1974/1974499.png" alt="Symbolab">
+              <div class="platform-name">Symbolab</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Calcul symbolique</div>
+              <div class="platform-desc">
+                Calculatrice scientifique avancée pour l'algèbre, le calcul et les statistiques.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Solveur d'équations</div>
+                <div><i class="fas fa-check-circle"></i> Calcul intégral</div>
+                <div><i class="fas fa-check-circle"></i> Matrices</div>
+              </div>
+              <a href="https://www.symbolab.com/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+
+          <div class="platform-card">
+            <div class="platform-header algebra-bg">
+              <img src="https://cdn-icons-png.flaticon.com/128/1974/1974499.png" alt="Lovable.dev">
+              <div class="platform-name">Lovable.dev</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">IA Mathématique</div>
+              <div class="platform-desc">
+                Assistant intelligent pour résoudre et expliquer les problèmes mathématiques avec l'IA.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Résolution par IA</div>
+                <div><i class="fas fa-check-circle"></i> Explications claires</div>
+                <div><i class="fas fa-check-circle"></i> Multiples sujets mathématiques</div>
+              </div>
+              <a href="https://lovable.dev/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="category-title geometry"><i class="fas fa-shapes"></i> Géométrie & Visualisation</div>
+        <div class="platforms-grid">
+          <div class="platform-card">
+            <div class="platform-header geometry-bg">
+              <img src="https://cdn-icons-png.flaticon.com/128/1974/1974499.png" alt="Geogebra">
+              <div class="platform-name">Geogebra</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Géométrie dynamique</div>
+              <div class="platform-desc">
+                Suite complète pour explorer la géométrie, l'algèbre, le calcul et les statistiques.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Construction interactive</div>
+                <div><i class="fas fa-check-circle"></i> 3D et AR</div>
+                <div><i class="fas fa-check-circle"></i> Calcul formel</div>
+              </div>
+              <a href="https://www.geogebra.org/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+
+          <div class="platform-card">
+            <div class="platform-header geometry-bg">
+              <img src="https://cdn-icons-png.flaticon.com/128/1974/1974499.png" alt="Desmos">
+              <div class="platform-name">Desmos</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Graphiques avancés</div>
+              <div class="platform-desc">
+                Calculatrice graphique en ligne pour visualiser des fonctions et relations mathématiques.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Interface intuitive</div>
+                <div><i class="fas fa-check-circle"></i> Animation de paramètres</div>
+                <div><i class="fas fa-check-circle"></i> Outils pédagogiques</div>
+              </div>
+              <a href="https://www.desmos.com/?lang=fr" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+
+          <div class="platform-card">
+            <div class="platform-header geometry-bg">
+              <img src="https://cdn-icons-png.flaticon.com/128/1974/1974499.png" alt="Mathigon">
+              <div class="platform-name">Mathigon</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Apprentissage interactif</div>
+              <div class="platform-desc">
+                Plateforme innovante pour explorer les concepts mathématiques à travers des activités interactives.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Polygones interactifs</div>
+                <div><i class="fas fa-check-circle"></i> Fractals</div>
+                <div><i class="fas fa-check-circle"></i> Puzzles mathématiques</div>
+              </div>
+              <a href="https://mathigon.org/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="category-title calculus"><i class="fas fa-infinity"></i> Calcul & Analyse</div>
+        <div class="platforms-grid">
+          <div class="platform-card">
+            <div class="platform-header calculus-bg">
+              <img src="https://cdn-icons-png.flaticon.com/128/1974/1974499.png" alt="Integral Calculator">
+              <div class="platform-name">Integral Calculator</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Calcul intégral</div>
+              <div class="platform-desc">
+                Calculateur d'intégrales avec solutions étape par étape et explications.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Intégrales définies/indéfinies</div>
+                <div><i class="fas fa-check-circle"></i> Techniques d'intégration</div>
+                <div><i class="fas fa-check-circle"></i> Graphes des solutions</div>
+              </div>
+              <a href="https://www.integral-calculator.com/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+
+          <div class="platform-card">
+            <div class="platform-header calculus-bg">
+              <img src="https://cdn-icons-png.flaticon.com/128/1974/1974499.png" alt="Derivative Calculator">
+              <div class="platform-name">Derivative Calculator</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Dérivation</div>
+              <div class="platform-desc">
+                Outil pour calculer des dérivées avec explications détaillées de chaque étape.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Dérivées partielles</div>
+                <div><i class="fas fa-check-circle"></i> Règles de dérivation</div>
+                <div><i class="fas fa-check-circle"></i> Simplification automatique</div>
+              </div>
+              <a href="https://www.derivative-calculator.net/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+
+          <div class="platform-card">
+            <div class="platform-header calculus-bg">
+              <img src="https://cdn-icons-png.flaticon.com/128/1974/1974499.png" alt="Brilliant">
+              <div class="platform-name">Brilliant</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Apprentissage actif</div>
+              <div class="platform-desc">
+                Plateforme pour maîtriser les concepts mathématiques avancés à travers des problèmes interactifs.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Calcul différentiel</div>
+                <div><i class="fas fa-check-circle"></i> Équations différentielles</div>
+                <div><i class="fas fa-check-circle"></i> Approche visuelle</div>
+              </div>
+              <a href="https://brilliant.org/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Création des particules animées
+      document.addEventListener('DOMContentLoaded', function() {
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 20;
+        
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          
+          const size = Math.random() * 4 + 1;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.animationDelay = `${Math.random() * 8}s`;
+          particle.style.animationDuration = `${Math.random() * 10 + 8}s`;
+          
+          particlesContainer.appendChild(particle);
+        }
+
+        // Animation des cartes
+        const platformCards = document.querySelectorAll('.platform-card');
+        platformCards.forEach((card, index) => {
+          card.style.animationDelay = `${(index % 10) * 0.1}s`;
+        });
+      });
+    </script>
+  </body>
+</html>

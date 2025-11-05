@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="fr" itemscope itemtype="http://schema.org/WebPage">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEBULA - Plateforme Éducative</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Bitter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="script.js"></script>
+
+</head>
+<body>
+    <!-- Navigation supérieure -->
+    <header class="header-nav">
+        <div class="nav-container">
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                NEBULA
+            </div>
+
+            <!-- Informations de contact -->
+            <div class="contact-info">
+                <div class="ministry-logo">
+                    <i class="fas fa-landmark"></i>
+                    <span>Ministère Éducation Nationale</span>
+                </div>
+                <div class="contact-details">
+                    <div class="phone">
+                        <i class="fas fa-phone"></i>
+                        <span>+221 77 729 75 34</span>
+                    </div>
+                    <div class="email">
+                        <i class="fas fa-envelope"></i>
+                        <span>abdoulaye.ndione14@education.sn</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="user-actions">
+                <button class="action-btn" onclick="window.open('inscription.html', '_self')">
+                    <i class="fas fa-user-plus"></i>
+                    Inscription
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation latérale -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-compass"></i> Navigation</h2>
+            <button class="close-sidebar" id="closeSidebar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/view/nebulabis/accueil" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        Accueil
+                    </a>
+                </li>
+                
+                <!-- Primaire -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-pencil-alt"></i>
+                        Primaire
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="matieres-ci.html" class="nav-link"><i class="fas fa-child"></i> CI</a></li>
+                        <li><a href="matieres-cp.html" class="nav-link"><i class="fas fa-child"></i> CP</a></li>
+                        <li><a href="matieres-ce1.html" class="nav-link"><i class="fas fa-child"></i> CE1</a></li>
+                        <li><a href="matieres-ce2.html" class="nav-link"><i class="fas fa-child"></i> CE2</a></li>
+                        <li><a href="matieres-cm1.html" class="nav-link"><i class="fas fa-child"></i> CM1</a></li>
+                        <li><a href="matieres-cm2.html" class="nav-link"><i class="fas fa-child"></i> CM2</a></li>
+                    </ul>
+                </li>
+
+                <!-- Assistant Khadija - Version intégrée directe -->
+<div class="assistant-widget" id="nebulaAssistant" style="display: none;">
+    <!-- Le contenu de l'assistant sera chargé ici dynamiquement -->
+</div>
+
+<!-- Bouton de lancement flottant -->
+<button id="assistantLauncher" class="assistant-launcher" title="Ouvrir l'assistant Khadija">
+    <i class="fas fa-robot"></i>
+</button>
+
+<script>
+// Fonction pour charger l'assistant
+function loadAssistant() {
+    console.log('Chargement de l\'assistant...');
+    
+    // Créer l'iframe pour l'assistant
+    const assistantContainer = document.getElementById('nebulaAssistant');
+    
+    // Charger le contenu de l'assistant via fetch
+    fetch('/assistant/index.html')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Fichier non trouné');
+            }
+            return response.text();
+        })
+        .then(html => {
+            assistantContainer.innerHTML = html;
+            console.log('Assistant chargé avec succès !');
+            
+            // Injecter le CSS
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = '/assistant/assistant.css';
+            document.head.appendChild(link);
+            
+            // Le JS se chargera automatiquement depuis index.html
+        })
+        .catch(error => {
+            console.error('Erreur chargement assistant:', error);
+            // Mode dégradé : créer un assistant basique
+            createFallbackAssistant();
+        });
+}
+
+// Assistant de secours si le chargement échoue
+function createFallbackAssistant() {
+    const assistantHTML = `
+        <div class="assistant-widget" style="display: flex;">
+            <header class="widget-header">
+                <div class="header-content">
+                    <div class="avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="header-text">
+                        <h3>Assistant Khadija</h3>
+                        <p>Votre assistante éducative</p>
+                    </div>
+                </div>
+                <div class="widget-controls">
+                    <button class="control-btn" onclick="toggleMinimize()">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="control-btn" onclick="hideAssistant()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </header>
+            <div class="widget-content">
+                <div class="chat-container">
+                    <div class="chat-history" id="fallbackChatHistory">
+                        <div class="message ai">
+                            <strong>👋 Bonjour ! Je suis Khadija</strong><br><br>
+                            Je suis votre assistante éducative pour NEBULA.
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" class="chat-input" id="fallbackChatInput" placeholder="Posez votre question...">
+                        <button class="input-btn send-btn" onclick="sendFallbackMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('nebulaAssistant').innerHTML = assistantHTML;
+}
+
+// Fonctions globales pour l'assistant de secours
+function toggleMinimize() {
+    const widget = document.querySelector('.assistant-widget');
+    widget.classList.toggle('minimized');
+}
+
+function hideAssistant() {
+    document.getElementById('nebulaAssistant').style.display = 'none';
+}
+
+function sendFallbackMessage() {
+    const input = document.getElementById('fallbackChatInput');
+    const history = document.getElementById('fallbackChatHistory');
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    // Message utilisateur
+    const userMsg = document.createElement('div');
+    userMsg.className = 'message user';
+    userMsg.textContent = message;
+    history.appendChild(userMsg);
+    
+    // Réponse simulée
+    setTimeout(() => {
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'message ai';
+        aiMsg.innerHTML = "Je suis votre assistante NEBULA. En mode démonstration, je peux simuler des réponses à vos questions éducatives !";
+        history.appendChild(aiMsg);
+        history.scrollTop = history.scrollHeight;
+    }, 1000);
+    
+    input.value = '';
+    history.scrollTop = history.scrollHeight;
+}
+
+// Gestion du bouton de lancement
+document.getElementById('assistantLauncher').addEventListener('click', function() {
+    const assistant = document.getElementById('nebulaAssistant');
+    if (assistant.style.display === 'none') {
+        assistant.style.display = 'flex';
+        // Si l'assistant n'est pas encore chargé, le charger
+        if (assistant.innerHTML.trim() === '') {
+            loadAssistant();
+        }
+    } else {
+        assistant.style.display = 'none';
+    }
+});
+
+// Charger l'assistant au démarrage
+window.addEventListener('load', function() {
+    console.log('Page chargée, initialisation de l\'assistant...');
+    // On ne charge pas automatiquement, seulement au premier clic
+});
+</script>
+
+<style>
+.assistant-launcher {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(127, 107, 0, 0.4);
+    z-index: 10000;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.assistant-launcher:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(127, 107, 0, 0.6);
+}
+
+/* Styles de base pour l'assistant */
+.assistant-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 380px;
+    height: 500px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    z-index: 10001;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.assistant-widget.minimized {
+    height: 70px;
+}
+
+.widget-header {
+    background: linear-gradient(135deg, #4169E1, #8A2BE2);
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.widget-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.control-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.widget-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-history {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    max-width: 85%;
+    padding: 10px 15px;
+    border-radius: 18px;
+    line-height: 1.4;
+}
+
+.message.user {
+    background: linear-gradient(135deg, #4169E1, #8A2BE2);
+    color: white;
+    align-self: flex-end;
+}
+
+.message.ai {
+    background: #f8f9fa;
+    color: #333;
+    align-self: flex-start;
+    border: 1px solid #e9ecef;
+}
+
+.chat-input-container {
+    display: flex;
+    padding: 15px;
+    gap: 8px;
+    border-top: 1px solid #e9ecef;
+}
+
+.chat-input {
+    flex: 1;
+    border: 2px solid #e9ecef;
+    border-radius: 25px;
+    padding: 10px 15px;
+    outline: none;
+}
+
+.input-btn {
+    background: transparent;
+    border: none;
+    color: #666;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.send-btn {
+    background: linear-gradient(135deg, #4169E1, #8A2BE2);
+    color: white;
+}
+</style>
+                
+                <!-- Moyen -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-book-open"></i>
+                        Moyen
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="matieres-sixieme.html" class="nav-link"><i class="fas fa-user-graduate"></i> Sixième</a></li>
+                        <li><a href="matieres-cinquieme.html" class="nav-link"><i class="fas fa-user-graduate"></i> Cinquième</a></li>
+                        <li><a href="matieres-quatrieme.html" class="nav-link"><i class="fas fa-user-graduate"></i> Quatrième</a></li>
+                        <li><a href="matieres-troisieme.html" class="nav-link"><i class="fas fa-user-graduate"></i> Troisième</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Secondaire -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-graduation-cap"></i>
+                        Secondaire
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="matieres-seconde.html" class="nav-link"><i class="fas fa-user-tie"></i> Seconde</a></li>
+                        <li><a href="matieres-premiere.html" class="nav-link"><i class="fas fa-user-tie"></i> Première</a></li>
+                        <li><a href="matieres-terminale.html" class="nav-link"><i class="fas fa-user-tie"></i> Terminale</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Religion -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-pray"></i>
+                        Religion
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="matieres-daara.html" class="nav-link"><i class="fas fa-mosque"></i> Daara</a></li>
+                        <li><a href="matieres-catechese.html" class="nav-link"><i class="fas fa-church"></i> Catéchèse</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Visio et Tableaux -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-video"></i>
+                        Visio et Tableaux
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="logiciels-visioconference.html" class="nav-link"><i class="fas fa-comments"></i> Visioconférence</a></li>
+                        <li><a href="logiciels-tableaux.html" class="nav-link"><i class="fas fa-chalkboard"></i> Tableaux</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Biblio'Tech -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-book"></i>
+                        Biblio'Tech
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="français-biblio.html" class="nav-link"><i class="fas fa-language"></i> Français</a></li>
+                        <li><a href="/view/nebulabis/bibliotech/sciences" class="nav-link"><i class="fas fa-flask"></i> Sciences</a></li>
+                        <li><a href="/view/nebulabis/bibliotech/religion" class="nav-link"><i class="fas fa-praying-hands"></i> Religion</a></li>
+                        <li><a href="/view/nebulabis/bibliotech/culture-generale" class="nav-link"><i class="fas fa-globe-africa"></i> Culture générale</a></li>
+                        <li><a href="/view/nebulabis/bibliotech/sciences-humaines" class="nav-link"><i class="fas fa-users"></i> Sciences humaines</a></li>
+                        <li><a href="/view/nebulabis/bibliotech/langues" class="nav-link"><i class="fas fa-flag"></i> Langues</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Espace IA -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-robot"></i>
+                        Espace IA
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="ressources-ia.html" class="nav-link"><i class="fas fa-graduation-cap"></i> Ressources pédagogiques</a></li>
+                        <li><a href="logiciels-ia.html" class="nav-link"><i class="fas fa-laptop-code"></i> Logiciels utiles</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Labo virtuel -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-microscope"></i>
+                        Labo virtuel
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="labo-mathematique.html" class="nav-link"><i class="fas fa-square-root-alt"></i> Mathématique</a></li>
+                        <li><a href="labo-biologie.html" class="nav-link"><i class="fas fa-dna"></i> Biologie</a></li>
+                        <li><a href="labo-pc.html" class="nav-link"><i class="fas fa-atom"></i> Physique-Chimie</a></li>
+                        <li><a href="labo-tech.html" class="nav-link"><i class="fas fa-cogs"></i> Technologie</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Jeux éducatifs -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-gamepad"></i>
+                        Jeux éducatifs
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="jeux-math.html" class="nav-link"><i class="fas fa-chess"></i> Jeux mathématiques</a></li>
+                        <li><a href="jeux-gene.html" class="nav-link"><i class="fas fa-puzzle-piece"></i> Jeux généralistes</a></li>
+                        <li><a href="jeux-maternelle.html" class="nav-link"><i class="fas fa-brain"></i> Jeux maternelles</a></li>
+                        <li><a href="jeux-langue.html" class="nav-link"><i class="fas fa-trophy"></i> Jeux langues</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Contact -->
+                <li class="nav-item">
+                    <a href="/view/nebulabis/contact" class="nav-link">
+                        <i class="fas fa-envelope"></i>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+                    <!-- Section hero avec carrousel -->
+<section class="hero-section">
+    <!-- Contrôles du carrousel -->
+                <div class="carousel-controls">
+                    <button class="carousel-prev" aria-label="Image précédente">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="carousel-next" aria-label="Image suivante">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <!-- Indicateurs de slide -->
+                <div class="carousel-indicators">
+                    <button class="indicator active" data-slide="0"></button>
+                    <button class="indicator" data-slide="1"></button>
+                    <button class="indicator" data-slide="2"></button>
+                    <button class="indicator" data-slide="3"></button>
+                    <button class="indicator" data-slide="4"></button>
+                </div>
+                
+                <!-- Contenu hero -->
+                <div class="hero-content">
+                    <h1 class="hero-title">Bienvenue dans NEBULA</h1>
+                    <p class="hero-subtitle">Un enseignement et une formation 2.0</p>
+                    <div class="hero-buttons">
+                        <a href="plateforme.html" class="btn-primary">Explorer la plateforme</a>
+                        <a href="inscription.html" class="btn-secondary">Inscription cours en ligne</a>
+                    </div>
+                    <div class="hero-features">
+                        <div class="feature">
+                            <i class="fas fa-gem"></i>
+                            <span>Qualité Premium</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-award"></i>
+                            <span>Excellence Académique</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Pédagogie Innovante</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-scroll">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+
+        <!-- Grille des sections -->
+    <div class="hero-carousel">
+
+        <!-- Slide 1 -->
+        <div class="carousel-slide active">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1920&q=80"
+                 alt="Élèves africains en ligne" class="carousel-image">
+            <div class="carousel-overlay"></div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-slide">
+            <img src="https://afrika.ng/wp-content/uploads/2024/12/pexels-theiykeibeh-17731675-scaled.jpg"
+                 alt="Apprentissage numérique en Afrique" class="carousel-image">
+            <div class="carousel-overlay"></div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-slide">
+            <img src="https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/5CD7/production/_87376732_tablet.jpg.webp"
+                 alt="Étudiant africain utilisant un ordinateur" class="carousel-image">
+            <div class="carousel-overlay"></div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="carousel-slide">
+            <img src="https://www.citeprograms.com/wp-content/uploads/2024/12/iStock-1588291032.jpg"
+                 alt="Cours en ligne avec enseignante africaine" class="carousel-image">
+            <div class="carousel-overlay"></div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="carousel-slide">
+            <img src="https://thumbs.wbm.im/pw/medium/53f5bf9524e62ef59d9e892934e1b77a.jpg"
+                 alt="Jeune étudiante africaine suivant un cours en ligne" class="carousel-image">
+            <div class="carousel-overlay"></div>
+        </div>
+
+    </div>
+</section>
+                
+                
+        <section class="sections-grid" id="sectionsGrid">
+            <!-- Les cartes de sections restent identiques -->
+            <!-- Primaire -->
+            <div class="section-card">
+                <div class="card-icon">
+                    <i class="fas fa-pencil-alt"></i>
+                </div>
+                <h3 class="section-title">Primaire</h3>
+                <ul class="section-list">
+                    <li><a href="matieres-ci.html"><i class="fas fa-child"></i> CI</a></li>
+                    <li><a href="matieres-cp.html"><i class="fas fa-child"></i> CP</a></li>
+                    <li><a href="matieres-ce1.html"><i class="fas fa-child"></i> CE1</a></li>
+                    <li><a href="matieres-ce2.html"><i class="fas fa-child"></i> CE2</a></li>
+                    <li><a href="matieres-cm1.html"><i class="fas fa-child"></i> CM1</a></li>
+                    <li><a href="matieres-cm2.html"><i class="fas fa-child"></i> CM2</a></li>
+                </ul>
+            </div>
+
+            <!-- Moyen -->
+            <div class="section-card">
+                <div class="card-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3 class="section-title">Moyen</h3>
+                <ul class="section-list">
+                    <li><a href="matieres-sixieme.html"><i class="fas fa-user-graduate"></i> Sixième</a></li>
+                    <li><a href="matieres-cinquieme.html"><i class="fas fa-user-graduate"></i> Cinquième</a></li>
+                    <li><a href="matieres-quatrieme.html"><i class="fas fa-user-graduate"></i> Quatrième</a></li>
+                    <li><a href="matieres-troisieme.html"><i class="fas fa-user-graduate"></i> Troisième</a></li>
+                </ul>
+            </div>
+
+            <!-- Secondaire -->
+            <div class="section-card">
+                <div class="card-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 class="section-title">Secondaire</h3>
+                <ul class="section-list">
+                    <li><a href="matieres-seconde.html"><i class="fas fa-user-tie"></i> Seconde</a></li>
+                    <li><a href="matieres-premiere.html"><i class="fas fa-user-tie"></i> Première</a></li>
+                    <li><a href="matieres-terminale.html"><i class="fas fa-user-tie"></i> Terminale</a></li>
+                </ul>
+            </div>
+
+            <!-- Religion -->
+            <div class="section-card">
+                <div class="card-icon">
+                    <i class="fas fa-pray"></i>
+                </div>
+                <h3 class="section-title">Religion</h3>
+                <ul class="section-list">
+                    <li><a href="matieres-daara.html"><i class="fas fa-mosque"></i> Daara</a></li>
+                    <li><a href="matieres-catechese.html"><i class="fas fa-church"></i> Catéchèse</a></li>
+                </ul>
+            </div>
+
+            <!-- Visio et tableaux -->
+            <div class="section-card">
+                <div class="card-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3 class="section-title">Visio et Tableaux</h3>
+                <ul class="section-list">
+                    <li><a href="logiciels-visioconference.html"><i class="fas fa-comments"></i> Visioconférence</a></li>
+                    <li><a href="#"><i class="fas fa-chalkboard"></i> Tableaux</a></li>
+                </ul>
+            </div>
+
+            <!-- Biblio'Tech -->
+            <div class="section-card">
+                <div class="card-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3 class="section-title">Biblio'Tech</h3>
+                <ul class="section-list">
+                    <li><a href="français-biblio.html"><i class="fas fa-language"></i> Français</a></li>
+                    <li><a href="#"><i class="fas fa-flask"></i> Sciences</a></li>
+                    <li><a href="#"><i class="fas fa-praying-hands"></i> Religion</a></li>
+                    <li><a href="#"><i class="fas fa-globe-africa"></i> Culture générale</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> Sciences humaines</a></li>
+                    <li><a href="#"><i class="fas fa-flag"></i> Langues</a></li>
+                </ul>
+            </div>
+
+            <!-- Espace IA -->
+            <div class="section-card">
+                <div class="card-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3 class="section-title">Espace IA</h3>
+                <ul class="section-list">
+                    <li><a href="ressources-ia.html"><i class="fas fa-graduation-cap"></i> Ressources pédagogiques</a></li>
+                    <li><a href="logiciels-ia.html"><i class="fas fa-laptop-code"></i> Logiciels utiles</a></li>
+                </ul>
+            </div>
+
+            <!-- Labo virtuel -->
+            <div class="section-card">
+                <div class="card-icon">
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <h3 class="section-title">Labo virtuel</h3>
+                <ul class="section-list">
+                    <li><a href="labo-math.html"><i class="fas fa-square-root-alt"></i> Mathématique</a></li>
+                    <li><a href="labo-biologie.html"><i class="fas fa-dna"></i> Biologie</a></li>
+                    <li><a href="labo-pc.html"><i class="fas fa-atom"></i> Physique-Chimie</a></li>
+                    <li><a href="labo-tech.html"><i class="fas fa-cogs"></i> Technologie</a></li>
+                </ul>
+            </div>
+
+            <!-- Jeux éducatifs -->
+            <div class="section-card">
+                <div class="card-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3 class="section-title">Jeux éducatifs</h3>
+                <ul class="section-list">
+                    <li><a href="jeux-mathematique.html"><i class="fas fa-chess"></i> Jeux mathematiques</a></li>
+                    <li><a href="jeux-gene.html"><i class="fas fa-puzzle-piece"></i> Jeux généralistes</a></li>
+                    <li><a href="jeux-maternelle.html"><i class="fas fa-brain"></i> Jeux maternelles</a></li>
+                    <li><a href="jeux-langue.html"><i class="fas fa-trophy"></i> Jeux langues</a></li>
+                </ul>
+            </div>
+        </section>
+
+
+        <!-- Ajoutez ces sections après la section hero et avant la grille des sections -->
+
+<!-- Section Statistiques -->
+<section class="stats-section">
+    <div class="container">
+        <h2 class="section-title">Quelques chiffres</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number" data-count="2000">0</div>
+                <div class="stat-label">Élèves</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <div class="stat-number" data-count="60">0</div>
+                <div class="stat-label">Enseignants</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-user-friends"></i>
+                </div>
+                <div class="stat-number" data-count="1000">0</div>
+                <div class="stat-label">Parents</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Partenaires -->
+<section class="partners-section">
+    <div class="container">
+        <h2 class="section-title">Nos Partenaires</h2>
+        <div class="partners-grid">
+            <div class="partner-item">
+                <div class="partner-logo">
+                    <i class="fas fa-landmark"></i>
+                </div>
+                <div class="partner-name">Ministère Éducation</div>
+            </div>
+            <div class="partner-item">
+                <div class="partner-logo">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="partner-name">Universités</div>
+            </div>
+            <div class="partner-item">
+                <div class="partner-logo">
+                    <i class="fas fa-school"></i>
+                </div>
+                <div class="partner-name">Établissements Scolaires</div>
+            </div>
+            <div class="partner-item">
+                <div class="partner-logo">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="partner-name">Éditeurs</div>
+            </div>
+            <div class="partner-item">
+                <div class="partner-logo">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="partner-name">Tech Partners</div>
+            </div>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-graduation-cap"></i>
+                NEBULA
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Cycles d'études</h4>
+                    <a href="#">Primaire</a>
+                    <a href="#">Moyen</a>
+                    <a href="#">Secondaire</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Ressources</h4>
+                    <a href="#">Biblio'Tech</a>
+                    <a href="#">Labo virtuel</a>
+                    <a href="#">Jeux éducatifs</a>
+                    <a href="#">Espace IA</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Outils</h4>
+                    <a href="#">Visio et Tableaux</a>
+                    <a href="#">Religion</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <a href="#">Aide</a>
+                    <a href="#">Contact</a>
+                    <a href="#">FAQ</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Réseaux sociaux -->
+        <div class="social-media">
+            <h4>Suivez-nous sur les réseaux sociaux</h4>
+            <div class="social-icons">
+                <a href="https://www.youtube.com/@PrecepTech" target="_blank" class="social-link youtube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://web.facebook.com/profile.php?id=100030929242318" target="_blank" class="social-link facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://wa.me/221777297534" target="_blank" class="social-link whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.tiktok.com/@preceptech" target="_blank" class="social-link tiktok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://www.linkedin.com" target="_blank" class="social-link linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer-actions">
+            <button class="action-btn" onclick="window.open('https://www.precep-tech.com', '_blank')">
+                <i class="fas fa-external-link-alt"></i>
+                PrecepTech
+            </button>
+            <button class="action-btn">
+                <i class="fas fa-flag"></i>
+                Signaler un problème
+            </button>
+            <button class="action-btn">
+                <i class="fas fa-question-circle"></i>
+                Aide
+            </button>
+        </div>
+        <p class="footer-copyright">&copy; 2024 NEBULA - Plateforme Éducative. Tous droits réservés.</p>
+
+    </footer>
+
+</body>
+</html>

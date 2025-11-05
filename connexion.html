@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - NEBULA</title>
+    <base target="_top">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #7F6B00;
+            --accent-color: #B8941F;
+            --gold-light: #D4AF37;
+            --gold-dark: #5D4A00;
+            --text-color: #ffffff;
+            --text-light: #cccccc;
+            --bg-dark: #0a0a0a;
+            --card-bg: rgba(15, 15, 15, 0.9);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--text-color);
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            padding-top: 80px; /* Pour la navigation fixe */
+        }
+
+        /* Navigation */
+        .header-nav { 
+            background: var(--primary-color); 
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 1rem;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            padding: 0;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: var(--secondary-color);
+            border-radius: 1px;
+            transition: var(--transition);
+        }
+
+        .menu-toggle:hover span {
+            background-color: var(--gold-light);
+        }
+
+        .logo { 
+            color: var(--secondary-color); 
+            font-family: 'Bitter', serif;
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-shadow: 0 0 10px rgba(127, 107, 0, 0.3);
+        }
+
+        /* Informations de contact */
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex: 1;
+            justify-content: center;
+            margin: 0 2rem;
+        }
+
+        .ministry-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .ministry-logo i {
+            font-size: 1.5rem;
+            color: var(--gold-light);
+        }
+
+        .contact-details {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .phone, .email {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .phone i, .email i {
+            color: var(--secondary-color);
+            font-size: 0.8rem;
+        }
+
+        .phone:hover, .email:hover {
+            color: var(--gold-light);
+        }
+
+        .phone:hover i, .email:hover i {
+            color: var(--gold-light);
+        }
+
+        .user-actions .action-btn {
+            background: none;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .user-actions .action-btn:hover {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
+        }
+
+        /* Contenu principal */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Effets de particules dorées */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--gold-light);
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatParticle 8s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .login-container {
+            max-width: 450px;
+            width: 100%;
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(127, 107, 0, 0.3);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        /* Header élégant */
+        .login-header {
+            text-align: center;
+            padding: 0 0 30px 0;
+            position: relative;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center top, rgba(127, 107, 0, 0.2) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .login-subtitle {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Formulaire */
+        .login-form {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--gold-light);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(30, 30, 30, 0.7);
+            border: 1px solid rgba(127, 107, 0, 0.3);
+            border-radius: 12px;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--gold-light);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+            background: rgba(40, 40, 40, 0.9);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-light);
+            opacity: 0.7;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            border: 1px solid rgba(127, 107, 0, 0.5);
+            box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(127, 107, 0, 0.5);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        /* Message d'erreur */
+        .error-message {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            color: #f8d7da;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .success-message {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            color: #d4edda;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Animation d'entrée */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Loading spinner */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--gold-light);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-color);
+            padding: 3rem 2rem 1.5rem;
+            border-top: 2px solid var(--secondary-color);
+            color: white;
+            margin-top: auto;
+        }
+
+        /* Section réseaux sociaux */
+        .social-media {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(127, 107, 0, 0.3);
+            border-bottom: 1px solid rgba(127, 107, 0, 0.3);
+        }
+
+        .social-media h4 {
+            color: var(--gold-light);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.2rem;
+            border: 2px solid transparent;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary-color);
+        }
+
+        .social-link.youtube:hover {
+            background: #FF0000;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .social-link.facebook:hover {
+            background: #1877F2;
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.3);
+        }
+
+        .social-link.whatsapp:hover {
+            background: #25D366;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .social-link.tiktok:hover {
+            background: #000000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-link.linkedin:hover {
+            background: #0077B5;
+            box-shadow: 0 5px 15px rgba(0, 119, 181, 0.3);
+        }
+
+        .footer-actions {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-actions .action-btn {
+            background: none;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .footer-actions .action-btn:hover {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
+        }
+
+        .footer-copyright {
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(127, 107, 0, 0.3);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+                margin: 0 1rem;
+            }
+            
+            .contact-details {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .contact-info {
+                order: 3;
+                width: 100%;
+                margin: 1rem 0 0 0;
+            }
+            
+            .ministry-logo {
+                justify-content: center;
+            }
+            
+            .contact-details {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .login-container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .login-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .footer-actions {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+            
+            .action-btn {
+                width: 200px;
+                justify-content: center;
+            }
+            
+            .social-icons {
+                gap: 1rem;
+            }
+            
+            .social-link {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-top: 120px; /* Plus d'espace pour la navigation sur mobile */
+            }
+            
+            .contact-details {
+                flex-direction: column;
+            }
+            
+            .login-container {
+                padding: 25px 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-input {
+                padding: 12px 15px;
+            }
+            
+            .login-button {
+                padding: 12px 15px;
+            }
+            
+            .social-link {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .social-media h4 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation supérieure -->
+    <header class="header-nav">
+        <div class="nav-container">
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                NEBULA
+            </div>
+
+            <!-- Informations de contact -->
+            <div class="contact-info">
+                <div class="ministry-logo">
+                    <i class="fas fa-landmark"></i>
+                    <span>Ministère Éducation Nationale</span>
+                </div>
+                <div class="contact-details">
+                    <a href="tel:+221777297534" class="phone">
+                        <i class="fas fa-phone"></i>
+                        <span>+221 77 729 75 34</span>
+                    </a>
+                    <a href="mailto:abdoulaye.ndione14@education.sn" class="email">
+                        <i class="fas fa-envelope"></i>
+                        <span>abdoulaye.ndione14@education.sn</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="user-actions">
+                <a href="inscription.html" class="action-btn">
+                    <i class="fas fa-user-plus"></i>
+                    Inscription
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+        <!-- Effets de particules -->
+        <div class="particles" id="particles"></div>
+
+        <div class="login-container">
+            <!-- Header de la page -->
+            <header class="login-header">
+                <div class="header-bg"></div>
+                <h1><i class="fas fa-lock"></i> Connexion</h1>
+                <p class="login-subtitle">Accès réservé - Code requis</p>
+            </header>
+
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="code" class="form-label">Code d'accès</label>
+                    <input 
+                        type="password" 
+                        id="code" 
+                        class="form-input" 
+                        placeholder="Entrez le code d'accès" 
+                        required
+                        autocomplete="off"
+                    >
+                </div>
+
+                <button type="submit" class="login-button" id="submitBtn">
+                    <span id="buttonText">Se connecter</span>
+                    <span id="buttonLoading" class="loading" style="display: none;"></span>
+                </button>
+
+                <div id="errorMessage" class="error-message"></div>
+                <div id="successMessage" class="success-message"></div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- Réseaux sociaux -->
+        <div class="social-media">
+            <h4>Suivez-nous sur les réseaux sociaux</h4>
+            <div class="social-icons">
+                <a href="https://www.youtube.com/@PrecepTech" target="_blank" class="social-link youtube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://web.facebook.com/profile.php?id=100030929242318" target="_blank" class="social-link facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://wa.me/221777297534" target="_blank" class="social-link whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.tiktok.com/@preceptech" target="_blank" class="social-link tiktok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://www.linkedin.com" target="_blank" class="social-link linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer-actions">
+            <a href="https://www.precep-tech.com" target="_blank" class="action-btn">
+                <i class="fas fa-external-link-alt"></i>
+                PrecepTech
+            </a>
+            <button class="action-btn" onclick="alert('Fonctionnalité de signalement à implémenter')">
+                <i class="fas fa-flag"></i>
+                Signaler un problème
+            </button>
+            <button class="action-btn" onclick="alert('Centre d\\'aide à implémenter')">
+                <i class="fas fa-question-circle"></i>
+                Aide
+            </button>
+        </div>
+        <p class="footer-copyright">&copy; 2024 NEBULA - Plateforme Éducative. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Création des particules animées
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 3 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 8}s`;
+                particle.style.animationDuration = `${Math.random() * 10 + 8}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+
+            // Gestion du formulaire
+            const loginForm = document.getElementById('loginForm');
+            const codeInput = document.getElementById('code');
+            const submitBtn = document.getElementById('submitBtn');
+            const buttonText = document.getElementById('buttonText');
+            const buttonLoading = document.getElementById('buttonLoading');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const code = codeInput.value.trim();
+                
+                if (!code) {
+                    showError("Veuillez entrer un code d'accès");
+                    return;
+                }
+
+                // Afficher le loading
+                buttonText.style.display = 'none';
+                buttonLoading.style.display = 'inline-block';
+                submitBtn.disabled = true;
+
+                // Simuler une vérification (remplacera par l'appel Google Apps Script)
+                setTimeout(() => {
+                    verifyCode(code);
+                }, 1000);
+            });
+
+            function verifyCode(code) {
+                // Ici, vous intégrerez l'appel à Google Apps Script
+                // Pour l'instant, simulation avec le code "12345"
+                if (code === "12345") {
+                    showSuccess("Code valide ! Redirection en cours...");
+                    
+                    // Redirection vers index.html après 2 secondes
+                    setTimeout(() => {
+                        window.location.href = "index.html";
+                    }, 2000);
+                } else {
+                    showError("Code invalide. Veuillez réessayer.");
+                    resetButton();
+                }
+            }
+
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                
+                // Animation shake pour l'erreur
+                loginForm.style.animation = 'shake 0.5s ease-in-out';
+                setTimeout(() => {
+                    loginForm.style.animation = '';
+                }, 500);
+            }
+
+            function showSuccess(message) {
+                successMessage.textContent = message;
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+            }
+
+            function resetButton() {
+                buttonText.style.display = 'inline-block';
+                buttonLoading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+
+            // Focus sur le champ de code au chargement
+            codeInput.focus();
+
+            // Gestion du menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            menuToggle.addEventListener('click', function() {
+                alert('Menu de navigation - Fonctionnalité à implémenter');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Camp Virtuel - Tous les Outils</title>
+  <base target="_top">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #000000;
+      --secondary-color: #7F6B00;
+      --accent-color: #B8941F;
+      --gold-light: #D4AF37;
+      --gold-dark: #5D4A00;
+      --text-color: #ffffff;
+      --text-light: #cccccc;
+      --bg-dark: #0a0a0a;
+      --card-bg: rgba(15, 15, 15, 0.9);
+      --border: rgba(127, 107, 0, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+      color: var(--text-color);
+      min-height: 100vh;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Effets de particules dorées */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      background: var(--gold-light);
+      border-radius: 50%;
+      opacity: 0;
+      animation: floatParticle 8s infinite linear;
+    }
+
+    @keyframes floatParticle {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.3;
+      }
+      90% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header élégant */
+    .page-header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      position: relative;
+    }
+
+    .header-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center top, rgba(127, 107, 0, 0.2) 0%, transparent 70%);
+      z-index: -1;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--accent-color) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 15px;
+      text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .page-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-light);
+      font-weight: 300;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .search-container {
+      margin: 40px auto;
+      position: relative;
+      max-width: 600px;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 20px 25px 20px 60px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      font-size: 1.1rem;
+      background: var(--card-bg);
+      color: var(--text-color);
+      transition: all 0.4s ease;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    #searchInput:focus {
+      outline: none;
+      border-color: var(--gold-light);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2), 0 15px 40px rgba(0, 0, 0, 0.4);
+      transform: translateY(-2px);
+    }
+
+    #searchInput::placeholder {
+      color: var(--text-light);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 25px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold-light);
+      font-size: 1.2rem;
+    }
+
+    .category {
+      margin-bottom: 60px;
+      animation: fadeInUp 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .category:nth-child(1) { animation-delay: 0.1s; }
+    .category:nth-child(2) { animation-delay: 0.2s; }
+    .category:nth-child(3) { animation-delay: 0.3s; }
+    .category:nth-child(4) { animation-delay: 0.4s; }
+    .category:nth-child(5) { animation-delay: 0.5s; }
+    .category:nth-child(6) { animation-delay: 0.6s; }
+    .category:nth-child(7) { animation-delay: 0.7s; }
+
+    .category-title {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border);
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-weight: 600;
+    }
+
+    .category-title i {
+      color: var(--gold-light);
+      font-size: 1.8rem;
+    }
+
+    .tools-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 25px;
+    }
+
+    .tool-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 30px 25px;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: fadeInUp 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .tool-card:hover::before {
+      left: 100%;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: var(--gold-light);
+      box-shadow: 
+        0 15px 40px rgba(127, 107, 0, 0.4),
+        0 0 0 1px rgba(212, 175, 55, 0.1);
+    }
+
+    .tool-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 15px;
+    }
+
+    .tool-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(127, 107, 0, 0.2) 0%, rgba(212, 175, 55, 0.1) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-light);
+      font-weight: bold;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(127, 107, 0, 0.3);
+    }
+
+    .tool-card:hover .tool-logo {
+      transform: scale(1.1) rotate(5deg);
+      background: linear-gradient(135deg, rgba(127, 107, 0, 0.3) 0%, rgba(212, 175, 55, 0.2) 100%);
+    }
+
+    .tool-logo img {
+      width: 24px;
+      height: 24px;
+      filter: brightness(0) saturate(100%) invert(72%) sepia(60%) saturate(500%) hue-rotate(10deg) brightness(90%) contrast(90%);
+    }
+
+    .tool-card:hover .tool-logo img {
+      filter: brightness(0) saturate(100%) invert(84%) sepia(30%) saturate(600%) hue-rotate(10deg) brightness(105%) contrast(90%);
+    }
+
+    .tool-name {
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: var(--gold-light);
+      transition: all 0.3s ease;
+    }
+
+    .tool-card:hover .tool-name {
+      color: var(--text-color);
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    }
+
+    .tool-description {
+      font-size: 0.95rem;
+      margin-bottom: 25px;
+      color: var(--text-light);
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .tool-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 30px;
+      background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(127, 107, 0, 0.4);
+      color: white;
+      text-decoration: none;
+    }
+
+    .tool-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .tool-link:hover::before {
+      left: 100%;
+    }
+
+    /* Effet de brillance sur les cartes */
+    .tool-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+      transform: rotate(45deg);
+      transition: all 0.6s ease;
+      opacity: 0;
+    }
+
+    .tool-card:hover::after {
+      opacity: 1;
+      transform: rotate(45deg) translate(50%, 50%);
+    }
+
+    /* Animation d'entrée */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .tools-container {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px 15px;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .tools-container {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+      
+      .tool-card {
+        padding: 25px 20px;
+      }
+      
+      .category-title {
+        font-size: 1.7rem;
+      }
+      
+      .search-container {
+        margin: 30px auto;
+      }
+      
+      #searchInput {
+        padding: 16px 20px 16px 50px;
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .tools-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .category-title {
+        font-size: 1.5rem;
+      }
+      
+      .tool-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+      }
+      
+      .tool-logo {
+        width: 45px;
+        height: 45px;
+      }
+    }
+
+    /* Bouton retour */
+    .back-button {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      background: rgba(15, 15, 15, 0.8);
+      color: var(--gold-light);
+      border: 1px solid rgba(127, 107, 0, 0.5);
+      padding: 12px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-button:hover {
+      background: rgba(127, 107, 0, 0.2);
+      transform: translateX(-5px);
+      border-color: var(--gold-light);
+      color: var(--gold-light);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bouton retour -->
+    <a href="./index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Retour à l'accueil
+    </a>
+
+  <div class="container">
+    <h1><i class="fas fa-robot"></i> Logiciels utiles</h1>
+    
+    <div class="search-container">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" id="searchInput" placeholder="Rechercher un outil..." onkeyup="filterTools()">
+    </div>
+    
+    <!-- Outils de Création -->
+    <div class="category">
+      <h2 class="category-title"><i class="fas fa-paint-brush"></i> Création</h2>
+      <div class="tools-container">
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=figma.com&sz=64" alt="Figma" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/3a0ca3/ffffff?text=FI'">
+            <div class="tool-name">Figma</div>
+          </div>
+          <div class="tool-description">Outil de design collaboratif pour interfaces utilisateur avec prototypage et animations intégrées.</div>
+          <a href="https://www.figma.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <i class="fas fa-heart tool-logo" style="color: #ff6b6b; font-size: 1.5rem;"></i>
+            <div class="tool-name">Lovable</div>
+          </div>
+          <div class="tool-description">Assistant IA pour améliorer vos relations et communications personnelles.</div>
+          <a href="https://lovable.dev/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=capcut.com&sz=64" alt="Capcut" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/4361ee/ffffff?text=CC'">
+            <div class="tool-name">Capcut</div>
+          </div>
+          <div class="tool-description">Plateforme de montage de vidéos.</div>
+          <a href="https://www.capcut.com/fr-fr/signup?from_page=landing_page&enter_from=top_banner" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=canva.com&sz=64" alt="Canva" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/00C4CC/ffffff?text=CV'">
+            <div class="tool-name">Canva</div>
+          </div>
+          <div class="tool-description">Outil de design graphique avec animations prédéfinies et modèles pour réseaux sociaux.</div>
+          <a href="https://www.canva.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+  <div class="tool-header">
+    <img src="https://www.google.com/s2/favicons?domain=aixploria.com&sz=64" alt="Aixploria" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/4361ee/ffffff?text=AX'">
+    <div class="tool-name">Aixploria</div>
+  </div>
+  <div class="tool-description">Plateforme éducative et ludique pour explorer divers sujets scientifiques et culturels.</div>
+  <a href="https://www.aixploria.com/" class="tool-link" target="_blank">Accéder</a>
+</div>
+<div class="tool-card">
+  <div class="tool-header">
+    <img src="https://www.google.com/s2/favicons?domain=freetts.com&sz=64" alt="FreeTTS" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/00C4CC/ffffff?text=FT'">
+    <div class="tool-name">FreeTTS</div>
+  </div>
+  <div class="tool-description">Service de synthèse vocale en ligne gratuit pour convertir du texte en parole.</div>
+  <a href="https://freetts.com/" class="tool-link" target="_blank">Accéder</a>
+</div>
+        <div class="tool-card">
+        <div class="tool-header">
+          <img src="https://www.google.com/s2/favicons?domain=scratch.mit.edu&sz=64" alt="Scratch" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/4D97FF/ffffff?text=S'">
+        <div class="tool-name">Scratch</div>
+        </div>
+       <div class="tool-description">Plateforme d'initiation à la programmation pour enfants.</div>
+       <a href="https://scratch.mit.edu/" class="tool-link" target="_blank">Accéder</a>
+       </div>
+        <div class="tool-card">
+  <div class="tool-header">
+    <img src="https://www.gstatic.com/images/branding/product/1x/slides_2020q4_48dp.png" alt="Google Slides" class="tool-logo">
+    <div class="tool-name">Google Slides</div>
+  </div>
+  <div class="tool-description">Outil de présentation.</div>
+  <a href="https://docs.google.com/presentation/d/1wSgNZSQ0FxKOejrB8ltp0vgl2TJMI89T6Kc6prE9u0o/copy" class="tool-link" target="_blank">Accéder</a>
+</div>
+
+<div class="tool-card">
+  <div class="tool-header">
+    <img src="https://www.gstatic.com/images/branding/product/1x/sheets_2020q4_48dp.png" alt="Google Sheets" class="tool-logo">
+    <div class="tool-name">Google Sheets</div>
+  </div>
+  <div class="tool-description">Outil pour la création de base de données.</div>
+  <a href="https://docs.google.com/spreadsheets/d/1TZRCZCnTkuTQlsYl0RGNFddTrVnsvInjLk6zE_tfXqQ/copy" class="tool-link" target="_blank">Accéder</a>
+</div>
+
+<div class="tool-card">
+  <div class="tool-header">
+    <img src="https://www.gstatic.com/images/branding/product/1x/docs_2020q4_48dp.png" alt="Google Docs" class="tool-logo">
+    <div class="tool-name">Google Docs</div>
+  </div>
+  <div class="tool-description">Outil pour la création de documents.</div>
+  <a href="https://docs.google.com/document/d/1K9zygqYGlOnO6dWkv5sx6HeXWIo9aTi6xTyS6fBSfQE/copy" class="tool-link" target="_blank">Accéder</a>
+</div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=invideo.io&sz=64" alt="InvideoAI" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/FF5C5C/ffffff?text=IA'">
+            <div class="tool-name">InvideoAI</div>
+          </div>
+          <div class="tool-description">Plateforme de création vidéo alimentée par IA avec des templates professionnels.</div>
+          <a href="https://invideo.io/ai/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=runwayml.com&sz=64" alt="Runway" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=RW'">
+            <div class="tool-name">Runway</div>
+          </div>
+          <div class="tool-description">Suite complète d'outils IA pour la création vidéo, image et son.</div>
+          <a href="https://runwayml.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=elevenlabs.io&sz=64" alt="Elevenlabs" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=EL'">
+            <div class="tool-name">Elevenlabs</div>
+          </div>
+          <div class="tool-description">IA de synthèse vocale avancée pour créer des voix naturelles en plusieurs langues.</div>
+          <a href="https://elevenlabs.io/fr" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=undraw.co&sz=64" alt="unDraw" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/6C63FF/ffffff?text=UD'">
+            <div class="tool-name">unDraw</div>
+          </div>
+          <div class="tool-description">Bibliothèque d'illustrations vectorielles open-source et personnalisables.</div>
+          <a href="https://undraw.co/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=absurd.design&sz=64" alt="Absurd Design" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=AD'">
+            <div class="tool-name">Absurd Design</div>
+          </div>
+          <div class="tool-description">Illustrations surréalistes et abstraites pour projets créatifs.</div>
+          <a href="https://absurd.design/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=studio.polotno.com&sz=64" alt="Polotno Studio" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=PS'">
+            <div class="tool-name">Polotno Studio</div>
+          </div>
+          <div class="tool-description">Éditeur graphique en ligne pour créer des designs et des visuels marketing.</div>
+          <a href="https://studio.polotno.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=genially.com&sz=64" alt="Genially" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/37C6F5/ffffff?text=GN'">
+            <div class="tool-name">Genially</div>
+          </div>
+          <div class="tool-description">Création de présentations interactives, infographies et contenus visuels animés.</div>
+          <a href="https://genially.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=picwand.ai&sz=64" alt="Picwand" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=PW'">
+            <div class="tool-name">Picwand</div>
+          </div>
+          <div class="tool-description">Outil IA pour améliorer et retoucher automatiquement vos photos.</div>
+          <a href="https://picwand.ai/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=animaker.com&sz=64" alt="Animaker" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=AK'">
+            <div class="tool-name">Animaker</div>
+          </div>
+          <div class="tool-description">Création de vidéos explicatives animées avec personnages customisables et voix off.</div>
+          <a href="https://www.animaker.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=henrri.co&sz=64" alt="Henrri" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=HR'">
+            <div class="tool-name">Henrri</div>
+          </div>
+          <div class="tool-description">Plateforme de création de sites web sans code avec des templates modernes et personnalisables.</div>
+          <a href="https://henrri.co/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=biteable.com&sz=64" alt="Biteable" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=BT'">
+            <div class="tool-name">Biteable</div>
+          </div>
+          <div class="tool-description">Plateforme pour créer des vidéos marketing courtes avec animations typographiques.</div>
+          <a href="https://biteable.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=renderforest.com&sz=64" alt="Renderforest" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=RF'">
+            <div class="tool-name">Renderforest</div>
+          </div>
+          <div class="tool-description">Création de logos animés, vidéos musicales et intros YouTube automatiques.</div>
+          <a href="https://www.renderforest.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=powtoon.com&sz=64" alt="Powtoon" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=PT'">
+            <div class="tool-name">Powtoon</div>
+          </div>
+          <div class="tool-description">Outil pour créer des présentations animées de style cartoon professionnel.</div>
+          <a href="https://www.powtoon.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=crello.com&sz=64" alt="Crello" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=CL'">
+            <div class="tool-name">Crello</div>
+          </div>
+          <div class="tool-description">Alternative à Canva avec effets "glitch" et néon, et calques animables.</div>
+          <a href="https://crello.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=animoto.com&sz=64" alt="Animoto" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=AM'">
+            <div class="tool-name">Animoto</div>
+          </div>
+          <div class="tool-description">Montage photo/vidéo automatisé avec synchronisation musique/images.</div>
+          <a href="https://animoto.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=flexclip.com&sz=64" alt="FlexClip" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=FC'">
+            <div class="tool-name">FlexClip</div>
+          </div>
+          <div class="tool-description">Studio de texte animé avec filtres vidéo professionnels et bibliothèque audio.</div>
+          <a href="https://www.flexclip.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=clipchamp.com&sz=64" alt="Clipchamp" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=CC'">
+            <div class="tool-name">Clipchamp</div>
+          </div>
+          <div class="tool-description">Éditeur vidéo avec timeline avancée et effets lumineux (bokeh, flares).</div>
+          <a href="https://clipchamp.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=kapwing.com&sz=64" alt="Kapwing" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=KW'">
+            <div class="tool-name">Kapwing</div>
+          </div>
+          <div class="tool-description">Meme Generator animé avec sous-titres automatiques et collaboration en temps réel.</div>
+          <a href="https://www.kapwing.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=offeo.com&sz=64" alt="Offeo" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=OF'">
+            <div class="tool-name">Offeo</div>
+          </div>
+          <div class="tool-description">Spécialisé dans les effets TikTok/Reels avec animations 3D isométriques.</div>
+          <a href="https://offeo.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=typito.com&sz=64" alt="Typito" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=TP'">
+            <div class="tool-name">Typito</div>
+          </div>
+          <div class="tool-description">Création de vidéos avec typographie animée et graphiques animés (charts).</div>
+          <a href="https://typito.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=vizmato.com&sz=64" alt="Vizmato" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=VZ'">
+            <div class="tool-name">Vizmato</div>
+          </div>
+          <div class="tool-description">Application mobile avec effets AR (réalité augmentée) et montage simplifié.</div>
+          <a href="https://www.vizmato.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Outils IA -->
+    <div class="category">
+      <h2 class="category-title"><i class="fas fa-brain"></i> Intelligence Artificielle</h2>
+      <div class="tools-container">
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=opus.pro&sz=64" alt="Opus Clip" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=OC'">
+            <div class="tool-name">Opus Clip</div>
+          </div>
+          <div class="tool-description">Outil IA pour découper automatiquement vos vidéos en clips optimisés pour les réseaux sociaux.</div>
+          <a href="https://opus.pro/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=agents.sabrina&sz=64" alt="Agents.sabrina" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=AS'">
+            <div class="tool-name">Agents.sabrina</div>
+          </div>
+          <div class="tool-description">Plateforme pour créer et déployer des agents conversationnels IA personnalisés.</div>
+          <a href="https://agents.sabrina/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=higgsfield.ai&sz=64" alt="Higgsfield" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=HF'">
+            <div class="tool-name">Higgsfield</div>
+          </div>
+          <div class="tool-description">Solution IA pour la génération et l'édition avancée de contenus visuels.</div>
+          <a href="https://higgsfield.ai/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=pika.art&sz=64" alt="Pika Labs" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=PL'">
+            <div class="tool-name">Pika Labs</div>
+          </div>
+          <div class="tool-description">Générateur IA pour créer des animations et vidéos à partir de textes ou images.</div>
+          <a href="https://pika.art/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=openmagic.io&sz=64" alt="Openmagic" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=OM'">
+            <div class="tool-name">Openmagic</div>
+          </div>
+          <div class="tool-description">Outil de magie numérique utilisant l'IA pour des effets visuels avancés.</div>
+          <a href="https://openmagic.io/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=klingai.com&sz=64" alt="Kling AI" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=KA'">
+            <div class="tool-name">Kling AI</div>
+          </div>
+          <div class="tool-description">Plateforme IA spécialisée dans la génération de contenus multimédias.</div>
+          <a href="https://klingai.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=vidu.ai&sz=64" alt="Vidu" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=VD'">
+            <div class="tool-name">Vidu</div>
+          </div>
+          <div class="tool-description">Solution IA pour la création et l'édition de vidéos professionnelles.</div>
+          <a href="https://www.vidu.ai/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=zeemo.ai&sz=64" alt="Zeemo" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=ZM'">
+            <div class="tool-name">Zeemo</div>
+          </div>
+          <div class="tool-description">Outil IA pour ajouter automatiquement des sous-titres animés aux vidéos.</div>
+          <a href="https://www.zeemo.ai/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=huggingface.co&sz=64" alt="Hugging Face" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=HF'">
+            <div class="tool-name">Hugging Face</div>
+          </div>
+          <div class="tool-description">Plateforme collaborative pour modèles IA et traitement du langage naturel.</div>
+          <a href="https://huggingface.co/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=chatpdf.com&sz=64" alt="ChatPDF" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=CP'">
+            <div class="tool-name">ChatPDF</div>
+          </div>
+          <div class="tool-description">Interagissez avec vos documents PDF comme avec un chatbot IA.</div>
+          <a href="https://www.chatpdf.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=heygen.com&sz=64" alt="Heygen" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=HG'">
+            <div class="tool-name">Heygen</div>
+          </div>
+          <div class="tool-description">Création d'avatars numériques et vidéos avec présentateurs IA réalistes.</div>
+          <a href="https://www.heygen.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=aistudio.google.com&sz=64" alt="Google AI Studio" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=GA'">
+            <div class="tool-name">Google AI Studio</div>
+          </div>
+          <div class="tool-description">Plateforme Google pour expérimenter avec les derniers modèles d'IA générative.</div>
+          <a href="https://aistudio.google.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <i class="fas fa-heart tool-logo" style="color: #ff6b6b; font-size: 1.5rem;"></i>
+            <div class="tool-name">Lovable</div>
+          </div>
+          <div class="tool-description">Assistant IA pour améliorer vos relations et communications personnelles.</div>
+          <a href="https://lovable.dev/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=airoomplanner.com&sz=64" alt="AI Room Planner" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=AR'">
+            <div class="tool-name">AI Room Planner</div>
+          </div>
+          <div class="tool-description">Générez des plans d'intérieur et des designs optimisés par IA.</div>
+          <a href="https://airoomplanner.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=akool.com&sz=64" alt="AKOOL" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=AK'">
+            <div class="tool-name">AKOOL</div>
+          </div>
+          <div class="tool-description">Plateforme IA pour la création et la personnalisation de contenus visuels.</div>
+          <a href="https://akool.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Productivité -->
+    <div class="category">
+      <h2 class="category-title"><i class="fas fa-tasks"></i> Productivité</h2>
+      <div class="tools-container">
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=odoo.com&sz=64" alt="Odoo" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=OD'">
+            <div class="tool-name">Odoo</div>
+          </div>
+          <div class="tool-description">Suite complète de gestion d'entreprise open-source (CRM, comptabilité, etc.).</div>
+          <a href="https://www.odoo.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=pippit.com&sz=64" alt="Pippit" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=PP'">
+            <div class="tool-name">Pippit</div>
+          </div>
+          <div class="tool-description">Outil de gestion de projets et collaboration en équipe avec tableau Kanban.</div>
+          <a href="https://www.pippit.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=cluely.ai&sz=64" alt="Cluely" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=CL'">
+            <div class="tool-name">Cluely</div>
+          </div>
+          <div class="tool-description">Assistant IA pour la productivité et l'organisation des tâches quotidiennes.</div>
+          <a href="https://www.cluely.ai/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=notion.so&sz=64" alt="Notion" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=NT'">
+            <div class="tool-name">Notion</div>
+          </div>
+          <div class="tool-description">Espace de travail tout-en-un pour notes, bases de données et gestion de projets.</div>
+          <a href="https://www.notion.so/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=whimsical.com&sz=64" alt="Whimsical" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=WH'">
+            <div class="tool-name">Whimsical</div>
+          </div>
+          <div class="tool-description">Outil visuel pour créer des wireframes, organigrammes et mind maps.</div>
+          <a href="https://whimsical.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=tinywow.com&sz=64" alt="Tiny Wow" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=TW'">
+            <div class="tool-name">Tiny Wow</div>
+          </div>
+          <div class="tool-description">Collection d'outils en ligne pour convertir, éditer et modifier des fichiers.</div>
+          <a href="https://tinywow.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=printfriendly.com&sz=64" alt="Printfriendly" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=PF'">
+            <div class="tool-name">Printfriendly</div>
+          </div>
+          <div class="tool-description">Optimise les pages web pour une impression propre et sans éléments superflus.</div>
+          <a href="https://www.printfriendly.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=contrats.tech&sz=64" alt="Contrats.tech" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=CT'">
+            <div class="tool-name">Contrats.tech</div>
+          </div>
+          <div class="tool-description">Générateur de contrats juridiques pour startups et freelances.</div>
+          <a href="https://contrats.tech/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=pitchdeckhunt.com&sz=64" alt="Pitchdeckhunt" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=PD'">
+            <div class="tool-name">Pitchdeckhunt</div>
+          </div>
+          <div class="tool-description">Collection de pitch decks de startups réelles pour inspiration.</div>
+          <a href="https://pitchdeckhunt.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=alternativeto.net&sz=64" alt="AlternativeTo" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=AT'">
+            <div class="tool-name">AlternativeTo</div>
+          </div>
+          <div class="tool-description">Trouvez des alternatives à vos logiciels préférés avec des comparaisons.</div>
+          <a href="https://alternativeto.net/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=printify.com&sz=64" alt="Printify" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=PY'">
+            <div class="tool-name">Printify</div>
+          </div>
+          <div class="tool-description">Plateforme de print-on-demand pour créer et vendre des produits personnalisés.</div>
+          <a href="https://printify.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=mailsignatures.com&sz=64" alt="Mail Signatures" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=MS'">
+            <div class="tool-name">Mail Signatures</div>
+          </div>
+          <div class="tool-description">Créateur de signatures email professionnelles et responsive.</div>
+          <a href="https://mailsignatures.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Éducation & Apprentissage -->
+    <div class="category">
+      <h2 class="category-title"><i class="fas fa-graduation-cap"></i> Éducation</h2>
+      <div class="tools-container">
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=pepites-histoires.fr&sz=64" alt="Pépites Histoires" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=PH'">
+            <div class="tool-name">Pépites Histoires</div>
+          </div>
+          <div class="tool-description">Plateforme de lecture interactive pour enfants avec histoires personnalisables.</div>
+          <a href="https://www.pepites-histoires.fr/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=apob.com&sz=64" alt="Apob" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=AP'">
+            <div class="tool-name">Apob</div>
+          </div>
+          <div class="tool-description">Application pour créer des livres interactifs et éducatifs.</div>
+          <a href="https://www.apob.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=shortmake.com&sz=64" alt="Shortmake" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=SM'">
+            <div class="tool-name">Shortmake</div>
+          </div>
+          <div class="tool-description">Outil pour créer des résumés visuels et des fiches de révision.</div>
+          <a href="https://shortmake.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=ready.com&sz=64" alt="Readdy" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=RD'">
+            <div class="tool-name">Readdy</div>
+          </div>
+          <div class="tool-description">Plateforme d'apprentissage adaptatif avec parcours personnalisés.</div>
+          <a href="https://ready.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=emupedia.net&sz=64" alt="Emupedia" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=EM'">
+            <div class="tool-name">Emupedia</div>
+          </div>
+          <div class="tool-description">Bibliothèque d'émulateurs pour découvrir l'histoire de l'informatique.</div>
+          <a href="https://emupedia.net/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=typingclub.com&sz=64" alt="Typingclub" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=TC'">
+            <div class="tool-name">Typingclub</div>
+          </div>
+          <div class="tool-description">Cours interactifs pour apprendre et améliorer sa dactylographie.</div>
+          <a href="https://www.typingclub.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=chatedu.com&sz=64" alt="Chatedu" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=CE'">
+            <div class="tool-name">Chatedu</div>
+          </div>
+          <div class="tool-description">Assistant éducatif IA pour aider aux devoirs et explications.</div>
+          <a href="https://www.chatedu.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=neal.fun&sz=64" alt="Neal.fun" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=NF'">
+            <div class="tool-name">Neal.fun</div>
+          </div>
+          <div class="tool-description">Collection d'outils éducatifs interactifs et ludiques sur divers sujets.</div>
+          <a href="https://neal.fun/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=openknowledgemaps.org&sz=64" alt="Open Knowledge Maps" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=OK'">
+            <div class="tool-name">Open Knowledge Maps</div>
+          </div>
+          <div class="tool-description">Cartographie visuelle de la recherche scientifique par domaines.</div>
+          <a href="https://openknowledgemaps.org/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=learndigital.withgoogle.com&sz=64" alt="Google Ateliers Numériques" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=GA'">
+            <div class="tool-name">Google Ateliers Numériques</div>
+          </div>
+          <div class="tool-description">Formations gratuites aux compétences numériques par Google.</div>
+          <a href="https://learndigital.withgoogle.com/ateliersnumeriques" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=learn.microsoft.com&sz=64" alt="Microsoft Training" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=MT'">
+            <div class="tool-name">Microsoft Training</div>
+          </div>
+          <div class="tool-description">Plateforme officielle de formation aux produits Microsoft.</div>
+          <a href="https://learn.microsoft.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=facebookblueprint.com&sz=64" alt="Meta Blueprint" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=MB'">
+            <div class="tool-name">Meta Blueprint</div>
+          </div>
+          <div class="tool-description">Formations certifiantes pour les outils publicitaires de Meta (Facebook, Instagram).</div>
+          <a href="https://www.facebookblueprint.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=accelerateur-du-numerique.fr&sz=64" alt="Accélérateur du Numérique" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=AN'">
+            <div class="tool-name">Accélérateur du Numérique</div>
+          </div>
+          <div class="tool-description">Programme français de formation aux métiers du numérique.</div>
+          <a href="https://accelerateur-du-numerique.fr/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Utilitaires -->
+    <div class="category">
+      <h2 class="category-title"><i class="fas fa-tools"></i> Utilitaires</h2>
+      <div class="tools-container">
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=namelix.com&sz=64" alt="Namelix" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=NM'">
+            <div class="tool-name">Namelix</div>
+          </div>
+          <div class="tool-description">Générateur de noms d'entreprise utilisant l'IA avec disponibilité de domaine.</div>
+          <a href="https://namelix.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=musclewiki.org&sz=64" alt="Musclewiki" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=MW'">
+            <div class="tool-name">Musclewiki</div>
+          </div>
+          <div class="tool-description">Encyclopédie interactive des exercices de musculation par groupe musculaire.</div>
+          <a href="https://musclewiki.org/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=flightaware.com&sz=64" alt="FlightAware" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=FA'">
+            <div class="tool-name">FlightAware</div>
+          </div>
+          <div class="tool-description">Suivi en temps réel des vols et statut des aéroports dans le monde.</div>
+          <a href="https://flightaware.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=vesselfinder.com&sz=64" alt="Vesselfinder" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=VF'">
+            <div class="tool-name">Vesselfinder</div>
+          </div>
+          <div class="tool-description">Suivi en direct des navires et bateaux sur les océans et voies navigables.</div>
+          <a href="https://www.vesselfinder.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=leolabs.space&sz=64" alt="Leolabs Space" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=LS'">
+            <div class="tool-name">Leolabs Space</div>
+          </div>
+          <div class="tool-description">Suivi des satellites et débris spatiaux en orbite terrestre.</div>
+          <a href="https://www.leolabs.space/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=carcarekiosk.com&sz=64" alt="CarCareKiosk" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=CK'">
+            <div class="tool-name">CarCareKiosk</div>
+          </div>
+          <div class="tool-description">Guide d'entretien automobile avec rappels et procédures détaillées.</div>
+          <a href="https://www.carcarekiosk.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=atlasobscura.com&sz=64" alt="Atlas Obscura" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=AO'">
+            <div class="tool-name">Atlas Obscura</div>
+          </div>
+          <div class="tool-description">Découvrez des lieux insolites et extraordinaires à travers le monde.</div>
+          <a href="https://www.atlasobscura.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=123apps.com&sz=64" alt="123apps" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=12'">
+            <div class="tool-name">123apps</div>
+          </div>
+          <div class="tool-description">Suite d'outils en ligne pour audio/vidéo (conversion, découpage, etc.).</div>
+          <a href="https://123apps.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=smashmail.com&sz=64" alt="Smash" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=SM'">
+            <div class="tool-name">Smash</div>
+          </div>
+          <div class="tool-description">Transfert de fichiers volumineux avec lien de téléchargement temporaire.</div>
+          <a href="https://en.smashmail.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=kozikaza.com&sz=64" alt="Kozikaza" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=KZ'">
+            <div class="tool-name">Kozikaza</div>
+          </div>
+          <div class="tool-description">Logiciel en ligne de plan d'intérieur et design d'espace 3D.</div>
+          <a href="https://kozikaza.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=geo-fs.com&sz=64" alt="Geo-fs" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=GF'">
+            <div class="tool-name">Geo-fs</div>
+          </div>
+          <div class="tool-description">Simulateur de vol en ligne avec cartographie réaliste.</div>
+          <a href="https://www.geo-fs.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=seostudio.tools&sz=64" alt="SEO Studio Tools" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=ST'">
+            <div class="tool-name">SEO Studio Tools</div>
+          </div>
+          <div class="tool-description">Collection d'outils pour l'optimisation SEO et l'analyse de sites web.</div>
+          <a href="https://seostudio.tools/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=omnicalculator.com&sz=64" alt="Omni Calculator" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=OC'">
+            <div class="tool-name">Omni Calculator</div>
+          </div>
+          <div class="tool-description">Collection de calculateurs spécialisés pour tous les besoins.</div>
+          <a href="https://www.omnicalculator.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=whereby.com&sz=64" alt="Whereby" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=WB'">
+            <div class="tool-name">Whereby</div>
+          </div>
+          <div class="tool-description">Solution de visioconférence simple sans nécessiter de téléchargement.</div>
+          <a href="https://whereby.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=vocalremover.org&sz=64" alt="Vocal Remover" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=VR'">
+            <div class="tool-name">Vocal Remover</div>
+          </div>
+          <div class="tool-description">Sépare les voix des instruments dans n'importe quelle chanson.</div>
+          <a href="https://vocalremover.org/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=cleanup.pictures&sz=64" alt="Cleanup.picture" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=CP'">
+            <div class="tool-name">Cleanup.picture</div>
+          </div>
+          <div class="tool-description">Supprimez des éléments indésirables de vos photos en un clic.</div>
+          <a href="https://cleanup.pictures/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=retoucher.online&sz=64" alt="Retoucher.online" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=RO'">
+            <div class="tool-name">Retoucher.online</div>
+          </div>
+          <div class="tool-description">Suite complète de retouche photo directement dans le navigateur.</div>
+          <a href="https://retoucher.online/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=subshort.com&sz=64" alt="Subshort" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=SS'">
+            <div class="tool-name">Subshort</div>
+          </div>
+          <div class="tool-description">Outil pour créer des sous-titres stylisés pour vos vidéos.</div>
+          <a href="https://subshort.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=supercook.com&sz=64" alt="Supercook" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=SC'">
+            <div class="tool-name">Supercook</div>
+          </div>
+          <div class="tool-description">Trouvez des recettes en fonction des ingrédients que vous avez déjà.</div>
+          <a href="https://www.supercook.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Multimédia -->
+    <div class="category">
+      <h2 class="category-title"><i class="fas fa-photo-video"></i> Multimédia</h2>
+      <div class="tools-container">
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=krea.ai&sz=64" alt="Krea" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=KR'">
+            <div class="tool-name">Krea</div>
+          </div>
+          <div class="tool-description">Plateforme de création visuelle alimentée par IA pour designs et illustrations.</div>
+          <a href="https://www.krea.ai/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=windy.com&sz=64" alt="Windy" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=WY'">
+            <div class="tool-name">Windy</div>
+          </div>
+          <div class="tool-description">Visualisation interactive des conditions météorologiques en temps réel.</div>
+          <a href="https://www.windy.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=klap.app&sz=64" alt="Klap" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=KL'">
+            <div class="tool-name">Klap</div>
+          </div>
+          <div class="tool-description">Outil pour transformer vos longs vidéos en clips courts optimisés.</div>
+          <a href="https://klap.app/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=ideogram.ai&sz=64" alt="Ideogram" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=ID'">
+            <div class="tool-name">Ideogram</div>
+          </div>
+          <div class="tool-description">Générateur IA spécialisé dans la création d'images avec texte intégré.</div>
+          <a href="https://ideogram.ai/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=designer.microsoft.com&sz=64" alt="MS Designer" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=MD'">
+            <div class="tool-name">MS Designer</div>
+          </div>
+          <div class="tool-description">Outil de design graphique par Microsoft avec suggestions IA.</div>
+          <a href="https://designer.microsoft.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=speechify.com&sz=64" alt="Speechify" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=SF'">
+            <div class="tool-name">Speechify</div>
+          </div>
+          <div class="tool-description">Transformez n'importe quel texte en audio avec des voix naturelles.</div>
+          <a href="https://speechify.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=nimvideo.com&sz=64" alt="Nim video" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=NV'">
+            <div class="tool-name">Nim video</div>
+          </div>
+          <div class="tool-description">Éditeur vidéo en ligne avec fonctionnalités avancées de montage.</div>
+          <a href="https://nimvideo.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=wegic.com&sz=64" alt="Wegic" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=WG'">
+            <div class="tool-name">Wegic</div>
+          </div>
+          <div class="tool-description">Solution tout-en-un pour création et gestion de contenus multimédias.</div>
+          <a href="https://wegic.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=fontspace.com&sz=64" alt="Font Space" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=FS'">
+            <div class="tool-name">Font Space</div>
+          </div>
+          <div class="tool-description">Bibliothèque de polices d'écriture gratuites pour tous vos projets.</div>
+          <a href="https://www.fontspace.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=iconscout.com&sz=64" alt="Icon Scout" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=IS'">
+            <div class="tool-name">Icon Scout</div>
+          </div>
+          <div class="tool-description">Collection d'icônes et illustrations vectorielles premium et gratuites.</div>
+          <a href="https://iconscout.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=futurepedia.io&sz=64" alt="Futurepedia" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=FP'">
+            <div class="tool-name">Futurepedia</div>
+          </div>
+          <div class="tool-description">Annuaire des meilleurs outils IA classés par catégories.</div>
+          <a href="https://www.futurepedia.io/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Divers -->
+    <div class="category">
+      <h2 class="category-title"><i class="fas fa-ellipsis-h"></i> Divers</h2>
+      <div class="tools-container">
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=cvboost.fr&sz=64" alt="CVboost" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=CV'">
+            <div class="tool-name">CVboost</div>
+          </div>
+          <div class="tool-description">Optimisez votre CV pour qu'il passe les systèmes de tracking des recruteurs.</div>
+          <a href="https://www.cvboost.fr/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=loecsen.com&sz=64" alt="Loecsen" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=LC'">
+            <div class="tool-name">Loecsen</div>
+          </div>
+          <div class="tool-description">Apprentissage de langues étrangères avec phrases pratiques et prononciation.</div>
+          <a href="https://www.loecsen.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=geneanet.org&sz=64" alt="Geneanet" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=GN'">
+            <div class="tool-name">Geneanet</div>
+          </div>
+          <div class="tool-description">Plateforme de généalogie pour retracer son arbre familial et son histoire.</div>
+          <a href="https://www.geneanet.org/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=pfpmaker.com&sz=64" alt="Pfpmaker" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=PM'">
+            <div class="tool-name">Pfpmaker</div>
+          </div>
+          <div class="tool-description">Créez une photo de profil professionnelle à partir de n'importe quelle image.</div>
+          <a href="https://pfpmaker.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=pfpmaker.com&sz=64" alt="Profilpickmaker" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=PP'">
+            <div class="tool-name">Profilpickmaker</div>
+          </div>
+          <div class="tool-description">Alternative pour créer des photos de profil parfaitement cadrées.</div>
+          <a href="https://pfpmaker.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=gardena.com&sz=64" alt="Gardena" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=GD'">
+            <div class="tool-name">Gardena</div>
+          </div>
+          <div class="tool-description">Conseils et outils pour l'aménagement et l'entretien de votre jardin.</div>
+          <a href="https://www.gardena.com/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-header">
+            <img src="https://www.google.com/s2/favicons?domain=stainsolutions.com.au&sz=64" alt="Stain Solutions" class="tool-logo" onerror="this.onerror=null;this.src='https://via.placeholder.com/30/000000/ffffff?text=SS'">
+            <div class="tool-name">Stain Solutions</div>
+          </div>
+          <div class="tool-description">Guide pour enlever toutes sortes de taches sur différents textiles.</div>
+          <a href="https://stainsolutions.com.au/" class="tool-link" target="_blank">Accéder</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function filterTools() {
+      const input = document.getElementById('searchInput');
+      const filter = input.value.toUpperCase();
+      const toolCards = document.querySelectorAll('.tool-card');
+      
+      toolCards.forEach(card => {
+        const name = card.querySelector('.tool-name').textContent.toUpperCase();
+        const description = card.querySelector('.tool-description').textContent.toUpperCase();
+        if (name.includes(filter) || description.includes(filter)) {
+          card.style.display = "";
+        } else {
+          card.style.display = "none";
+        }
+      });
+      
+      // Masquer les catégories vides
+      document.querySelectorAll('.category').forEach(category => {
+        const visibleTools = category.querySelectorAll('.tool-card[style=""]').length;
+        const visibleTools2 = category.querySelectorAll('.tool-card:not([style])').length;
+        
+        if (visibleTools === 0 && visibleTools2 === 0) {
+          category.style.display = "none";
+        } else {
+          category.style.display = "";
+        }
+      });
+    }
+  </script>
+</body>
+</html>

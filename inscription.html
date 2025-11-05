@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscription aux Cours en Ligne - NEBULA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="script-ins.js"></script>
+  <style>
+    :root {
+      --primary-color: #000000;
+      --secondary-color: #7F6B00;
+      --accent-color: #B8941F;
+      --gold-light: #D4AF37;
+      --gold-dark: #5D4A00;
+      --text-color: #ffffff;
+      --text-light: #cccccc;
+      --bg-dark: #0a0a0a;
+      --card-bg: rgba(15, 15, 15, 0.9);
+      --border: rgba(127, 107, 0, 0.3);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--text-color);
+      position: relative;
+    }
+
+    /* Effets de particules */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      background: var(--gold-light);
+      border-radius: 50%;
+      opacity: 0;
+      animation: floatParticle 8s infinite linear;
+    }
+
+    @keyframes floatParticle {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+
+    /* Bouton retour */
+    .back-button {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      background: rgba(15, 15, 15, 0.8);
+      color: var(--gold-light);
+      border: 1px solid rgba(127, 107, 0, 0.5);
+      padding: 12px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--transition);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-button:hover {
+      background: rgba(127, 107, 0, 0.2);
+      transform: translateX(-5px);
+      border-color: var(--gold-light);
+    }
+
+    .container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 40px;
+      width: 100%;
+      max-width: 900px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--secondary-color), var(--gold-light));
+    }
+
+    .container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.05), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .container:hover::after {
+      left: 100%;
+    }
+
+    h3 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--accent-color) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      padding-bottom: 15px;
+      text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+    }
+
+    h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--secondary-color), var(--gold-light));
+      border-radius: 2px;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 25px;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      flex: 1;
+    }
+
+    .form-group.full-width {
+      flex: 0 0 100%;
+    }
+
+    label {
+      display: block;
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: var(--gold-light);
+    }
+
+    .input-field {
+      position: relative;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 1.1rem;
+      transition: var(--transition);
+      background-color: rgba(30, 30, 30, 0.7);
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text-color);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--gold-light);
+      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+      background-color: rgba(40, 40, 40, 0.8);
+    }
+
+    .input-icon {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold-light);
+      font-size: 1.1rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 150px;
+    }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23D4AF37' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+      background-size: 16px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 28px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: center;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+      color: var(--text-color);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(127, 107, 0, 0.4);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    .message {
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 1rem;
+      text-align: center;
+      font-weight: 500;
+      border-left: 5px solid;
+    }
+
+    .success {
+      background-color: rgba(56, 176, 0, 0.15);
+      color: #38b000;
+      border-color: #38b000;
+    }
+
+    .error {
+      background-color: rgba(255, 65, 108, 0.15);
+      color: #ff416c;
+      border-color: #ff416c;
+    }
+
+    .checkbox-group, .matieres-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .checkbox-item, .matiere-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background-color: rgba(30, 30, 30, 0.7);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+
+    .checkbox-item:hover, .matiere-item:hover {
+      border-color: var(--gold-light);
+      background-color: rgba(40, 40, 40, 0.8);
+    }
+
+    input[type="checkbox"] {
+      width: auto;
+      transform: scale(1.2);
+      accent-color: var(--gold-light);
+    }
+
+    @media (max-width: 768px) {
+      .form-row {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .container {
+        padding: 30px 20px;
+      }
+      
+      h3 {
+        font-size: 2rem;
+      }
+      
+      .checkbox-group, .matieres-group {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .back-button {
+        top: 20px;
+        left: 20px;
+        padding: 10px 20px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 25px 15px;
+      }
+      
+      h3 {
+        font-size: 1.8rem;
+      }
+      
+      input, select, textarea {
+        padding: 14px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Effets de particules -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Bouton retour -->
+  <a href="index.html" class="back-button">
+    <i class="fas fa-arrow-left"></i>
+    Retour à l'accueil
+  </a>
+
+  <div class="container">
+    <h3><i class="fas fa-graduation-cap"></i> Inscription aux Cours en Ligne</h3>
+    
+    <form id="inscriptionForm">
+      <!-- Informations personnelles -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="prenom">Prénom*</label>
+          <div class="input-field">
+            <input type="text" id="prenom" name="prenom" required>
+            <i class="fas fa-user input-icon"></i>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="nom">Nom*</label>
+          <div class="input-field">
+            <input type="text" id="nom" name="nom" required>
+            <i class="fas fa-user input-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">Email*</label>
+          <div class="input-field">
+            <input type="email" id="email" name="email" required>
+            <i class="fas fa-envelope input-icon"></i>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="telephone">Téléphone*</label>
+          <div class="input-field">
+            <input type="tel" id="telephone" name="telephone" required>
+            <i class="fas fa-phone input-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Niveau scolaire -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="niveau">Niveau scolaire*</label>
+          <select id="niveau" name="niveau" required>
+            <option value="">Sélectionnez votre niveau</option>
+            <option value="Lycée">Lycée</option>
+            <option value="Collège">Collège</option>
+            <option value="Primaire">Primaire</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="classe">Classe*</label>
+          <select id="classe" name="classe" required disabled>
+            <option value="">Sélectionnez d'abord le niveau</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Type de cours -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="type_cours">Type de cours*</label>
+          <select id="type_cours" name="type_cours" required>
+            <option value="">Sélectionnez un type</option>
+            <option value="Scolaire">Renforcement</option>
+            <option value="Informatique">Informatique</option>
+            <option value="Les deux">Les deux</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Matières (affichage conditionnel) -->
+      <div class="form-row" id="matieresContainer" style="display:none;">
+        <div class="form-group full-width">
+          <label>Matières*</label>
+          <div class="matieres-group" id="matieresGroup">
+            <!-- Les cases à cocher seront ajoutées dynamiquement -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Cours informatique -->
+      <div class="form-row" id="informatiqueContainer" style="display:none;">
+        <div class="form-group">
+          <label for="cours_info">Cours d'informatique*</label>
+          <select id="cours_info" name="cours_info">
+            <option value="">Sélectionnez un cours</option>
+            <option value="Bureautique">Bureautique (Word, Excel...)</option>
+            <option value="Programmation">Programmation</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Disponibilités -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="frequence">Fréquence souhaitée*</label>
+          <select id="frequence" name="frequence" required>
+            <option value="">Sélectionnez une fréquence</option>
+            <option value="Ponctuel">Ponctuel</option>
+            <option value="1h/semaine">1h/semaine</option>
+            <option value="2h/semaine">2h/semaine</option>
+            <option value="3h/semaine">3h/semaine</option>
+            <option value="4h/semaine">4h/semaine</option>
+            <option value="5h/semaine">5h/semaine</option>
+            <option value="6h+/semaine">6h+/semaine</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label>Jours de disponibilité*</label>
+          <div class="checkbox-group">
+            <div class="checkbox-item">
+              <input type="checkbox" id="lundi" name="disponibilites" value="Lundi">
+              <label for="lundi">Lundi</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="mardi" name="disponibilites" value="Mardi">
+              <label for="mardi">Mardi</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="mercredi" name="disponibilites" value="Mercredi">
+              <label for="mercredi">Mercredi</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="jeudi" name="disponibilites" value="Jeudi">
+              <label for="jeudi">Jeudi</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="vendredi" name="disponibilites" value="Vendredi">
+              <label for="vendredi">Vendredi</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="samedi" name="disponibilites" value="Samedi">
+              <label for="samedi">Samedi</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="dimanche" name="disponibilites" value="Dimanche">
+              <label for="dimanche">Dimanche</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Message -->
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="message">Informations complémentaires</label>
+          <textarea id="message" name="message" placeholder="Précisez vos besoins, objectifs, ou toute autre information utile..."></textarea>
+        </div>
+      </div>
+
+      <!-- Bouton -->
+      <div class="form-row">
+        <div class="form-group full-width">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-paper-plane"></i> Envoyer l'inscription
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div id="responseMessage" class="message"></div>
+  </div>
+
+  <script>
+    // Création des particules animées
+    document.addEventListener('DOMContentLoaded', function() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 15;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        const size = Math.random() * 3 + 1;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.animationDelay = `${Math.random() * 8}s`;
+        particle.style.animationDuration = `${Math.random() * 10 + 8}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
+    });
+
+    // Données des classes par niveau
+    const classesParNiveau = {
+      'Lycée': ['Terminale', 'Première', 'Seconde'],
+      'Collège': ['Troisième', 'Quatrième', 'Cinquième', 'Sixième'],
+      'Primaire': ['CM2', 'CM1', 'CE2', 'CE1', 'CP'],
+      'Autre': ['Autre']
+    };
+
+    // Données des matières par type de cours
+    const matieresParType = {
+      'Scolaire': ['Mathématiques', 'Français', 'Physique-Chimie', 'SVT', 'Histoire-Géographie', 'Anglais', 'Autre langue', 'Philosophie'],
+      'Informatique': ['Bureautique', 'Programmation', 'Autre'],
+      'Les deux': ['Mathématiques', 'Français', 'Physique-Chimie', 'SVT', 'Histoire-Géographie', 'Anglais', 'Autre langue', 'Philosophie', 'Autre']
+    };
+
+    // Gestion du changement de niveau
+    document.getElementById('niveau').addEventListener('change', function() {
+      const niveau = this.value;
+      const classeSelect = document.getElementById('classe');
+      
+      // Réinitialiser les options
+      classeSelect.innerHTML = '<option value="">Sélectionnez votre classe</option>';
+      
+      if (niveau && classesParNiveau[niveau]) {
+        // Activer le select
+        classeSelect.disabled = false;
+        
+        // Ajouter les options correspondantes
+        classesParNiveau[niveau].forEach(classe => {
+          const option = document.createElement('option');
+          option.value = classe;
+          option.textContent = classe;
+          classeSelect.appendChild(option);
+        });
+      } else {
+        // Désactiver si aucun niveau sélectionné
+        classeSelect.disabled = true;
+        classeSelect.innerHTML = '<option value="">Sélectionnez d\'abord le niveau</option>';
+      }
+    });
+
+    // Gestion du changement de type de cours
+    document.getElementById('type_cours').addEventListener('change', function() {
+      const type = this.value;
+      const matieresContainer = document.getElementById('matieresContainer');
+      const matieresGroup = document.getElementById('matieresGroup');
+      const infoContainer = document.getElementById('informatiqueContainer');
+      
+      // Réinitialiser les options
+      matieresGroup.innerHTML = '';
+      matieresContainer.style.display = 'none';
+      infoContainer.style.display = 'none';
+      
+      if (type === 'Scolaire' || type === 'Les deux') {
+        matieresContainer.style.display = 'block';
+        
+        // Ajouter les cases à cocher correspondantes
+        matieresParType[type].forEach(matiere => {
+          const id = 'matiere-' + matiere.toLowerCase().replace(/[^a-z0-9]/g, '-');
+          
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'matiere-item';
+          
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.id = id;
+          checkbox.name = 'matieres';
+          checkbox.value = matiere;
+          
+          const label = document.createElement('label');
+          label.htmlFor = id;
+          label.textContent = matiere;
+          
+          itemDiv.appendChild(checkbox);
+          itemDiv.appendChild(label);
+          matieresGroup.appendChild(itemDiv);
+        });
+      }
+      
+      if (type === 'Informatique' || type === 'Les deux') {
+        infoContainer.style.display = 'block';
+      }
+    });
+
+    // Envoi du formulaire
+    document.getElementById('inscriptionForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.querySelector('.btn-primary');
+      const originalBtnText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+      submitBtn.disabled = true;
+      
+      // Récupérer les matières sélectionnées
+      const matieresSelectionnees = Array.from(document.querySelectorAll('input[name="matieres"]:checked'))
+                                   .map(checkbox => checkbox.value)
+                                   .join(', ');
+      
+      // Récupérer les jours sélectionnés
+      const joursSelectionnes = Array.from(document.querySelectorAll('input[name="disponibilites"]:checked'))
+                                   .map(checkbox => checkbox.value)
+                                   .join(', ');
+      
+      const formData = {
+        prenom: document.getElementById('prenom').value,
+        nom: document.getElementById('nom').value,
+        email: document.getElementById('email').value,
+        telephone: document.getElementById('telephone').value,
+        niveau: document.getElementById('niveau').value,
+        classe: document.getElementById('classe').value,
+        type_cours: document.getElementById('type_cours').value,
+        matieres: matieresSelectionnees,
+        cours_info: document.getElementById('cours_info').value || 'Non applicable',
+        frequence: document.getElementById('frequence').value,
+        disponibilites: joursSelectionnes || 'Non spécifié',
+        message: document.getElementById('message').value || 'Aucune information supplémentaire',
+        date: new Date().toLocaleString('fr-FR')
+      };
+      
+      // Validation supplémentaire
+      if (!formData.classe || formData.classe === "") {
+        showMessage("Veuillez sélectionner votre classe", false);
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+        return;
+      }
+      
+      if ((formData.type_cours === 'Scolaire' || formData.type_cours === 'Les deux') && !matieresSelectionnees) {
+        showMessage("Veuillez sélectionner au moins une matière", false);
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+        return;
+      }
+      
+      if (!joursSelectionnes) {
+        showMessage("Veuillez sélectionner au moins un jour de disponibilité", false);
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+        return;
+      }
+      
+      if ((formData.type_cours === 'Informatique' || formData.type_cours === 'Les deux') && !formData.cours_info) {
+        showMessage("Veuillez sélectionner un cours d'informatique", false);
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+        return;
+      }
+      
+      // Simulation d'envoi (remplacez par votre logique réelle)
+      setTimeout(() => {
+        showMessage("✅ Inscription envoyée avec succès ! Nous vous contacterons rapidement.", true);
+        document.getElementById('inscriptionForm').reset();
+        document.getElementById('classe').disabled = true;
+        document.getElementById('matieresContainer').style.display = 'none';
+        document.getElementById('informatiqueContainer').style.display = 'none';
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+      }, 2000);
+    });
+
+    function showMessage(message, isSuccess) {
+      const responseElement = document.getElementById('responseMessage');
+      responseElement.textContent = message;
+      responseElement.className = isSuccess ? "message success" : "message error";
+      
+      setTimeout(() => {
+        responseElement.textContent = '';
+        responseElement.className = "message";
+      }, 5000);
+    }
+  </script>
+</body>
+</html>

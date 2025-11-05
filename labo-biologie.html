@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratoire Virtuel - NEBULA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      :root {
+        --primary-color: #000000;
+        --secondary-color: #7F6B00;
+        --accent-color: #B8941F;
+        --gold-light: #D4AF37;
+        --gold-dark: #5D4A00;
+        --text-color: #ffffff;
+        --text-light: #cccccc;
+        --bg-dark: #0a0a0a;
+        --card-bg: rgba(15, 15, 15, 0.9);
+        --biology-color: #2ECC71;
+        --geology-color: #E67E22;
+        --ai-color: #4361ee;
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Montserrat', 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        color: var(--text-color);
+        position: relative;
+        overflow-x: hidden;
+        padding: 40px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      /* Effets de particules dorées */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .particle {
+        position: absolute;
+        background: var(--gold-light);
+        border-radius: 50%;
+        opacity: 0;
+        animation: floatParticle 8s infinite linear;
+      }
+
+      @keyframes floatParticle {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.3;
+        }
+        90% {
+          opacity: 0.3;
+        }
+        100% {
+          transform: translateY(-100px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      .container {
+        max-width: 1200px;
+        width: 100%;
+        background: var(--card-bg);
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(127, 107, 0, 0.3);
+        backdrop-filter: blur(10px);
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Header élégant */
+      .page-header {
+        text-align: center;
+        padding: 0 0 40px 0;
+        position: relative;
+      }
+
+      .header-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(ellipse at center top, rgba(127, 107, 0, 0.2) 0%, transparent 70%);
+        z-index: -1;
+      }
+
+      h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--gold-light) 0%, var(--accent-color) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 15px;
+        text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .page-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        font-weight: 300;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      /* Badge NEBULA */
+      .nebula-badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
+      }
+
+      .category {
+        margin-bottom: 50px;
+      }
+
+      .category-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: var(--gold-light);
+        margin: 40px 0 25px;
+        padding-left: 15px;
+        border-left: 4px solid;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+      }
+
+      .biology { border-left-color: var(--biology-color); }
+      .geology { border-left-color: var(--geology-color); }
+      .ai-assistant { border-left-color: var(--ai-color); }
+
+      .category-title i {
+        font-size: 1.8rem;
+      }
+
+      .platforms-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 30px;
+        width: 100%;
+      }
+
+      .platform-card {
+        background: var(--card-bg);
+        border: 1px solid rgba(127, 107, 0, 0.3);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        transition: var(--transition);
+        position: relative;
+        backdrop-filter: blur(10px);
+        animation: fadeInUp 0.6s ease forwards;
+        opacity: 0;
+      }
+
+      .platform-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+        transition: left 0.6s ease;
+      }
+
+      .platform-card:hover::before {
+        left: 100%;
+      }
+
+      .platform-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        border-color: var(--gold-light);
+        box-shadow: 
+          0 15px 40px rgba(127, 107, 0, 0.4),
+          0 0 0 1px rgba(212, 175, 55, 0.1);
+      }
+
+      .platform-header {
+        padding: 30px 20px;
+        text-align: center;
+        position: relative;
+        height: 140px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .biology-bg { 
+        background: #5D4A00;
+        border-bottom: 2px solid rgba(46, 204, 113, 0.5);
+      }
+      .geology-bg { 
+        background: #5D4A00;
+        border-bottom: 2px solid rgba(230, 126, 34, 0.5);
+      }
+      .ai-bg { 
+        background: #5D4A00;
+        border-bottom: 2px solid rgba(67, 97, 238, 0.5);
+      }
+
+      .platform-header img {
+        width: 70px;
+        height: 70px;
+        object-fit: contain;
+        margin-bottom: 15px;
+        filter: brightness(0) invert(1) drop-shadow(0 3px 5px rgba(0,0,0,0.3));
+        transition: var(--transition);
+      }
+
+      .platform-card:hover .platform-header img {
+        transform: scale(1.1) rotate(5deg);
+      }
+
+      .platform-name {
+        font-weight: 600;
+        font-size: 1.3rem;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+
+      .platform-body {
+        padding: 25px;
+        background: transparent;
+      }
+
+      .tag {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(255,255,255,0.9);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        color: #333;
+      }
+
+      .platform-desc {
+        font-size: 0.95rem;
+        color: var(--text-light);
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+
+      .platform-features {
+        font-size: 0.85rem;
+        color: var(--text-light);
+        margin-bottom: 25px;
+        line-height: 1.6;
+      }
+
+      .platform-features div {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .platform-features i {
+        color: var(--gold-light);
+        margin-right: 10px;
+        margin-top: 2px;
+        flex-shrink: 0;
+      }
+
+      .platform-link {
+        display: block;
+        text-align: center;
+        padding: 12px 20px;
+        background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 500;
+        transition: var(--transition);
+        border: 1px solid rgba(127, 107, 0, 0.5);
+        box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
+      }
+
+      .platform-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(127, 107, 0, 0.5);
+        text-decoration: none;
+        color: white;
+      }
+
+      .platform-link i {
+        margin-left: 8px;
+      }
+
+      /* Animation d'entrée */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Délais d'animation pour chaque carte */
+      .platform-card:nth-child(1) { animation-delay: 0.1s; }
+      .platform-card:nth-child(2) { animation-delay: 0.2s; }
+      .platform-card:nth-child(3) { animation-delay: 0.3s; }
+      .platform-card:nth-child(4) { animation-delay: 0.4s; }
+      .platform-card:nth-child(5) { animation-delay: 0.5s; }
+      .platform-card:nth-child(6) { animation-delay: 0.6s; }
+      .platform-card:nth-child(7) { animation-delay: 0.7s; }
+      .platform-card:nth-child(8) { animation-delay: 0.8s; }
+      .platform-card:nth-child(9) { animation-delay: 0.9s; }
+
+      /* Bouton retour */
+      .back-button {
+        position: fixed;
+        top: 30px;
+        left: 30px;
+        background: rgba(15, 15, 15, 0.8);
+        color: var(--gold-light);
+        border: 1px solid rgba(127, 107, 0, 0.5);
+        padding: 12px 25px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: var(--transition);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .back-button:hover {
+        background: rgba(127, 107, 0, 0.2);
+        transform: translateX(-5px);
+        border-color: var(--gold-light);
+        color: var(--gold-light);
+        text-decoration: none;
+      }
+
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .platforms-grid {
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 25px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 20px;
+          margin: 20px;
+        }
+        
+        h1 {
+          font-size: 2.2rem;
+          flex-direction: column;
+          gap: 10px;
+        }
+        
+        .platforms-grid {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 20px;
+        }
+        
+        .platform-header {
+          height: 120px;
+          padding: 20px 15px;
+        }
+        
+        .platform-header img {
+          width: 60px;
+          height: 60px;
+        }
+        
+        .back-button {
+          top: 20px;
+          left: 20px;
+          padding: 10px 20px;
+          font-size: 12px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 10px;
+        }
+        
+        .container {
+          padding: 25px 15px;
+        }
+        
+        h1 {
+          font-size: 1.8rem;
+        }
+        
+        .page-subtitle {
+          font-size: 0.9rem;
+        }
+        
+        .platforms-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .platform-header {
+          height: 110px;
+          padding: 15px 10px;
+        }
+        
+        .platform-header img {
+          width: 50px;
+          height: 50px;
+        }
+        
+        .platform-body {
+          padding: 20px 15px;
+        }
+        
+        .back-button {
+          top: 15px;
+          left: 15px;
+          padding: 8px 15px;
+          font-size: 11px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Effets de particules -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Bouton retour à l'accueil -->
+    <a href="./index.html" class="back-button">
+      <i class="fas fa-arrow-left"></i>
+      Retour à l'accueil
+    </a>
+
+    <div class="container">
+      <!-- Header de la page -->
+      <header class="page-header">
+        <div class="header-bg"></div>
+        <h1><i class="fas fa-flask"></i> Laboratoire Virtuel</h1>
+        <p class="page-subtitle">Biologie - Géologie - Assistants IA</p>
+        <div class="nebula-badge">NEBULA</div>
+      </header>
+
+      <!-- Nouvelle catégorie pour les assistants IA -->
+      <div class="category">
+        <div class="category-title ai-assistant"><i class="fas fa-robot"></i> Assistants IA Scientifiques</div>
+        <div class="platforms-grid">
+          <div class="platform-card">
+            <div class="platform-header ai-bg">
+              <img src="https://cdn-icons-png.flaticon.com/512/9626/9626716.png" alt="Lovable">
+              <div class="platform-name">Lovable</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Apprentissage</div>
+              <div class="platform-desc">
+                Assistant IA conversationnel spécialisé dans l'aide aux devoirs scientifiques et l'apprentissage interactif.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Explications détaillées</div>
+                <div><i class="fas fa-check-circle"></i> Résolution de problèmes</div>
+                <div><i class="fas fa-check-circle"></i> Approche pédagogique</div>
+              </div>
+              <a href="https://lovable.dev/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="category-title biology"><i class="fas fa-dna"></i> Biologie Expérimentale</div>
+        <div class="platforms-grid">
+          <div class="platform-card">
+            <div class="platform-header biology-bg">
+              <img src="https://cdn-icons-png.flaticon.com/512/1995/1995599.png" alt="BioInteractive">
+              <div class="platform-name">BioInteractive</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Simulations</div>
+              <div class="platform-desc">
+                Ressources multimédias pour explorer la biologie évolutive, l'écologie et la génétique.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Animations moléculaires</div>
+                <div><i class="fas fa-check-circle"></i> Données réelles</div>
+                <div><i class="fas fa-check-circle"></i> Activités interactives</div>
+              </div>
+              <a href="https://www.biointeractive.org/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+
+          <div class="platform-card">
+            <div class="platform-header biology-bg">
+              <img src="https://cdn-icons-png.flaticon.com/512/1995/1995599.png" alt="Virtual Biology Lab">
+              <div class="platform-name">Virtual Biology Lab</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Laboratoire complet</div>
+              <div class="platform-desc">
+                Simulations d'expériences d'écologie, génétique et biologie cellulaire.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Écosystèmes virtuels</div>
+                <div><i class="fas fa-check-circle"></i> Microscope virtuel</div>
+                <div><i class="fas fa-check-circle"></i> Modèles évolutifs</div>
+              </div>
+              <a href="https://virtualbiologylab.org/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+
+          <div class="platform-card">
+            <div class="platform-header biology-bg">
+              <img src="https://cdn-icons-png.flaticon.com/512/1995/1995599.png" alt="Bioman Biology">
+              <div class="platform-name">Bioman Biology</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Jeux éducatifs</div>
+              <div class="platform-desc">
+                Plateforme de jeux sérieux pour apprendre la biologie de manière ludique.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Quiz interactifs</div>
+                <div><i class="fas fa-check-circle"></i> Simulations cellulaires</div>
+                <div><i class="fas fa-check-circle"></i> Défis scientifiques</div>
+              </div>
+              <a href="https://biomanbio.com/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+
+          <div class="platform-card">
+            <div class="platform-header biology-bg">
+              <img src="https://cdn-icons-png.flaticon.com/512/1995/1995599.png" alt="Cell Collective">
+              <div class="platform-name">Cell Collective</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Modélisation</div>
+              <div class="platform-desc">
+                Créez et simulez des réseaux biologiques complexes (métabolisme, signalisation).
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Interface visuelle</div>
+                <div><i class="fas fa-check-circle"></i> Banque de modèles</div>
+                <div><i class="fas fa-check-circle"></i> Outils d'analyse</div>
+              </div>
+              <a href="https://cellcollective.org/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+
+          <div class="platform-card">
+            <div class="platform-header biology-bg">
+              <img src="https://cdn-icons-png.flaticon.com/512/1995/1995599.png" alt="PhET Simulations">
+              <div class="platform-name">PhET Simulations</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Interactif</div>
+              <div class="platform-desc">
+                Simulations scientifiques interactives pour la biologie et autres sciences.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Biologie moléculaire</div>
+                <div><i class="fas fa-check-circle"></i> Génétique</div>
+                <div><i class="fas fa-check-circle"></i> Écologie</div>
+              </div>
+              <a href="https://phet.colorado.edu/fr/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="category">
+        <div class="category-title geology"><i class="fas fa-mountain"></i> Géologie Expérimentale</div>
+        <div class="platforms-grid">
+          <div class="platform-card">
+            <div class="platform-header geology-bg">
+              <img src="https://cdn-icons-png.flaticon.com/512/1995/1995599.png" alt="Virtual Geology">
+              <div class="platform-name">Virtual Geology</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Exploration 3D</div>
+              <div class="platform-desc">
+                Collection de roches et minéraux en 3D avec outils d'analyse virtuels.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Microscopie pétrographique</div>
+                <div><i class="fas fa-check-circle"></i> Clés d'identification</div>
+                <div><i class="fas fa-check-circle"></i> Cartes géologiques</div>
+              </div>
+              <a href="https://www.virtual-geology.info/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+
+          <div class="platform-card">
+            <div class="platform-header geology-bg">
+              <img src="https://cdn-icons-png.flaticon.com/512/1995/1995599.png" alt="Google Earth">
+              <div class="platform-name">Google Earth</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Géologie terrain</div>
+              <div class="platform-desc">
+                Explorez les formations géologiques mondiales avec couches scientifiques.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Voyages géologiques</div>
+                <div><i class="fas fa-check-circle"></i> Modèles 3D</div>
+                <div><i class="fas fa-check-circle"></i> Données satellites</div>
+              </div>
+              <a href="https://earth.google.com/web/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+
+          <div class="platform-card">
+            <div class="platform-header geology-bg">
+              <img src="https://cdn-icons-png.flaticon.com/512/1995/1995599.png" alt="USGS Simulations">
+              <div class="platform-name">USGS Simulations</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Phénomènes naturels</div>
+              <div class="platform-desc">
+                Modèles interactifs de tremblements de terre, volcans et processus géologiques.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Sismicité en temps réel</div>
+                <div><i class="fas fa-check-circle"></i> Éruptions volcaniques</div>
+                <div><i class="fas fa-check-circle"></i> Cycle des roches</div>
+              </div>
+              <a href="https://www.usgs.gov/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+
+          <div class="platform-card">
+            <div class="platform-header geology-bg">
+              <img src="https://cdn-icons-png.flaticon.com/512/1995/1995599.png" alt="Rockd">
+              <div class="platform-name">Rockd</div>
+            </div>
+            <div class="platform-body">
+              <div class="tag">Application mobile</div>
+              <div class="platform-desc">
+                Outil de terrain virtuel pour identifier roches et fossiles avec réalité augmentée.
+              </div>
+              <div class="platform-features">
+                <div><i class="fas fa-check-circle"></i> Carte géologique interactive</div>
+                <div><i class="fas fa-check-circle"></i> Base de données complète</div>
+                <div><i class="fas fa-check-circle"></i> Outils de mesure</div>
+              </div>
+              <a href="https://rockd.org/" class="platform-link" target="_blank">Accéder <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Création des particules animées
+      document.addEventListener('DOMContentLoaded', function() {
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 20;
+        
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          
+          const size = Math.random() * 4 + 1;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.animationDelay = `${Math.random() * 8}s`;
+          particle.style.animationDuration = `${Math.random() * 10 + 8}s`;
+          
+          particlesContainer.appendChild(particle);
+        }
+
+        // Animation des cartes
+        const platformCards = document.querySelectorAll('.platform-card');
+        platformCards.forEach((card, index) => {
+          card.style.animationDelay = `${(index % 9) * 0.1}s`;
+        });
+      });
+    </script>
+  </body>
+</html>
