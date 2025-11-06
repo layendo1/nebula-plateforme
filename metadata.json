@@ -1,0 +1,7 @@
+{
+  "name": "Assistant Nebula",
+  "description": "Votre assistant pour accéder à des ressources éducatives numériques sur senprof",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

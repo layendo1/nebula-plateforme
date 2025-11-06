@@ -30,16 +30,13 @@
     body {
       font-family: 'Montserrat', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
       background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
-      color: var(--primary-color);
+      color: var(--text-color);
       min-height: 100vh;
       line-height: 1.6;
       position: relative;
       overflow-x: hidden;
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
     }
 
     /* Effets de particules dorées */
@@ -78,8 +75,24 @@
       }
     }
 
+    /* Container principal qui occupe tout l'écran */
+    .main-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+    }
+
+    .content-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
     .container {
-      max-width: 1000px;
+      max-width: 1200px;
       width: 100%;
       background: var(--card-bg);
       padding: 40px 30px;
@@ -283,11 +296,31 @@
       text-decoration: none;
     }
 
+    /* Badge NEBULA */
+    .nebula-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
+      .content-wrapper {
+        padding: 15px;
+      }
+      
       .container {
         padding: 30px 20px;
-        margin: 20px;
+        margin: 0;
       }
       
       h1 {
@@ -324,7 +357,7 @@
     }
 
     @media (max-width: 480px) {
-      body {
+      .content-wrapper {
         padding: 10px;
       }
       
@@ -365,6 +398,18 @@
         font-size: 11px;
       }
     }
+
+    /* Pour les très grands écrans */
+    @media (min-width: 1400px) {
+      .container {
+        max-width: 1300px;
+      }
+      
+      #hiddenButtons {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 30px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -377,63 +422,69 @@
     Retour à l'accueil
   </a>
 
-  <div class="container">
-    <!-- Header de la page -->
-    <header class="page-header">
-      <div class="header-bg"></div>
-      <h1><i class="fas fa-book-open"></i> Les Matières au CI</h1>
-      <p class="page-subtitle">Découvrez les matières de Cours d'Initiation</p>
-    </header>
+  <!-- Container principal qui occupe tout l'écran -->
+  <div class="main-container">
+    <div class="content-wrapper">
+      <div class="container">
+        <!-- Header de la page -->
+        <header class="page-header">
+          <div class="header-bg"></div>
+          <h1><i class="fas fa-book-open"></i> Les Matières au CI</h1>
+          <p class="page-subtitle">Découvrez les matières de Cours d'Initiation</p>
+          <div class="nebula-badge">NEBULA</div>
+        </header>
 
-    <div id="section2">
-      <div id="hiddenButtons">
-        <!-- Mathématique -->
-        <a href="mathematique-ci.html" class="subject-card">
-          <img src="https://cdn-icons-png.flaticon.com/128/4344/4344982.png" alt="Mathématique">
-          <div class="subject-name">Mathématique</div>
-        </a>
-        
-        <!-- Découverte du monde -->
-        <a href="decouverte-monde-ci.html" class="subject-card">
-          <img src="https://cdn-icons-png.flaticon.com/128/6747/6747083.png" alt="Découverte du monde">
-          <div class="subject-name">Découverte du monde</div>
-        </a>
-        
-        <!-- Education au développement durable -->
-        <a href="edd-ci.html" class="subject-card">
-          <img src="https://cdn-icons-png.flaticon.com/128/12619/12619549.png" alt="Education au développement durable">
-          <div class="subject-name">Education au développement durable</div>
-        </a>
-        
-        <!-- Langues nationales -->
-        <a href="langues-nationales-ci.html" class="subject-card">
-          <img src="https://cdn-icons-png.flaticon.com/128/197/197377.png" alt="Langues nationales">
-          <div class="subject-name">Langues nationales</div>
-        </a>
-        
-        <!-- Français -->
-        <a href="francais-ci.html" class="subject-card">
-          <img src="https://cdn-icons-png.flaticon.com/128/197/197560.png" alt="Français">
-          <div class="subject-name">Français</div>
-        </a>
-        
-        <!-- Anglais -->
-        <a href="anglais-ci.html" class="subject-card">
-          <img src="https://cdn-icons-png.flaticon.com/128/8363/8363075.png" alt="Anglais">
-          <div class="subject-name">Anglais</div>
-        </a>
-        
-        <!-- Education religieuse -->
-        <a href="education-religieuse-ci.html" class="subject-card">
-          <img src="https://cdn-icons-png.flaticon.com/128/10265/10265962.png" alt="Education religieuse">
-          <div class="subject-name">Education religieuse</div>
-        </a>
-        
-        <!-- Education artistique -->
-        <a href="education-artistique-ci.html" class="subject-card">
-          <img src="https://cdn-icons-png.flaticon.com/128/15299/15299746.png" alt="Education artistique">
-          <div class="subject-name">Education artistique</div>
-        </a>
+        <div id="section2">
+          <div id="hiddenButtons">
+            <!-- Mathématique -->
+            <a href="mathematique-ci.html" class="subject-card">
+              <img src="https://cdn-icons-png.flaticon.com/128/4344/4344982.png" alt="Mathématique">
+              <div class="subject-name">Mathématique</div>
+            </a>
+            
+            <!-- Découverte du monde -->
+            <a href="decouverte-monde-ci.html" class="subject-card">
+              <img src="https://cdn-icons-png.flaticon.com/128/6747/6747083.png" alt="Découverte du monde">
+              <div class="subject-name">Découverte du monde</div>
+            </a>
+            
+            <!-- Education au développement durable -->
+            <a href="edd-ci.html" class="subject-card">
+              <img src="https://cdn-icons-png.flaticon.com/128/12619/12619549.png" alt="Education au développement durable">
+              <div class="subject-name">Education au développement durable</div>
+            </a>
+            
+            <!-- Langues nationales -->
+            <a href="langues-nationales-ci.html" class="subject-card">
+              <img src="https://cdn-icons-png.flaticon.com/128/197/197377.png" alt="Langues nationales">
+              <div class="subject-name">Langues nationales</div>
+            </a>
+            
+            <!-- Français -->
+            <a href="francais-ci.html" class="subject-card">
+              <img src="https://cdn-icons-png.flaticon.com/128/197/197560.png" alt="Français">
+              <div class="subject-name">Français</div>
+            </a>
+            
+            <!-- Anglais -->
+            <a href="anglais-ci.html" class="subject-card">
+              <img src="https://cdn-icons-png.flaticon.com/128/8363/8363075.png" alt="Anglais">
+              <div class="subject-name">Anglais</div>
+            </a>
+            
+            <!-- Education religieuse -->
+            <a href="education-religieuse-ci.html" class="subject-card">
+              <img src="https://cdn-icons-png.flaticon.com/128/10265/10265962.png" alt="Education religieuse">
+              <div class="subject-name">Education religieuse</div>
+            </a>
+            
+            <!-- Education artistique -->
+            <a href="education-artistique-ci.html" class="subject-card">
+              <img src="https://cdn-icons-png.flaticon.com/128/15299/15299746.png" alt="Education artistique">
+              <div class="subject-name">Education artistique</div>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

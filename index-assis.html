@@ -1,84 +1,318 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
+<html><head>
+    <title>Nebula</title>
+    <link rel="stylesheet" href="styl-assis.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khadija - Assistante SenProf</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&amp;family=Poppins:wght@400;600&amp;display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;🌌&lt;/text&gt;&lt;/svg&gt;">
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/genai": "https://esm.sh/@google/genai@^0.7.0",
+          "marked": "https://esm.sh/marked@^15.0.7"
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .language-buttons {
-            display: flex;
-            gap: 10px;
-            margin: 20px 0;
-        }
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background: #2E8B57;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #256945;
-        }
-    </style>
+      }
+    </script>
+    <script type="module" src="index.tsx"></script>
+  <link rel="stylesheet" href="/index.css">
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Khadija</h1>
-            <p>Votre assistante pour les ressources éducatives numériques sur Senprof</p>
+  <body data-theme="light">
+    <main class="chat-container collapsed" data-text-size="normal">
+      <header>
+        <div class="header-content">
+          <div id="avatar-container" class="avatar">
+            <!-- Avatar SVG will be loaded by index.tsx -->
+          </div>
+          <div class="header-text">
+            <h1 data-translate-key="appTitle">Nebula</h1>
+            <p data-translate-key="appSubtitle">Votre assistant pour la plateforme Nebula</p>
+          </div>
         </div>
-        
-        <div class="welcome-message">
-            <p>Bonjour ! Salaam aleekum ! Yeksil ak jàmm !</p>
-            <p>Je suis Khadija, votre assistante SenProf.</p>
+        <div class="header-controls">
+            <button type="button" id="advanced-search-button" data-translate-key-tooltip="advancedSearch">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+            </button>
+            <button type="button" id="share-button" aria-label="Partager la conversation" title="Partager la conversation">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"></path></svg>
+            </button>
+            <button type="button" id="settings-button" aria-label="Ouvrir les paramètres" title="Ouvrir les paramètres">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                    <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59-1.69.98l2.49 1c.23.09.49 0 .61.22l2-3.46c.12-.22-.07.49-.12.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"></path>
+                </svg>
+            </button>
+            <button type="button" id="help-button" aria-label="Aide" title="Aide">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"></path>
+                </svg>
+            </button>
+            <button type="button" id="minimize-button" aria-label="Réduire la fenêtre" title="Réduire la fenêtre">
+                <svg class="icon-minimize" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                    <path d="M5 11h14v2H5z"></path>
+                </svg>
+                <svg class="icon-restore" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display: none;">
+                    <path d="M3 21V3h18v18H3zm2-2h14V5H5v14z"></path>
+                </svg>
+            </button>
+            <button type="button" id="close-button" aria-label="Fermer la fenêtre" title="Fermer la fenêtre">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path>
+                </svg>
+            </button>
         </div>
-        
-        <div class="language-buttons">
-            <button onclick="setLanguage('fr')">Français</button>
-            <button onclick="setLanguage('wo')">Wolof</button>
-            <button onclick="setLanguage('ar')">Arabe</button>
+      </header>
+      
+      <div id="settings-panel">
+        <div class="settings-header">
+          <h2 data-translate-key="settingsTitle">Paramètres</h2>
+          <button type="button" id="close-settings-button" aria-label="Fermer les paramètres" title="Fermer les paramètres">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path>
+            </svg>
+          </button>
         </div>
-        
-        <div class="chat-interface">
-            <p>Posez votre question :</p>
-            <input type="text" id="question" placeholder="Tapez votre question ici...">
-            <button onclick="askQuestion()">Envoyer</button>
-            <div id="response"></div>
+        <div class="settings-content">
+            <details class="settings-section" open>
+                <summary data-translate-key="userProfile">Mon Profil</summary>
+                <div class="settings-section-content">
+                    <div class="setting-item">
+                      <label for="user-role-select" data-translate-key="userRole">Je suis un(e)...</label>
+                      <select id="user-role-select" class="settings-select">
+                        <option value="enseignant" data-translate-key="roleTeacher">Enseignant</option>
+                        <option value="eleve" data-translate-key="roleStudent">Élève</option>
+                        <option value="parent" data-translate-key="roleParent">Parent</option>
+                      </select>
+                    </div>
+                    <div class="setting-item">
+                      <label for="user-level-select" data-translate-key="userLevel">Niveau/Classe</label>
+                      <select id="user-level-select" class="settings-select">
+                        <!-- Options will be populated by index.tsx -->
+                      </select>
+                    </div>
+                </div>
+            </details>
+
+            <details class="settings-section">
+                <summary data-translate-key="appearanceSettings">Apparence</summary>
+                <div class="settings-section-content">
+                    <div class="setting-item">
+                      <label for="ui-lang-select" data-translate-key="uiLanguage">Langue de l'interface</label>
+                      <select id="ui-lang-select" class="settings-select">
+                          <option value="fr">Français</option>
+                          <option value="ar">العربية</option>
+                          <option value="wo">Wolof</option>
+                      </select>
+                    </div>
+                    <div class="setting-item">
+                      <label data-translate-key="theme">Thème</label>
+                      <div class="theme-toggle" id="theme-toggle">
+                          <button class="theme-button active" data-theme="light" data-translate-key="lightTheme" aria-pressed="true">Clair</button>
+                          <button class="theme-button" data-theme="dark" data-translate-key="darkTheme" aria-pressed="false">Sombre</button>
+                      </div>
+                    </div>
+                    <div class="setting-item">
+                      <label data-translate-key="textSize">Taille du texte</label>
+                      <div class="text-size-toggle" id="text-size-toggle">
+                          <button class="text-size-button" data-size="small" data-translate-key="smallSize" aria-pressed="false">P</button>
+                          <button class="text-size-button active" data-size="normal" data-translate-key="normalSize" aria-pressed="true">M</button>
+                          <button class="text-size-button" data-size="large" data-translate-key="largeSize" aria-pressed="false">G</button>
+                      </div>
+                    </div>
+                </div>
+            </details>
+
+            <details class="settings-section">
+                <summary data-translate-key="soundSettings">Audio & Sons</summary>
+                <div class="settings-section-content">
+                    <div class="setting-item">
+                      <label for="sound-toggle" data-translate-key="enableSounds">Activer les sons</label>
+                      <label class="switch">
+                        <input type="checkbox" id="sound-toggle" checked="">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                    <div class="setting-item">
+                      <label data-translate-key="soundTheme">Thème sonore</label>
+                      <div class="radio-group" id="sound-theme-group">
+                        <div class="radio-option">
+                          <input type="radio" id="theme-default" name="sound-theme" value="default" checked="">
+                          <label for="theme-default" data-translate-key="defaultTheme">Défaut</label>
+                          <button class="preview-button" data-theme="default" data-translate-key-tooltip="previewSoundTooltip">▶</button>
+                        </div>
+                        <div class="radio-option">
+                          <input type="radio" id="theme-soft" name="sound-theme" value="soft">
+                          <label for="theme-soft" data-translate-key="softTheme">Doux</label>
+                          <button class="preview-button" data-theme="soft" data-translate-key-tooltip="previewSoundTooltip">▶</button>
+                        </div>
+                        <div class="radio-option">
+                          <input type="radio" id="theme-digital" name="sound-theme" value="digital">
+                          <label for="theme-digital" data-translate-key="digitalTheme">Numérique</label>
+                          <button class="preview-button" data-theme="digital" data-translate-key-tooltip="previewSoundTooltip">▶</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="settings-subsection">
+                        <h4 data-translate-key="assistantVoice">Voix de l'assistante</h4>
+                        <div class="native-tts-controls">
+                            <div class="setting-item">
+                                <label for="voice-select" data-translate-key="voice">Voix</label>
+                                <select id="voice-select" class="settings-select"></select>
+                            </div>
+                            <div class="setting-item">
+                                <label for="pitch-slider" data-translate-key="pitch">Hauteur</label>
+                                <input type="range" id="pitch-slider" min="0" max="2" step="0.1" value="1">
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <label data-translate-key="playbackSpeed">Vitesse de lecture</label>
+                            <div class="text-size-toggle" id="playback-speed-toggle">
+                                <button class="playback-speed-button" data-speed="0.75" aria-pressed="false">0.75x</button>
+                                <button class="playback-speed-button active" data-speed="1" aria-pressed="true">1x</button>
+                                <button class="playback-speed-button" data-speed="1.25" aria-pressed="false">1.25x</button>
+                                <button class="playback-speed-button" data-speed="1.5" aria-pressed="false">1.5x</button>
+                            </div>
+                        </div>
+                        <button type="button" id="voice-preview-button" class="settings-button" data-translate-key="previewVoice">Écouter un aperçu</button>
+                    </div>
+                </div>
+            </details>
+
+            <details class="settings-section">
+                <summary data-translate-key="dataManagement">Gestion des Données</summary>
+                <div class="settings-section-content">
+                    <div class="setting-item">
+                      <label data-translate-key="history">Historique</label>
+                      <button type="button" id="clear-history-button" class="settings-button" data-translate-key="clearHistory" data-translate-key-tooltip="clearHistoryTooltip">
+                        Vider l'historique
+                      </button>
+                    </div>
+                    <div class="favorites-section">
+                      <h3 data-translate-key="favorites">Mes Favoris</h3>
+                      <div id="favorites-list">
+                        <!-- Favorites will be rendered here -->
+                      </div>
+                    </div>
+                </div>
+            </details>
+        </div>
+      </div>
+
+      <div id="chat-history" role="log" aria-live="polite">
+        <!-- Chat messages will be appended here -->
+      </div>
+
+      <div id="suggestion-chips-container">
+        <!-- Suggestion chips will be appended here -->
+      </div>
+      
+      <div id="loading-indicator" class="hidden">
+        <div class="loading-spinner-container">
+            <svg class="loading-spinner-svg" viewBox="0 0 50 50">
+                <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="4"></circle>
+            </svg>
+        </div>
+        <span id="loading-text" role="status" aria-live="polite"></span>
+      </div>
+      
+      <div id="image-preview-container" class="hidden">
+        <img id="image-preview" src="" alt="Aperçu de l'image">
+        <button id="remove-image-button" aria-label="Supprimer l'image">&times;</button>
+      </div>
+      
+      <form id="chat-form" aria-label="Zone de saisie de message">
+        <input type="text" id="chat-input" placeholder="Posez votre question..." autocomplete="off" aria-label="Message à envoyer">
+        <div class="lang-selector-wrapper">
+          <select id="lang-select" aria-label="Choisir la langue de la saisie vocale">
+            <option value="fr-FR">FR</option>
+            <option value="ar-SA">AR</option>
+            <option value="wo-SN">Wolof</option>
+          </select>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="lang-selector-arrow">
+            <path d="M7 10l5 5 5-5H7z"></path>
+          </svg>
+        </div>
+        <button type="button" id="image-upload-button" aria-label="Joindre une image" title="Joindre une image">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"></path></svg>
+        </button>
+        <button type="button" id="mic-button" aria-label="Enregistrer un message vocal" title="Enregistrer un message vocal">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.49 6-3.31 6-6.72h-1.7z"></path>
+          </svg>
+        </button>
+        <button type="submit" aria-label="Envoyer le message" title="Envoyer le message">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2 .01 7z"></path>
+          </svg>
+        </button>
+      </form>
+    </main>
+    
+    <input type="file" id="image-upload-input" class="hidden" accept="image/*">
+
+    <div id="share-modal-overlay" class="hidden">
+      <div id="share-modal">
+        <h3 data-translate-key="shareConversation">Partager la conversation</h3>
+        <div class="share-options">
+          <button id="copy-transcription-button" class="settings-button" data-translate-key="copyTranscription" data-translate-key-tooltip="copyTranscriptionTooltip">Copier la transcription</button>
+          <button id="export-pdf-button" class="settings-button" data-translate-key="exportPdf" data-translate-key-tooltip="exportPdfTooltip">Télécharger en PDF</button>
+        </div>
+        <button id="close-share-modal-button" data-translate-key-tooltip="closeShareModalTooltip">&times;</button>
+      </div>
+    </div>
+
+    <div id="advanced-search-modal-overlay" class="hidden">
+        <div id="advanced-search-modal">
+            <h3 data-translate-key="advancedSearch">Recherche Avancée</h3>
+            <form id="advanced-search-form">
+                <div class="form-group">
+                    <label for="search-subject-input" data-translate-key="searchSubject">Sujet / Mot-clé</label>
+                    <input type="text" id="search-subject-input" required="">
+                </div>
+                <div class="form-group">
+                    <label for="search-level-select" data-translate-key="userLevel">Niveau/Classe</label>
+                    <select id="search-level-select" class="settings-select">
+                        <!-- Options will be populated by index.tsx -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <fieldset>
+                        <legend data-translate-key="resourceType">Type de ressource</legend>
+                        <div id="search-type-container" class="checkbox-group">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="resource-type" value="Vidéo" checked="">
+                                <span class="checkmark"></span>
+                                <span data-translate-key="resourceVideo">Vidéo</span>
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="resource-type" value="Document" checked="">
+                                <span class="checkmark"></span>
+                                <span data-translate-key="resourceDocument">Document</span>
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="resource-type" value="Article" checked="">
+                                <span class="checkmark"></span>
+                                <span data-translate-key="resourceArticle">Article</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" class="settings-button search-submit-button" data-translate-key="searchAction">Rechercher</button>
+            </form>
+            <button id="close-advanced-search-button" data-translate-key-tooltip="close">&times;</button>
         </div>
     </div>
 
-    <script>
-        function setLanguage(lang) {
-            alert('Langue changée: ' + lang);
-            // Ici vous ajouterez la logique pour changer la langue
-        }
-        
-        function askQuestion() {
-            const question = document.getElementById('question').value;
-            const responseDiv = document.getElementById('response');
-            responseDiv.innerHTML = `<p><strong>Vous:</strong> ${question}</p>
-                                   <p><strong>Khadija:</strong> Je traite votre question...</p>`;
-        }
-    </script>
-</body>
-</html>
+    <div id="search-results-modal-overlay" class="hidden">
+        <div id="search-results-modal">
+            <h3 data-translate-key="searchResults">Résultats de la Recherche</h3>
+            <div id="search-results-container">
+                <!-- Results will be rendered here -->
+            </div>
+            <button id="close-search-results-button" data-translate-key-tooltip="close">&times;</button>
+        </div>
+    </div>
+
+  <script type="module" src="/index.tsx"></script>
+
+</body></html>
