@@ -1266,7 +1266,7 @@ body {
     
     /* S'assurer que le carrousel occupe tout l'écran */
     .hero-section {
-        height: 95vh; /* Réduire légèrement la hauteur sur mobile */
+        height: 90vh; /* Réduire légèrement la hauteur sur mobile */
         min-height: 500px; /* Hauteur minimum */
     }
     
@@ -1432,7 +1432,7 @@ body {
     }
 
     .hero-section {
-        height: 95vh; /* Encore moins haut sur très petits écrans */
+        height: 90vh; /* Encore moins haut sur très petits écrans */
         min-height: 400px;
     }
     
