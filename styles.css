@@ -136,7 +136,7 @@ body {
     white-space: nowrap;
 }
 
-.phone, .email {
+.phone {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -146,7 +146,7 @@ body {
     white-space: nowrap;
 }
 
-.phone i, .email i {
+.phone i {
     color: var(--secondary-color);
     font-size: 0.8rem;
     flex-shrink: 0;
@@ -156,14 +156,32 @@ body {
     color: var(--gold-light);
 }
 
-.phone:hover i, .email:hover i {
+.phone:hover i{
     color: var(--gold-light);
 }
 
-/* Cacher les détails de contact sur mobile pour économiser l'espace */
-.contact-details .email span {
-    display: none;
-}
+.user-actions .action-btn {
+            background: none;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .user-actions .action-btn:hover {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
+        }
 
 /* Sidebar */
 .sidebar {

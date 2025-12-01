@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordonnées - NEBULA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #7F6B00;
+            --accent-color: #B8941F;
+            --gold-light: #D4AF37;
+            --gold-dark: #5D4A00;
+            --text-color: #ffffff;
+            --text-light: #cccccc;
+            --bg-dark: #0a0a0a;
+            --card-bg: rgba(15, 15, 15, 0.9);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--text-color);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Navigation supérieure - VERSION MOBILE OPTIMISÉE */
+        .header-nav { 
+            background: var(--primary-color); 
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 1rem;
+        }
+
+        /* Menu hamburger amélioré */
+        .menu-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            padding: 0;
+            flex-shrink: 0;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: var(--secondary-color);
+            border-radius: 1px;
+            transition: var(--transition);
+            transform-origin: center;
+        }
+
+        .menu-toggle:hover span {
+            background-color: var(--gold-light);
+        }
+
+        /* Logo centré et optimisé */
+        .logo { 
+            color: var(--secondary-color); 
+            font-family: 'Bitter', serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-shadow: 0 0 10px rgba(127, 107, 0, 0.3);
+            flex-shrink: 0;
+            white-space: nowrap;
+            margin: 0 auto;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        /* Informations de contact optimisées pour mobile */
+        .header-contact-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            justify-content: flex-end;
+            min-width: 0;
+        }
+
+        .ministry-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .ministry-logo i {
+            font-size: 1.3rem;
+            color: var(--gold-light);
+        }
+
+        .contact-details {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+
+        .phone, .email {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .phone i, .email i {
+            color: var(--secondary-color);
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .phone:hover, .email:hover {
+            color: var(--gold-light);
+        }
+
+        .phone:hover i, .email:hover i {
+            color: var(--gold-light);
+        }
+
+        /* Cacher les détails de contact sur mobile pour économiser l'espace */
+        .contact-details .email span {
+            display: none;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: -300px;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background: var(--primary-color);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            transition: left 0.3s ease;
+            z-index: 999;
+            overflow-y: auto;
+            border-right: 2px solid var(--secondary-color);
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-sidebar:hover {
+            color: var(--gold-light);
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            border-bottom: 1px solid rgba(127, 107, 0, 0.2);
+        }
+
+        .nav-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .nav-link i {
+            margin-right: 0.7rem;
+            width: 20px;
+            text-align: center;
+            color: var(--secondary-color);
+        }
+
+        .nav-link:hover {
+            background: rgba(127, 107, 0, 0.1);
+            color: var(--gold-light);
+        }
+
+        .nav-link:hover i {
+            color: var(--gold-light);
+        }
+
+        .nav-link.active {
+            background: rgba(127, 107, 0, 0.15);
+            color: var(--gold-light);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .nav-link.active i {
+            color: var(--gold-light);
+        }
+
+        .submenu {
+            list-style: none;
+            background: rgba(0, 0, 0, 0.3);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .submenu.open {
+            max-height: 500px;
+        }
+
+        .submenu .nav-link {
+            padding-left: 3rem;
+            font-size: 0.9rem;
+            font-weight: normal;
+            border-left: 3px solid transparent;
+        }
+
+        .submenu .nav-link:hover {
+            border-left-color: var(--secondary-color);
+            background: rgba(127, 107, 0, 0.1);
+        }
+
+        .arrow {
+            transition: var(--transition);
+            font-size: 0.8rem;
+        }
+
+        .submenu-toggle.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Effets de particules dorées */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--gold-light);
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatParticle 8s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header élégant */
+        .page-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center top, rgba(127, 107, 0, 0.2) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        /* Carte de coordonnées */
+        .contact-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(127, 107, 0, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.05), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .contact-card:hover::before {
+            left: 100%;
+        }
+
+        /* Section de coordonnées */
+        .contact-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gold-light);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(127, 107, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 1.3rem;
+        }
+
+        /* Liste des coordonnées */
+        .contact-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(127, 107, 0, 0.2);
+        }
+
+        .contact-item:hover {
+            background: rgba(40, 40, 40, 0.9);
+            transform: translateX(10px);
+            border-color: var(--gold-light);
+            box-shadow: 
+                0 5px 20px rgba(127, 107, 0, 0.3),
+                0 0 0 1px rgba(212, 175, 55, 0.1);
+        }
+
+        .contact-icon {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .contact-details-card {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .contact-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .contact-link {
+            color: var(--gold-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* Bouton retour */
+        .back-button {
+            position: fixed;
+            top: 80px;
+            left: 30px;
+            background: rgba(15, 15, 15, 0.8);
+            color: var(--gold-light);
+            border: 1px solid rgba(127, 107, 0, 0.5);
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button:hover {
+            background: rgba(127, 107, 0, 0.2);
+            transform: translateX(-5px);
+            border-color: var(--gold-light);
+        }
+
+        /* Badge de contact */
+        .contact-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
+        }
+
+        /* Animation d'entrée */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .contact-item {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .footer {
+            background: var(--primary-color);
+            padding: 3rem 2rem 1.5rem;
+            border-top: 2px solid var(--secondary-color);
+            color: white;
+        }
+
+        /* Section réseaux sociaux */
+        .social-media {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(127, 107, 0, 0.3);
+            border-bottom: 1px solid rgba(127, 107, 0, 0.3);
+        }
+
+        .social-media h4 {
+            color: var(--gold-light);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.2rem;
+            border: 2px solid transparent;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary-color);
+        }
+
+        .social-link.youtube:hover {
+            background: #FF0000;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .social-link.facebook:hover {
+            background: #1877F2;
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.3);
+        }
+
+        .social-link.whatsapp:hover {
+            background: #25D366;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .social-link.tiktok:hover {
+            background: #000000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-link.linkedin:hover {
+            background: #0077B5;
+            box-shadow: 0 5px 15px rgba(0, 119, 181, 0.3);
+        }
+
+        /* Actions du footer */
+        .footer-actions {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: nowrap;
+        }
+
+        .footer-actions .action-btn {
+            background: #000000;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .footer-actions .action-btn:hover {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
+        }
+
+        .footer-copyright {
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(127, 107, 0, 0.3);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ============================================= */
+        /* RESPONSIVE DESIGN - OPTIMISÉ POUR MOBILE */
+        /* ============================================= */
+
+        @media (max-width: 1024px) {
+            .header-contact-info {
+                gap: 0.8rem;
+            }
+            
+            .contact-details {
+                gap: 0.8rem;
+            }
+            
+            .phone, .email {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .contact-card {
+                padding: 25px 20px;
+            }
+            
+            .contact-item {
+                padding: 12px;
+            }
+            
+            .contact-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+                margin-right: 12px;
+            }
+            
+            .back-button {
+                top: 20px;
+                left: 20px;
+                padding: 10px 20px;
+                font-size: 12px;
+            }
+            
+            .header-nav {
+                padding: 0.8rem 1rem;
+            }
+            
+            .nav-container {
+                gap: 0.8rem;
+                flex-wrap: nowrap;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+                margin: 0;
+                order: 2;
+                flex: 1;
+                justify-content: center;
+            }
+            
+            .logo i {
+                font-size: 1.5rem;
+            }
+            
+            .menu-toggle {
+                order: 1;
+                flex-shrink: 0;
+            }
+            
+            .header-contact-info {
+                order: 3;
+                flex: none;
+                justify-content: flex-end;
+            }
+            
+            .ministry-logo {
+                display: none; /* Cacher le logo ministère sur mobile */
+            }
+            
+            .contact-details {
+                gap: 0.5rem;
+            }
+            
+            .phone span, .email span {
+                display: none; /* Cacher le texte, garder seulement les icônes */
+            }
+            
+            .phone, .email {
+                font-size: 0.9rem;
+                padding: 0.3rem;
+            }
+            
+            .phone i, .email i {
+                font-size: 1rem;
+                margin: 0;
+            }
+            
+            .footer-actions {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .footer-actions .action-btn {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header {
+                padding: 50px 15px 30px;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .container {
+                padding: 0 15px 40px;
+            }
+            
+            .contact-item {
+                padding: 10px;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .contact-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .header-nav {
+                padding: 0.7rem 0.8rem;
+            }
+            
+            .logo {
+                font-size: 1.2rem;
+            }
+            
+            .logo i {
+                font-size: 1.3rem;
+            }
+            
+            .header-contact-info {
+                gap: 0.3rem;
+            }
+            
+            .contact-details {
+                gap: 0.3rem;
+            }
+            
+            .phone, .email {
+                padding: 0.2rem;
+            }
+            
+            .phone i, .email i {
+                font-size: 0.9rem;
+            }
+            
+            .footer-actions {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+
+        /* Version très petits mobiles */
+        @media (max-width: 360px) {
+            .header-nav {
+                padding: 0.6rem 0.5rem;
+            }
+            
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            .contact-details {
+                display: none; /* Cacher complètement les contacts sur très petits écrans */
+            }
+        }
+    </style>
+</head>
+<body>
+     
+     <!-- Navigation supérieure -->
+    <header class="header-nav">
+        <div class="nav-container">
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                NEBULA
+            </div>
+
+            <!-- Informations de contact -->
+            <div class="header-contact-info">
+                <div class="ministry-logo">
+                    <i class="fas fa-landmark"></i>
+                    <span>Ministère de l'Education nationale</span>
+                </div>
+                <div class="contact-details">
+                    <div class="phone">
+                        <i class="fas fa-phone"></i>
+                        <span>+221 77 729 75 34</span>
+                    </div>
+                    <div class="email">
+                        <i class="fas fa-envelope"></i>
+                        <span>abdoulaye.ndione14@education.sn</span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </header>
+
+    <!-- Navigation latérale -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-compass"></i> Navigation</h2>
+            <button class="close-sidebar" id="closeSidebar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        Accueil
+                    </a>
+                </li>
+                
+                <!-- Primaire -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-pencil-alt"></i>
+                        Primaire
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="primaire/ci.html" class="nav-link"><i class="fas fa-child"></i> CI</a></li>
+                        <li><a href="primaire/cp.html" class="nav-link"><i class="fas fa-child"></i> CP</a></li>
+                        <li><a href="primaire/ce1.html" class="nav-link"><i class="fas fa-child"></i> CE1</a></li>
+                        <li><a href="primaire/ce2.html" class="nav-link"><i class="fas fa-child"></i> CE2</a></li>
+                        <li><a href="primaire/cm1.html" class="nav-link"><i class="fas fa-child"></i> CM1</a></li>
+                        <li><a href="primaire/cm2.html" class="nav-link"><i class="fas fa-child"></i> CM2</a></li>
+                    </ul>
+                </li>
+
+                <!-- Moyen -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-book-open"></i>
+                        Moyen
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="moyen/sixieme.html" class="nav-link"><i class="fas fa-user-graduate"></i> Sixième</a></li>
+                        <li><a href="moyen/cinquieme.html" class="nav-link"><i class="fas fa-user-graduate"></i> Cinquième</a></li>
+                        <li><a href="moyen/quatrieme.html" class="nav-link"><i class="fas fa-user-graduate"></i> Quatrième</a></li>
+                        <li><a href="moyen/troisieme.html" class="nav-link"><i class="fas fa-user-graduate"></i> Troisième</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Secondaire -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-graduation-cap"></i>
+                        Secondaire
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="secondaire/seconde.html" class="nav-link"><i class="fas fa-user-tie"></i> Seconde</a></li>
+                        <li><a href="secondaire/premiere.html" class="nav-link"><i class="fas fa-user-tie"></i> Première</a></li>
+                        <li><a href="secondaire/terminale.html" class="nav-link"><i class="fas fa-user-tie"></i> Terminale</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Religion -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-pray"></i>
+                        Religion
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="religion/daara.html" class="nav-link"><i class="fas fa-mosque"></i> Daara</a></li>
+                        <li><a href="religion/catechese.html" class="nav-link"><i class="fas fa-church"></i> Catéchèse</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Visio et Tableaux -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-video"></i>
+                        Visio et Tableaux
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="visio/logiciels-visioconference.html" class="nav-link"><i class="fas fa-comments"></i> Visioconférence</a></li>
+                        <li><a href="visio/logiciels-tableaux.html" class="nav-link"><i class="fas fa-chalkboard"></i> Tableaux</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Biblio'Tech -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-book"></i>
+                        Biblio'Tech
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="bibliotheque/francais.html" class="nav-link"><i class="fas fa-language"></i> Français</a></li>
+                        <li><a href="bibliotheque/sciences.html" class="nav-link"><i class="fas fa-flask"></i> Sciences</a></li>
+                        <li><a href="bibliotheque/religion.html" class="nav-link"><i class="fas fa-praying-hands"></i> Religion</a></li>
+                        <li><a href="bibliotheque/culture.html" class="nav-link"><i class="fas fa-globe-africa"></i> Culture générale</a></li>
+                        <li><a href="bibliotheque/humaines.html" class="nav-link"><i class="fas fa-users"></i> Sciences humaines</a></li>
+                        <li><a href="bibliotheque/langues.html" class="nav-link"><i class="fas fa-flag"></i> Langues</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Espace IA -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-robot"></i>
+                        Espace IA
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="ia/ressources.html" class="nav-link"><i class="fas fa-graduation-cap"></i> Ressources pédagogiques</a></li>
+                        <li><a href="ia/logiciels.html" class="nav-link"><i class="fas fa-laptop-code"></i> Logiciels utiles</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Labo virtuel -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-microscope"></i>
+                        Labo virtuel
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="labo/mathematique.html" class="nav-link"><i class="fas fa-square-root-alt"></i> Mathématique</a></li>
+                        <li><a href="labo/biologie.html" class="nav-link"><i class="fas fa-dna"></i> Biologie</a></li>
+                        <li><a href="labo/physique-chimie.html" class="nav-link"><i class="fas fa-atom"></i> Physique-Chimie</a></li>
+                        <li><a href="labo/technologie.html" class="nav-link"><i class="fas fa-cogs"></i> Technologie</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Jeux éducatifs -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-gamepad"></i>
+                        Jeux éducatifs
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="jeux/mathematique.html" class="nav-link"><i class="fas fa-chess"></i> Jeux mathématiques</a></li>
+                        <li><a href="jeux/generalistes.html" class="nav-link"><i class="fas fa-puzzle-piece"></i> Jeux généralistes</a></li>
+                        <li><a href="jeux/maternelle.html" class="nav-link"><i class="fas fa-brain"></i> Jeux maternelles</a></li>
+                        <li><a href="jeux/langues.html" class="nav-link"><i class="fas fa-trophy"></i> Jeux langues</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Contact -->
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">
+                        <i class="fas fa-envelope"></i>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Effets de particules -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Bouton retour -->
+    <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Retour à l'accueil
+    </a>
+
+    <!-- Header de la page -->
+    <header class="page-header">
+        <div class="header-bg"></div>
+        <h1 class="page-title">Mes Coordonnées</h1>
+        <p class="page-subtitle">Restons en contact - N'hésitez pas à nous contacter</p>
+    </header>
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <div class="contact-card">
+            <div class="contact-badge">Contact</div>
+            
+            <!-- Informations personnelles -->
+            <div class="contact-section">
+                <h2 class="section-title">
+                    <i class="fas fa-user"></i>
+                    Informations de la structure
+                </h2>
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="contact-details-card">
+                            <div class="contact-label">Nom complet</div>
+                            <div class="contact-value">PrecepTech</div>
+                        </div>
+                    </li>
+                    
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details-card">
+                            <div class="contact-label">Localisation</div>
+                            <div class="contact-value">Dakar, Sénégal</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Coordonnées de contact -->
+            <div class="contact-section">
+                <h2 class="section-title">
+                    <i class="fas fa-address-book"></i>
+                    Coordonnées
+                </h2>
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details-card">
+                            <div class="contact-label">Email</div>
+                            <div class="contact-value">
+                                <a href="mailto:abdoulaye.ndione14@education.sn" class="contact-link">
+                                    abdoulaye.ndione14@education.sn
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details-card">
+                            <div class="contact-label">Téléphone</div>
+                            <div class="contact-value">
+                                <a href="tel:+22177297534" class="contact-link">
+                                    +221 77 729 75 34
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Horaires de disponibilité -->
+            <div class="contact-section">
+                <h2 class="section-title">
+                    <i class="fas fa-clock"></i>
+                    Disponibilités
+                </h2>
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="contact-details-card">
+                            <div class="contact-label">Jours de travail</div>
+                            <div class="contact-value">Lundi - Vendredi</div>
+                        </div>
+                    </li>
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-business-time"></i>
+                        </div>
+                        <div class="contact-details-card">
+                            <div class="contact-label">Heures de disponibilité</div>
+                            <div class="contact-value">9h00 - 17h00</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Réseaux sociaux -->
+    <footer class="footer">
+        <div class="social-media">
+            <h4>Suivez-nous sur les réseaux sociaux</h4>
+            <div class="social-icons">
+                <a href="https://www.youtube.com/@PrecepTech" target="_blank" class="social-link youtube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://web.facebook.com/profile.php?id=100030929242318" target="_blank" class="social-link facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://wa.me/221777297534" target="_blank" class="social-link whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.tiktok.com/@preceptech" target="_blank" class="social-link tiktok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://www.linkedin.com" target="_blank" class="social-link linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer-actions">
+            <button class="action-btn" onclick="window.open('https://www.precep-tech.com', '_blank')">
+                <i class="fas fa-external-link-alt"></i>
+                PrecepTech
+            </button>
+            <button class="action-btn">
+                <i class="fas fa-flag"></i>
+                Signaler un problème
+            </button>
+            <button class="action-btn">
+                <i class="fas fa-question-circle"></i>
+                Aide
+            </button>
+        </div>
+        <p class="footer-copyright">&copy; 2024 NEBULA - Plateforme Éducative. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Création des particules animées
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Taille aléatoire
+                const size = Math.random() * 3 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Position de départ aléatoire
+                particle.style.left = `${Math.random() * 100}%`;
+                
+                // Animation
+                particle.style.animationDelay = `${Math.random() * 8}s`;
+                particle.style.animationDuration = `${Math.random() * 10 + 8}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+
+            // Animation d'entrée pour chaque élément de contact
+            const contactItems = document.querySelectorAll('.contact-item');
+            contactItems.forEach((item, index) => {
+                item.style.animationDelay = `${0.1 + index * 0.05}s`;
+            });
+
+            // Gestion du menu mobile
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeSidebar = document.getElementById('closeSidebar');
+            
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.add('open');
+            });
+            
+            closeSidebar.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+            });
+            
+            // Gestion des sous-menus
+            const submenuToggles = document.querySelectorAll('.submenu-toggle');
+            
+            submenuToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const submenu = this.nextElementSibling;
+                    
+                    // Fermer tous les autres sous-menus
+                    submenuToggles.forEach(otherToggle => {
+                        if (otherToggle !== this) {
+                            otherToggle.classList.remove('active');
+                            otherToggle.nextElementSibling.classList.remove('open');
+                        }
+                    });
+                    
+                    // Ouvrir/fermer le sous-menu actuel
+                    this.classList.toggle('active');
+                    submenu.classList.toggle('open');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
