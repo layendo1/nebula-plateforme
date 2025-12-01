@@ -288,14 +288,14 @@ body {
 
 /* Contenu principal */
 .main-content {
-    margin-top: 80px;
+    margin-top: 50px;
     min-height: calc(100vh - 160px);
 }
 
 /* Section hero avec carrousel */
 .hero-section {
     position: relative;
-    height: 100vh;
+    height: 95vh;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -565,14 +565,14 @@ body {
 
 .hero-scroll {
     position: absolute;
-    bottom: 80px;
-    left: 50%;
+    bottom: 50px;
+    left: 5%;
     transform: translateX(-50%);
     animation: bounce 2s infinite;
     cursor: pointer;
     z-index: 5;
     color: var(--secondary-color);
-    font-size: 1.5rem;
+    font-size: 2.5rem;
 }
 
 @keyframes bounce {
@@ -1212,6 +1212,11 @@ body {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
     }
+
+    .footer-column {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
     
     .footer-actions {
         flex-direction: column;
@@ -1312,7 +1317,8 @@ body {
     }
     
     .footer-column {
-        text-align: center;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
     }
 }
 
@@ -1336,5 +1342,10 @@ body {
     
     .hero-subtitle {
         font-size: 1rem;
+    }
+
+    .footer-column {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
     }
 }
