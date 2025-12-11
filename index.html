@@ -20,7 +20,10 @@
             </button>
             
             <div class="logo">
-                <i class="fas fa-graduation-cap"></i>
+                <div class="logo-icon">
+                    <i class="fas fa-laptop"></i>
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
                 NEBULA
             </div>
 
@@ -122,7 +125,6 @@
                         <li><a href="\Nebu\Langues\pular.html" class="nav-link"><i class="fas fa-comments"></i> Pular</a></li>
                         <li><a href="\Nebu\Langues\serere.html" class="nav-link"><i class="fas fa-comments"></i> Sérère</a></li>
                         <li><a href="\Nebu\Langues\malinke.html" class="nav-link"><i class="fas fa-comments"></i> Malinké</a></li>
-                        <li><a href="\Nebu\Langues\soninke.html" class="nav-link"><i class="fas fa-comments"></i> Soninké</a></li>
                         <li><a href="\Nebu\Langues\diola.html" class="nav-link"><i class="fas fa-comments"></i> Diola</a></li>
                     </ul>
                 </li>
@@ -182,7 +184,6 @@
                         <li><a href="\Nebu\Bibliotheque\religion-biblio.html" class="nav-link"><i class="fas fa-praying-hands"></i> Religion</a></li>
                         <li><a href="\Nebu\Bibliotheque\culture-biblio.html" class="nav-link"><i class="fas fa-globe-africa"></i> Culture générale</a></li>
                         <li><a href="\Nebu\Bibliotheque\humaines-biblio.html" class="nav-link"><i class="fas fa-users"></i> Sciences humaines</a></li>
-                        <li><a href="\Nebu\Bibliotheque\langues-biblio.html" class="nav-link"><i class="fas fa-flag"></i> Langues</a></li>
                     </ul>
                 </li>
                 
@@ -214,19 +215,18 @@
                     </ul>
                 </li>
 
-                <!-- Projets et Activités -->
+                <!-- Formation -->
                 <li class="nav-item">
                     <a href="#" class="nav-link submenu-toggle">
-                        <i class="fas fa-project-diagram"></i>
-                        Projets et Activités
+                        <i class="fas fa-graduation-cap"></i>
+                        Formation
                         <span class="arrow">▼</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="\Nebu\Projets\projets-scolaires.html" class="nav-link"><i class="fas fa-school"></i> Projets Scolaires</a></li>
-                        <li><a href="\Nebu\Projets\activites-culturelles.html" class="nav-link"><i class="fas fa-music"></i> Activités Culturelles</a></li>
-                        <li><a href="\Nebu\Projets\projets-communaute.html" class="nav-link"><i class="fas fa-hands-helping"></i> Projets Communautaires</a></li>
-                        <li><a href="\Nebu\Projets\concours.html" class="nav-link"><i class="fas fa-trophy"></i> Concours et Compétitions</a></li>
-                        <li><a href="\Nebu\Projets\ateliers.html" class="nav-link"><i class="fas fa-paint-brush"></i> Ateliers Créatifs</a></li>
+                        <li><a href="\Nebu\Formation\eleve.html" class="nav-link"><i class="fas fa-user-graduate"></i> Pour les Élèves</a></li>
+                        <li><a href="\Nebu\Formation\enseignant.html" class="nav-link"><i class="fas fa-chalkboard-teacher"></i> Pour les Enseignants</a></li>
+                        <li><a href="\Nebu\Formation\atelier.html" class="nav-link"><i class="fas fa-tools"></i> Ateliers Pratiques</a></li>
+                        <li><a href="\Nebu\Formation\certification.html" class="nav-link"><i class="fas fa-certificate"></i> Certifications</a></li>
                     </ul>
                 </li>
                 
@@ -256,6 +256,176 @@
         </nav>
     </aside>
 
+    <style>
+    :root {
+        --primary-color: #000000;
+        --secondary-color: #7F6B00;
+        --accent-color: #B8941F;
+        --gold-light: #D4AF37;
+        --gold-dark: #5D4A00;
+        --text-color: #333333;
+        --text-light: #666666;
+        --bg-light: #f8f9fa;
+        --bg-dark: #1a1a1a;
+        --shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+        --transition: all 0.3s ease;
+    }
+
+    .modern-chatbot-btn {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        width: 65px;
+        height: 65px;
+        background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+        color: white;
+        border-radius: 50%;
+        border: 2px solid var(--gold-light);
+        cursor: pointer;
+        font-size: 26px;
+        box-shadow: 
+            var(--shadow),
+            0 0 20px rgba(212, 175, 55, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        transition: var(--transition);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    
+    /* Effet brillant sur le bord */
+    .modern-chatbot-btn::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, 
+            var(--gold-light), 
+            var(--accent-color), 
+            var(--secondary-color), 
+            var(--gold-light));
+        border-radius: 50%;
+        z-index: -1;
+        opacity: 0;
+        transition: var(--transition);
+    }
+    
+    .modern-chatbot-btn:hover::before {
+        opacity: 1;
+        animation: rotateBorder 3s linear infinite;
+    }
+    
+    /* Animation de rotation de la bordure */
+    @keyframes rotateBorder {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    
+    .modern-chatbot-btn:hover {
+        transform: scale(1.15) rotate(5deg);
+        box-shadow: 
+            0 10px 25px rgba(0, 0, 0, 0.8),
+            0 0 30px rgba(212, 175, 55, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        border-color: var(--accent-color);
+    }
+    
+    /* Animation de pulsation subtile */
+    @keyframes gentlePulse {
+        0%, 100% {
+            box-shadow: 
+                var(--shadow),
+                0 0 20px rgba(212, 175, 55, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        50% {
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.7),
+                0 0 25px rgba(212, 175, 55, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+    }
+    
+    .modern-chatbot-btn {
+        animation: gentlePulse 3s infinite ease-in-out;
+    }
+    
+    /* Badge de notification */
+    .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: var(--primary-color);
+        color: var(--gold-light);
+        font-size: 12px;
+        font-weight: bold;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid var(--gold-light);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Effet de vague au clic */
+    .modern-chatbot-btn:active {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+    }
+    
+    /* Tooltip */
+    .chatbot-tooltip {
+        position: absolute;
+        right: 75px;
+        background: var(--bg-dark);
+        color: var(--gold-light);
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        opacity: 0;
+        transform: translateX(10px);
+        transition: var(--transition);
+        pointer-events: none;
+        border: 1px solid var(--secondary-color);
+        box-shadow: var(--shadow);
+    }
+    
+    .modern-chatbot-btn:hover .chatbot-tooltip {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    /* Flèche du tooltip */
+    .chatbot-tooltip::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: -6px;
+        transform: translateY(-50%);
+        border-width: 6px 0 6px 6px;
+        border-style: solid;
+        border-color: transparent transparent transparent var(--bg-dark);
+    }
+</style>
+
+<button class="modern-chatbot-btn" onclick="window.open('https://layendo1.github.io/assistant-nebula/', '_blank')" title="Assistant Nebula">
+    <span class="chatbot-tooltip">Assistant Nebula</span>
+    💬
+    <span class="notification-badge">1</span>
+</button>
+
     <!-- Contenu principal -->
     <main class="main-content">
         <!-- Section hero avec carrousel -->
@@ -284,7 +454,7 @@
                 <h1 class="hero-title">Bienvenue dans NEBULA</h1>
                 <p class="hero-subtitle">Un enseignement et une formation 2.0</p>
                 <div class="hero-buttons">
-                    <a href="plateforme.html" class="btn-primary">Explorer la plateforme</a>
+                    <a href="blog.html" class="btn-primary">Blog et FAQ</a>
                     <a href="\Nebu\Inscription\inscription.html" class="btn-secondary">Cours en ligne</a>
                 </div>
                 <div class="hero-features">
@@ -437,7 +607,6 @@
                     <li><a href="\Nebu\Langues\pular.html"><i class="fas fa-comments"></i> Pular</a></li>
                     <li><a href="\Nebu\Langues\serere.html"><i class="fas fa-comments"></i> Sérère</a></li>
                     <li><a href="\Nebu\Langues\malinke.html"><i class="fas fa-comments"></i> Malinké</a></li>
-                    <li><a href="\Nebu\Langues\soninke.html"><i class="fas fa-comments"></i> Soninké</a></li>
                     <li><a href="\Nebu\Langues\diola.html"><i class="fas fa-comments"></i> Diola</a></li>
                 </ul>
             </div>
@@ -458,19 +627,18 @@
             </div>
 
 
-            <!-- Projets et Activités -->
+            <!-- Formation -->
             <div class="section-card">
                 <div class="card-icon">
                     <i class="fas fa-project-diagram"></i>
                 </div>
-                <h3 class="section-title">Projets et Activités</h3>
-                <ul class="section-list">
-                    <li><a href="\Nebu\Projets\projets-scolaires.html"><i class="fas fa-school"></i> Projets Scolaires</a></li>
-                    <li><a href="\Nebu\Projets\activites-culturelles.html"><i class="fas fa-music"></i> Activités Culturelles</a></li>
-                    <li><a href="\Nebu\Projets\projets-communaute.html"><i class="fas fa-hands-helping"></i> Projets Communautaires</a></li>
-                    <li><a href="\Nebu\Projets\concours.html"><i class="fas fa-trophy"></i> Concours et Compétitions</a></li>
-                    <li><a href="\Nebu\Projets\ateliers.html"><i class="fas fa-paint-brush"></i> Ateliers Créatifs</a></li>
-                </ul>
+                <h3 class="section-title">Formation</h3>
+                    <ul class="section-list">
+                        <li><a href="\Nebu\Formation\eleve.html"><i class="fas fa-user-graduate"></i> Pour les Élèves</a></li>
+                        <li><a href="\Nebu\Formation\enseignant.html"><i class="fas fa-chalkboard-teacher"></i> Pour les Enseignants</a></li>
+                        <li><a href="\Nebu\Formation\atelier.html"><i class="fas fa-tools"></i> Ateliers Pratiques</a></li>
+                        <li><a href="\Nebu\Formation\certification.html"><i class="fas fa-certificate"></i> Certifications</a></li>
+                    </ul>
             </div>
 
             
@@ -487,7 +655,6 @@
                     <li><a href="\Nebu\Bibliotheque\religion-biblio.html"><i class="fas fa-praying-hands"></i> Religion</a></li>
                     <li><a href="\Nebu\Bibliotheque\culture-biblio.html"><i class="fas fa-globe-africa"></i> Culture générale</a></li>
                     <li><a href="\Nebu\Bibliotheque\humaines-biblio.html"><i class="fas fa-users"></i> Sciences humaines</a></li>
-                    <li><a href="\Nebu\Bibliotheque\langues-biblio.html"><i class="fas fa-flag"></i> Langues</a></li>
                 </ul>
             </div>
 
@@ -595,6 +762,7 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-logo">
+                <i class="fas fa-laptop"></i>
                 <i class="fas fa-graduation-cap"></i>
                 NEBULA
             </div>
@@ -660,43 +828,6 @@
         </div>
         <p class="footer-copyright">&copy; 2024 NEBULA - Plateforme Éducative. Tous droits réservés.</p>
     </footer>
-
-
-<div style="width: 0; height: 0;" id="VG_OVERLAY_CONTAINER">
-    <!-- Here is where CONVOCORE renders the widget. -->
-    <!-- Set render to 'full-width' then adjust the width and height to 500px (for example) to render the chatbot itself without the popup. -->
-</div>
-
-<!-- Remove 'defer' if you want widget to load faster (Will affect website loading) -->
-<script defer>
-    (function() {
-        window.VG_CONFIG = {
-            ID: "my9v1ETB7zj2dIDk", // YOUR AGENT ID
-            region: 'na', // YOUR ACCOUNT REGION 
-            render: 'bottom-right', // can be 'full-width' or 'bottom-left' or 'bottom-right'
-            // modalMode: true, // Set this to 'true' to open the widget in modal mode
-            stylesheets: [
-                // Base CONVOCORE CSS
-                "https://vg-bunny-cdn.b-cdn.net/vg_live_build/styles.css",
-                // Add your custom css stylesheets, Can also add relative URL ('/public/your-file.css)
-            ],
-            // THIS IS SUPPOSED TO BE CHANGED OR REMOVED.
-            // user: {
-            //     name: 'John Doe', // User's name
-            //     email: 'johndoe@gmail.com', // User's email
-            //     phone: '+1234567890', // User's phone number
-            // }
-            // Optional user data -- end
-            // **
-            // userID: 'USER_ID', // If you want to use your own user_id
-            // autostart: true, // Whether to autostart the chatbot with the proactive message
-        }
-        var VG_SCRIPT = document.createElement("script");
-        VG_SCRIPT.src = "https://vg-bunny-cdn.b-cdn.net/vg_live_build/vg_bundle.js";
-        VG_SCRIPT.defer = true; // Remove 'defer' if you want widget to load faster (Will affect website loading)
-        document.body.appendChild(VG_SCRIPT);
-    })()
-</script>
 
     
 </body>

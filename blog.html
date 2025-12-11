@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Apprenant - NEBULA</title>
+    <base target="_top">
+    <link rel="stylesheet" href="blog.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Bitter:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation supérieure -->
+    <header class="header-nav">
+        <div class="nav-container">
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-laptop"></i>
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                NEBULA
+            </div>
+
+            <!-- Informations de contact -->
+            <div class="contact-info">
+                <div class="ministry-logo">
+                    <i class="fas fa-landmark"></i>
+                    <span>Ministère de l'Education nationale</span>
+                </div>
+                <div class="contact-details">
+                    <div class="phone">
+                        <i class="fas fa-phone"></i>
+                        <span>+221 77 729 75 34</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-actions">
+                <a href="#" class="action-btn" onclick="alert('Fonctionnalité à venir')">
+                    <i class="fas fa-user-circle"></i>
+                    Mon Profil
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Navigation latérale -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-compass"></i> Navigation</h2>
+            <button class="close-sidebar" id="closeSidebar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        Accueil
+                    </a>
+                </li>
+                
+                <!-- Primaire -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-pencil-alt"></i>
+                        Elémentaire
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="\Nebu\CI\matieres-ci.html" class="nav-link"><i class="fas fa-child"></i> CI</a></li>
+                        <li><a href="\Nebu\CP\matieres-cp.html" class="nav-link"><i class="fas fa-child"></i> CP</a></li>
+                        <li><a href="\Nebu\CE1\matieres-ce1.html" class="nav-link"><i class="fas fa-child"></i> CE1</a></li>
+                        <li><a href="\Nebu\CE2\matieres-ce2.html" class="nav-link"><i class="fas fa-child"></i> CE2</a></li>
+                        <li><a href="\Nebu\CM1\matieres-cm1.html" class="nav-link"><i class="fas fa-child"></i> CM1</a></li>
+                        <li><a href="\Nebu\CM2\matieres-cm2.html" class="nav-link"><i class="fas fa-child"></i> CM2</a></li>
+                    </ul>
+                </li>
+
+                <!-- Moyen -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-book-open"></i>
+                        Collège
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="\Nebu\Sixieme\matieres-sixieme.html" class="nav-link"><i class="fas fa-user-graduate"></i> Sixième</a></li>
+                        <li><a href="\Nebu\Cinquieme\matieres-cinquieme.html" class="nav-link"><i class="fas fa-user-graduate"></i> Cinquième</a></li>
+                        <li><a href="\Nebu\Quatrieme\matieres-quatrieme.html" class="nav-link"><i class="fas fa-user-graduate"></i> Quatrième</a></li>
+                        <li><a href="\Nebu\Troisieme\matieres-troisieme.html" class="nav-link"><i class="fas fa-user-graduate"></i> Troisième</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Secondaire -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-graduation-cap"></i>
+                        Lycée
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="\Nebu\Seconde\matieres-seconde.html" class="nav-link"><i class="fas fa-user-tie"></i> Seconde</a></li>
+                        <li><a href="\Nebu\Premiere\matieres-premiere.html" class="nav-link"><i class="fas fa-user-tie"></i> Première</a></li>
+                        <li><a href="\Nebu\Terminale\matieres-terminale.html" class="nav-link"><i class="fas fa-user-tie"></i> Terminale</a></li>
+                    </ul>
+                </li>
+
+                <!-- Langues Nationales -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-language"></i>
+                        Langues Nationales
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="\Nebu\Langues\wolof.html" class="nav-link"><i class="fas fa-comments"></i> Wolof</a></li>
+                        <li><a href="\Nebu\Langues\pular.html" class="nav-link"><i class="fas fa-comments"></i> Pular</a></li>
+                        <li><a href="\Nebu\Langues\serere.html" class="nav-link"><i class="fas fa-comments"></i> Sérère</a></li>
+                        <li><a href="\Nebu\Langues\malinke.html" class="nav-link"><i class="fas fa-comments"></i> Malinké</a></li>
+                        <li><a href="\Nebu\Langues\soninke.html" class="nav-link"><i class="fas fa-comments"></i> Soninké</a></li>
+                        <li><a href="\Nebu\Langues\diola.html" class="nav-link"><i class="fas fa-comments"></i> Diola</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Religion -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-pray"></i>
+                        Religion
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="\Nebu\Religion\matieres-daara.html" class="nav-link"><i class="fas fa-mosque"></i> Daara</a></li>
+                        <li><a href="\Nebu\Religion\matieres-catechese.html" class="nav-link"><i class="fas fa-church"></i> Catéchèse</a></li>
+                    </ul>
+                </li>
+
+                <!-- Informatique -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-laptop-code"></i>
+                        Informatique
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="\Nebu\Informatique\bureautique.html" class="nav-link"><i class="fas fa-file-alt"></i> Bureautique</a></li>
+                        <li><a href="\Nebu\Informatique\programmation.html" class="nav-link"><i class="fas fa-code"></i> Programmation</a></li>
+                        <li><a href="\Nebu\Informatique\design.html" class="nav-link"><i class="fas fa-paint-brush"></i> Design Graphique</a></li>
+                        <li><a href="\Nebu\Informatique\reseau.html" class="nav-link"><i class="fas fa-network-wired"></i> Réseaux</a></li>
+                        <li><a href="\Nebu\Informatique\cybersecurite.html" class="nav-link"><i class="fas fa-shield-alt"></i> Cybersécurité</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Visio et Tableaux -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-video"></i>
+                        Visio et Tableaux
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="\Nebu\Visio-tableau\logiciels-visioconference.html" class="nav-link"><i class="fas fa-comments"></i> Visioconférence</a></li>
+                        <li><a href="\Nebu\Visio-tableau\logiciels-tableaux.html" class="nav-link"><i class="fas fa-chalkboard"></i> Tableaux</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Biblio'Tech -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-book"></i>
+                        Biblio'Tech
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="\Nebu\Bibliotheque\français-biblio.html" class="nav-link"><i class="fas fa-language"></i> Français</a></li>
+                        <li><a href="\Nebu\Bibliotheque\sciences-biblio.html" class="nav-link"><i class="fas fa-flask"></i> Sciences</a></li>
+                        <li><a href="\Nebu\Bibliotheque\religion-biblio.html" class="nav-link"><i class="fas fa-praying-hands"></i> Religion</a></li>
+                        <li><a href="\Nebu\Bibliotheque\culture-biblio.html" class="nav-link"><i class="fas fa-globe-africa"></i> Culture générale</a></li>
+                        <li><a href="\Nebu\Bibliotheque\humaines-biblio.html" class="nav-link"><i class="fas fa-users"></i> Sciences humaines</a></li>
+                        <li><a href="\Nebu\Bibliotheque\langues-biblio.html" class="nav-link"><i class="fas fa-flag"></i> Langues</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Espace IA -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-robot"></i>
+                        Espace IA
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="\Nebu\Espace-ia\ressources-ia.html" class="nav-link"><i class="fas fa-graduation-cap"></i> Ressources pédagogiques</a></li>
+                        <li><a href="\Nebu\Espace-ia\logiciels-ia.html" class="nav-link"><i class="fas fa-laptop-code"></i> Logiciels utiles</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Labo virtuel -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-microscope"></i>
+                        Labo virtuel
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="\Nebu\Labo\labo-math.html" class="nav-link"><i class="fas fa-square-root-alt"></i> Mathématique</a></li>
+                        <li><a href="\Nebu\Labo\labo-biologie.html" class="nav-link"><i class="fas fa-dna"></i> Biologie</a></li>
+                        <li><a href="\Nebu\Labo\labo-physique-chimie.html" class="nav-link"><i class="fas fa-atom"></i> Physique-Chimie</a></li>
+                        <li><a href="\Nebu\Labo\labo-technologie.html" class="nav-link"><i class="fas fa-cogs"></i> Technologie</a></li>
+                    </ul>
+                </li>
+
+                <!-- Formation -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-graduation-cap"></i>
+                        Formation
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="\Nebu\Formation\formations-eleves.html" class="nav-link"><i class="fas fa-user-graduate"></i> Pour les Élèves</a></li>
+                        <li><a href="\Nebu\Formation\formations-professeurs.html" class="nav-link"><i class="fas fa-chalkboard-teacher"></i> Pour les Professeurs</a></li>
+                        <li><a href="\Nebu\Formation\ateliers-pratiques.html" class="nav-link"><i class="fas fa-tools"></i> Ateliers Pratiques</a></li>
+                        <li><a href="\Nebu\Formation\ressources-pedagogiques.html" class="nav-link"><i class="fas fa-book-open"></i> Ressources Pédagogiques</a></li>
+                        <li><a href="\Nebu\Formation\certifications.html" class="nav-link"><i class="fas fa-certificate"></i> Certifications</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Jeux éducatifs -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link submenu-toggle">
+                        <i class="fas fa-gamepad"></i>
+                        Jeux éducatifs
+                        <span class="arrow">▼</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="\Nebu\Jeux\jeux-mathematique.html" class="nav-link"><i class="fas fa-chess"></i> Jeux mathématiques</a></li>
+                        <li><a href="\Nebu\Jeux\jeux-gene.html" class="nav-link"><i class="fas fa-puzzle-piece"></i> Jeux généralistes</a></li>
+                        <li><a href="\Nebu\Jeux\jeux-maternelle.html" class="nav-link"><i class="fas fa-brain"></i> Jeux maternelles</a></li>
+                        <li><a href="\Nebu\Jeux\jeux-langue.html" class="nav-link"><i class="fas fa-trophy"></i> Jeux langues</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Contact -->
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">
+                        <i class="fas fa-envelope"></i>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Contenu principal -->
+    <main class="container">
+        <!-- Effets de particules -->
+        <div class="particles" id="particles"></div>
+
+        <!-- Bouton retour -->
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Retour à l'accueil
+        </a>
+        
+        <div class="hero-content">
+            <h1>La Communauté d'Entraide des Apprenants</h1>
+            <p>Pose tes questions, partage tes connaissances, progresse ensemble dans un espace dédié à l'apprentissage collaboratif</p>
+        </div>
+
+        <!-- Section pour poser une question -->
+        <section class="ask-section" id="poser">
+            <div class="ask-form-container">
+                <h2><i class="fas fa-pen"></i> Poser une question</h2>
+                <form id="question-form">
+                    <div class="form-group">
+                        <textarea id="question-content" placeholder="Posez votre question ici. Décrivez votre question en détail pour obtenir des réponses pertinentes..." rows="5" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <select id="question-sujet" required>
+                                <option value="">Sélectionnez un sujet</option>
+                                <option value="demande-info">Demande de renseignement</option>
+                                <option value="pedagogique">Questions pédagogiques</option>
+                                <option value="general">Questions générales</option>
+                                <option value="technique">Questions techniques</option>
+                                <option value="organisation">Organisation et méthodologie</option>
+                                <option value="ressources">Ressources éducatives</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-paper-plane"></i> Publier votre question
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Filtres par sujet -->
+        <section class="filters" id="sujets">
+            <h2><i class="fas fa-filter"></i> Filtrer par sujet</h2>
+            <div class="filter-tags">
+                <button class="filter-tag active" data-filter="all">Tous les sujets</button>
+                <button class="filter-tag" data-filter="demande-info">Demande de renseignement</button>
+                <button class="filter-tag" data-filter="pedagogique">Questions pédagogiques</button>
+                <button class="filter-tag" data-filter="general">Questions générales</button>
+                <button class="filter-tag" data-filter="technique">Questions techniques</button>
+                <button class="filter-tag" data-filter="organisation">Organisation</button>
+                <button class="filter-tag" data-filter="ressources">Ressources</button>
+            </div>
+        </section>
+
+        <!-- Liste des questions -->
+        <section class="questions-section" id="questions">
+            <div class="section-header">
+                <h2><i class="fas fa-question-circle"></i> Questions récentes</h2>
+                <div class="sort-options">
+                    <select id="sort-select">
+                        <option value="recent">Plus récentes</option>
+                        <option value="votes">Plus populaires</option>
+                        <option value="reponses">Plus de réponses</option>
+                        <option value="non-repondu">Non répondues</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Les questions seront insérées ici par JavaScript -->
+            <div id="questions-container" class="questions-container">
+                <!-- Contenu généré dynamiquement -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Réseaux sociaux -->
+    <footer class="footer">
+        <div class="social-media">
+            <h4>Suivez-nous sur les réseaux sociaux</h4>
+            <div class="social-icons">
+                <a href="https://www.youtube.com/@PrecepTech" target="_blank" class="social-link youtube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://web.facebook.com/profile.php?id=100030929242318" target="_blank" class="social-link facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://wa.me/221777297534" target="_blank" class="social-link whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.tiktok.com/@preceptech" target="_blank" class="social-link tiktok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://www.linkedin.com" target="_blank" class="social-link linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer-actions">
+            <button class="action-btn" onclick="window.open('https://www.precep-tech.com', '_blank')">
+                <i class="fas fa-external-link-alt"></i>
+                Consultez notre site web
+            </button>
+        </div>
+        <p class="footer-copyright">&copy; 2024 NEBULA - Plateforme Éducative. Tous droits réservés.</p>
+    </footer>
+
+    <!-- Modal pour afficher une question -->
+    <div id="question-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div id="modal-content">
+                <!-- Contenu chargé dynamiquement -->
+            </div>
+        </div>
+    </div>
+
+    <script src="blog.js"></script>
+</body>
+</html>

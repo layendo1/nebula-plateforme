@@ -84,7 +84,7 @@ body {
     background-color: var(--gold-light);
 }
 
-/* Logo centré et optimisé */
+/* Logo avec ordinateur et chapeau de graduation */
 .logo { 
     color: var(--secondary-color); 
     font-family: 'Bitter', serif;
@@ -99,8 +99,72 @@ body {
     margin: 0 auto;
 }
 
-.logo i {
-    font-size: 1.8rem;
+.logo-icon {
+    position: relative;
+    width: 45px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* L'ordinateur */
+.logo-icon .fa-laptop {
+    font-size: 2.2rem;
+    color: var(--secondary-color);
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+/* Le chapeau de graduation accroché en haut à gauche */
+.logo-icon .fa-graduation-cap {
+    font-size: 1.5rem;
+    color: var(--gold-light);
+    position: absolute;
+    top: -3px;
+    left: -2px;
+    z-index: 2;
+    transform: rotate(-15deg);
+    animation: hatFloat 3s ease-in-out infinite;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+}
+
+/* Animation du chapeau qui flotte légèrement */
+@keyframes hatFloat {
+    0%, 100% {
+        transform: rotate(-15deg) translateY(0);
+    }
+    50% {
+        transform: rotate(-15deg) translateY(-3px);
+    }
+}
+
+/* Effet de brillance sur l'ordinateur */
+.logo-icon .fa-laptop::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    filter: blur(1px);
+}
+
+/* Version alternative avec effet 3D */
+.logo-icon.three-d {
+    perspective: 1000px;
+}
+
+.logo-icon.three-d .fa-laptop {
+    transform: rotateX(10deg) rotateY(-5deg);
+    transform-style: preserve-3d;
+}
+
+.logo-icon.three-d .fa-graduation-cap {
+    transform: rotate(-15deg) rotateX(10deg);
 }
 
 /* Informations de contact optimisées pour mobile */
@@ -160,28 +224,39 @@ body {
     color: var(--gold-light);
 }
 
-.user-actions .action-btn {
-            background: none;
-            border: 1px solid var(--secondary-color);
-            color: var(--secondary-color);
-            padding: 0.7rem 1.5rem;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-        }
+.user-actions {
+    display: flex;
+    align-items: center;
+}
 
-        .user-actions .action-btn:hover {
-            background: var(--secondary-color);
-            color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
-        }
+.action-btn {
+    background: none;
+    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+    padding: 0.5rem 1rem; /* Réduire le padding */
+    border-radius: 20px; /* Rendre le bord plus arrondi ou garder 30px */
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    text-decoration: none;
+    font-size: 0.9rem; /* Réduire la taille de la police */
+}
+
+.action-btn i {
+    font-size: 0.9rem; /* Réduire la taille de l'icône */
+}
+
+.action-btn:hover {
+    background: var(--secondary-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
+}
 
 /* Sidebar */
 .sidebar {
@@ -940,6 +1015,7 @@ body {
     margin-bottom: 2rem;
 }
 
+/* Logo du footer avec ordinateur et chapeau */
 .footer-logo {
     font-family: 'Bitter', serif;
     font-size: 1.8rem;
@@ -951,6 +1027,45 @@ body {
     text-shadow: 0 0 10px rgba(127, 107, 0, 0.3);
     flex-shrink: 0;
     white-space: nowrap;
+    position: relative;
+}
+
+/* Conteneur pour les icônes */
+.footer-logo::before {
+    content: '';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 50px;
+    height: 40px;
+}
+
+/* Positionner les icônes dans le pseudo-élément */
+.footer-logo .fa-laptop,
+.footer-logo .fa-graduation-cap {
+    position: absolute;
+}
+
+/* L'ordinateur */
+.footer-logo .fa-laptop {
+    font-size: 2rem;
+    color: var(--secondary-color);
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+/* Le chapeau de graduation accroché */
+.footer-logo .fa-graduation-cap {
+    font-size: 1.2rem;
+    color: var(--gold-light);
+    left: -5px;
+    top: 5px;
+    transform: rotate(-15deg);
+    z-index: 2;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
 }
 
 .footer-links {
