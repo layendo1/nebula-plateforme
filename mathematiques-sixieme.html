@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programme de Mathématiques - NEBULA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #7F6B00;
+            --accent-color: #B8941F;
+            --gold-light: #D4AF37;
+            --gold-dark: #5D4A00;
+            --text-color: #ffffff;
+            --text-light: #cccccc;
+            --bg-dark: #0a0a0a;
+            --card-bg: rgba(15, 15, 15, 0.9);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--text-color);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Effets de particules dorées */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--gold-light);
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatParticle 8s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header élégant */
+        .page-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center top, rgba(127, 107, 0, 0.2) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        /* Liste des leçons */
+        .lessons-container {
+            background: var(--card-bg);
+            border: 1px solid rgba(127, 107, 0, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lessons-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.05), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .lessons-container:hover::before {
+            left: 100%;
+        }
+
+        .lesson-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .lesson-item {
+            margin-bottom: 25px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .lesson-header {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 18px 20px;
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid rgba(127, 107, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+        }
+
+        .lesson-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .lesson-header:hover::before {
+            left: 100%;
+        }
+
+        .lesson-number {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            margin-right: 15px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .lesson-header:hover .lesson-number {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .lesson-title {
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        .lesson-header:hover {
+            background: rgba(40, 40, 40, 0.9);
+            transform: translateX(10px);
+            border-color: var(--gold-light);
+            box-shadow: 
+                0 5px 20px rgba(127, 107, 0, 0.3),
+                0 0 0 1px rgba(212, 175, 55, 0.1);
+        }
+
+        /* Bouton retour */
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(15, 15, 15, 0.8);
+            color: var(--gold-light);
+            border: 1px solid rgba(127, 107, 0, 0.5);
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button:hover {
+            background: rgba(127, 107, 0, 0.2);
+            transform: translateX(-5px);
+            border-color: var(--gold-light);
+        }
+
+        /* Animation d'entrée */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .lesson-item {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .lesson-item:nth-child(1) { animation-delay: 0.1s; }
+        .lesson-item:nth-child(2) { animation-delay: 0.15s; }
+        .lesson-item:nth-child(3) { animation-delay: 0.2s; }
+        .lesson-item:nth-child(4) { animation-delay: 0.25s; }
+        .lesson-item:nth-child(5) { animation-delay: 0.3s; }
+        .lesson-item:nth-child(6) { animation-delay: 0.35s; }
+        .lesson-item:nth-child(7) { animation-delay: 0.4s; }
+        .lesson-item:nth-child(8) { animation-delay: 0.45s; }
+        .lesson-item:nth-child(9) { animation-delay: 0.5s; }
+        .lesson-item:nth-child(10) { animation-delay: 0.55s; }
+        .lesson-item:nth-child(11) { animation-delay: 0.6s; }
+        .lesson-item:nth-child(12) { animation-delay: 0.65s; }
+        .lesson-item:nth-child(13) { animation-delay: 0.7s; }
+        .lesson-item:nth-child(14) { animation-delay: 0.75s; }
+        .lesson-item:nth-child(15) { animation-delay: 0.8s; }
+        .lesson-item:nth-child(16) { animation-delay: 0.85s; }
+        .lesson-item:nth-child(17) { animation-delay: 0.9s; }
+        .lesson-item:nth-child(18) { animation-delay: 0.95s; }
+        .lesson-item:nth-child(19) { animation-delay: 1s; }
+
+        /* Effet de scintillement */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        .twinkle {
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        /* Badge mathématique */
+        .math-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(127, 107, 0, 0.3);
+        }
+
+        /* Boutons d'action */
+        .lesson-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+            min-height: 48px;
+        }
+
+        .pdf-btn {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .pdf-btn:hover {
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--gold-light) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(127, 107, 0, 0.4);
+        }
+
+        .web-btn {
+            background: rgba(30, 30, 30, 0.7);
+            color: var(--text-light);
+            border: 1px solid rgba(127, 107, 0, 0.2);
+        }
+
+        .web-btn:hover {
+            background: rgba(40, 40, 40, 0.9);
+            border-color: var(--gold-light);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .lessons-container {
+                padding: 25px 20px;
+            }
+            
+            .lesson-header {
+                padding: 15px;
+                font-size: 15px;
+            }
+            
+            .lesson-number {
+                width: 32px;
+                height: 32px;
+                font-size: 13px;
+                margin-right: 12px;
+            }
+            
+            .back-button {
+                top: 20px;
+                left: 20px;
+                padding: 10px 20px;
+                font-size: 12px;
+            }
+            
+            .lesson-actions {
+                flex-wrap: wrap;
+            }
+            
+            .action-btn {
+                flex: 1 1 calc(50% - 10px);
+                min-width: 140px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header {
+                padding: 50px 15px 30px;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .container {
+                padding: 0 15px 40px;
+            }
+            
+            .lesson-header {
+                padding: 12px;
+                font-size: 14px;
+            }
+            
+            .lesson-number {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+                margin-right: 10px;
+            }
+            
+            .action-btn {
+                padding: 10px 8px;
+                font-size: 12px;
+                flex: 1 1 100%;
+            }
+            
+            .lesson-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Effets de particules -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Bouton retour -->
+    <a href="matieres-sixieme.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Retour aux matières
+    </a>
+
+    <!-- Header de la page -->
+    <header class="page-header">
+        <div class="header-bg"></div>
+        <h1 class="page-title">Programme de Mathématiques</h1>
+        <p class="page-subtitle">Classe de Sixième - 19 leçons complètes</p>
+    </header>
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <div class="lessons-container">
+            <div class="math-badge">6ème</div>
+            
+            <ul class="lesson-list">
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">1</span>
+                        <span class="lesson-title">Nombres décimaux arithmétiques</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1qFpNZM_oBgd1pnNFJXxD-n84EK9fetCp1giciIiwiP0/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">2</span>
+                        <span class="lesson-title">Addition de deux nombres décimaux arithmétiques</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1riN2JUq4aR_161t_w88PUBTicxafGr3OXDFCZ0SdbcY/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">3</span>
+                        <span class="lesson-title">Soustraction de deux nombres décimaux arithmétiques</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1pPYdoBX9T1UyLL10zq_oM5aVZJ2JEzqaTOfo6Bl85JQ/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">4</span>
+                        <span class="lesson-title">Rangement des nombres décimaux arithmétiques</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/187hh3xRzCgs9HF_34jE9VgKlmde6js8K9A2NPMpOtGk/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">5</span>
+                        <span class="lesson-title">Multiplication des nombres décimaux arithmétiques</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1NOMhFqUVJDNUmfMN3xMpPr8d6M1yWPbZ4dzULKqcbCI/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">6</span>
+                        <span class="lesson-title">Division des nombres décimaux arithmétiques</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1DTpfeXMkdUSQ3fnOolSkmQieoLFcJoQcJZJVo1-zGmY/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">7</span>
+                        <span class="lesson-title">Organisation d'un calcul</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1KjSgoJJrTygo5oQ2ODiauEUjXSCM3vXX8RdL2PLm8U8/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">8</span>
+                        <span class="lesson-title">Proportionnalité</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/188Qd6CCMFvnsobOIHMrzfSlYGRT_pDD3gKPbs6mZmZw/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">9</span>
+                        <span class="lesson-title">Nombres décimaux relatifs</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1pR223LpOpF0qWgNWY9AsJq_EZ-plzGYLN9s7czFmmu4/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">10</span>
+                        <span class="lesson-title">Repérage sur la droite et le plan</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1oHOB0wWUhbfQ7OlXpu07UemVox8cPMT4OIkBV00dHVA/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">11</span>
+                        <span class="lesson-title">Introduction à la géométrie</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1bsV6U7WXE5ToDeSpusDtkozgDmqnuwPne6wlZjl76Gc/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">12</span>
+                        <span class="lesson-title">Le cercle</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1E0Wkw66vZ72HY5zFyRbR76BIqEeGSqr9c65TjfvrOAw/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">13</span>
+                        <span class="lesson-title">Droites perpendiculaires et droites parallèles</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/11-BAzV2B27g1-oTylZjqNy9nV029h9J7oxzJI1QEB-A/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">14</span>
+                        <span class="lesson-title">Symétrie orthogonale par rapport à une droite donnée</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1OirmBV7hzmCIdOcza27Lx3-ju_qSbXEEp1RU3pttN18/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">15</span>
+                        <span class="lesson-title">Angles</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1_d21FZi4aJX6BRfvvO8YJ3HOV-xTBWqU9ZCQSe1UrEU/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">16</span>
+                        <span class="lesson-title">Polygones</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1AFfGZp47qQX_oAKAa3u7ShPdKDgsKvXoDWK2L3UIeCI/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">17</span>
+                        <span class="lesson-title">Aires</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1MTnLOx9GersSNHgcSe4KjR3tRJOGlwlKIbqbHXRAow4/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">18</span>
+                        <span class="lesson-title">Géométrie dans l'espace</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1KAsdgUMEOeaF2K8DZchBV7McLPi2dFfyMjOF8QHpJzQ/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+                <li class="lesson-item">
+                    <div class="lesson-header">
+                        <span class="lesson-number">19</span>
+                        <span class="lesson-title">Repérage sur la sphère</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <a href="https://docs.google.com/document/d/1sfZ5DVPAEi-1_hFOfoOsDkk6hgnAkMx2ghfxQa73yl8/export?format=pdf" target="_blank" class="action-btn pdf-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Cours et Exercices PDF
+                        </a>
+                        <a href="#" class="action-btn web-btn">
+                            <i class="fas fa-globe"></i>
+                            Cours et Exercices en ligne
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Création des particules animées
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Taille aléatoire
+                const size = Math.random() * 3 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Position de départ aléatoire
+                particle.style.left = `${Math.random() * 100}%`;
+                
+                // Animation
+                particle.style.animationDelay = `${Math.random() * 8}s`;
+                particle.style.animationDuration = `${Math.random() * 10 + 8}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        });
+    </script>
+</body>
+</html>
